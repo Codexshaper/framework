@@ -1,0 +1,69 @@
+<?php
+/**
+ * $CLASS$ Taxonomy file
+ *
+ * @category   Taxonomy
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
+
+namespace $NAMESPACE$;
+
+use CodexShaper\Framework\Foundation\Taxonomy;
+
+// exit if access directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
+
+/**
+ * $CLASS$ taxonomy class
+ *
+ * @category   Class
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
+class $CLASS$ extends Taxonomy
+{
+    /**
+	 * Constructor
+	 *
+	 * Perform some compatibility checks to make sure basic requirements are meet.
+	 * If all compatibility checks pass, initialize the functionality.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		// Do your settings here
+		parent::__construct();
+	}
+
+    /**
+     * Get TAXONOMY name.
+     *
+     * @return string $CLASS$ name.
+     */
+    public function get_name()
+    {
+        return '$TAXONOMY_NAME$';
+    }
+
+    /**
+	 * Get post type name or names.
+	 *
+	 * @return string|string[] name.
+	 */
+	public function get_object_type()
+	{
+		return array( '$OBJECT_TYPE$' );
+	}
+}

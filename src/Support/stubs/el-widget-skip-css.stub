@@ -1,0 +1,169 @@
+<?php
+/**
+ * $CLASS$ Widget file
+ *
+ * @category   Widget
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
+
+namespace $NAMESPACE$;
+
+use CodexShaper\Framework\Foundation\Elementor\Widget;
+use Elementor\Controls_Manager;
+
+// Exit if access directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
+
+/**
+ * $CLASS$ widget class
+ *
+ * @category   Class
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
+class $CLASS$ extends Widget
+{
+
+    /**
+     * Get widget name.
+     *
+     * @return string Widget name.
+     */
+    public function get_name()
+    {
+        return '$WIDGET_NAME$';
+    }
+
+    /**
+     * Get widget title.
+     *
+     * @return string Widget title.
+     */
+    public function get_title()
+    {
+        return __('CXF $TITLE$', '$TEXT_DOMAIN$');
+    }
+
+    /**
+	 * Get widget icon.
+	 *
+	 * Retrieve the widget icon.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget icon.
+	 */
+	public function get_icon() {
+		return 'eicon-apps';
+	}
+
+    /**
+     * Get widget keywords.
+     *
+     * @return string Widget keywords.
+     */
+    public function get_keywords()
+    {
+        return ['$TITLE$', "CodexShaper", 'CodexShaper Framework', 'CXF'];
+    }
+
+    /**
+     * Get widget categories.
+     *
+     * @return array Widget categories.
+     *
+     */
+    public function get_categories()
+    {
+        return arry( '$WIDGET_CATEGORY$' );
+    }
+
+    /**
+     * Register Elementor widget controls.
+     * Adds different input fields to allow the user to change and customize the widget settings.
+     *
+     * @access protected
+     *
+     * @return void
+     */
+    protected function register_controls()
+    {
+
+        // Register layout controls.
+        $this->register_layout_controls();
+		// Register style controls.
+        $this->register_style_controls();
+    }
+
+	/**
+     * Register Elementor widget layout controls.
+     * Adds different input fields to allow the user to change and customize the widget settings.
+     *
+     * @access protected
+     *
+     * @return void
+     */
+    protected function register_layout_controls()
+    {
+		$this->start_controls_section(
+            'section_layout',
+            [
+                'label' => __('Layout', '$TEXT_DOMAIN$'),
+                'tab' => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        $this->end_controls_section();
+	}
+
+    /**
+     * Register Elementor widget style controls.
+     * Adds different input fields to allow the user to change and customize the widget settings.
+     *
+     * @access protected
+     *
+     * @return void
+     */
+    protected function register_style_controls()
+    {
+        $this->start_controls_section(
+            'section_style',
+            [
+                'label' => __('Layout', 'codexshaper-framework'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+		// Write style controls here.
+
+		$this->end_controls_section();
+    }
+
+    /**
+     * Render Elementor widget output on the frontend.
+     *
+     * Written in PHP and used to generate the final HTML.
+     *
+     * @since 1.0.0
+     * @access protected
+     *
+     * @return void
+     */
+    protected function render()
+    {
+        $settings = $this->get_settings_for_display();
+    ?>
+        <h2>$TITLE$</h2>
+    <?php
+    }
+}

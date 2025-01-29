@@ -1,0 +1,10 @@
+window.addEventListener("elementor/frontend/init", function () {
+  const widgetName = '$WIDGET_NAME$';
+  const skins = $WIDGET_SKINS$;
+
+  elementorFrontend.hooks.addFilter("cxf/widgets/sliders", function (sliders) {
+    sliders[widgetName] = skins;
+
+    return sliders;
+  });
+});

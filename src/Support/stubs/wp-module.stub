@@ -1,0 +1,74 @@
+<?php
+/**
+ * $CLASS$ module file
+ *
+ * @category   Module
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
+
+namespace $NAMESPACE$;
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+use CodexShaper\Framework\Foundation\Module as ModuleBase;
+
+/**
+ * $CLASS$ module class
+ *
+ * @category   Class
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
+class $CLASS$ extends ModuleBase {
+
+	/**
+	 * Get module name.
+	 *
+	 * Retrieve the module name.
+	 *
+	 * @since 1.7.0
+	 * @access public
+	 *
+	 * @return string Module name.
+	 */
+	public function get_name() {
+		return '$MODULE_NAME$';
+	}
+
+	/**
+	 * Get the module's associated widgets.
+	 *
+	 * @return string[]
+	 */
+	public function get_widgets() {
+		return [
+			'$WIDGET_CLASS$',
+		];
+	}
+
+	/**
+	 * Register styles.
+	 *
+	 * `/assets/css/$WIDGET_NAME$.min.css`.
+	 *
+	 * @return void
+	 */
+	public function register_styles() {
+		wp_register_style(
+			'$WIDGET_NAME$',
+			$this->get_css_assets_url( '$WIDGET_NAME$', null, true, true ),
+			[],
+			CXF_APP_VERSION
+		);
+	}
+}

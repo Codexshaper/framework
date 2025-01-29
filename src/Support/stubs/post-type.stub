@@ -1,0 +1,59 @@
+<?php
+/**
+ * $CLASS$ PostType file
+ *
+ * @category   PostType
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
+
+namespace $NAMESPACE$;
+
+use CodexShaper\Framework\Foundation\PostType;
+
+// Exit if access directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
+
+/**
+ * $CLASS$ post_type class
+ *
+ * @category   Class
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
+class $CLASS$ extends PostType
+{
+    /**
+	 * Constructor
+	 *
+	 * Perform some compatibility checks to make sure basic requirements are meet.
+	 * If all compatibility checks pass, initialize the functionality.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		// Do your settings here
+		parent::__construct();
+	}
+
+    /**
+     * Get post type name.
+     *
+     * @return string $CLASS$ name.
+     */
+    public function get_name()
+    {
+        return '$POST_TYPE$';
+    }
+}
