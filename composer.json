@@ -1,9 +1,8 @@
 {
   "name": "codexshaper/framework",
-  "description": "A plugin starter kit for wordpress theme.",
+  "description": "An MVC framework for WordPress.",
   "type": "library",
   "license": "gpl-2.0",
-  "version": "1.0.0",
   "keywords": [
     "wordpress",
     "plugin"
@@ -22,7 +21,7 @@
     {
       "name": "Md Abu Ahsan Basir",
       "email": "maab.career@gmil.com"
-    }
+    },
   ],
   "require": {
     "php": ">=5.4.0",
@@ -38,5 +37,7 @@
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
-  }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }
