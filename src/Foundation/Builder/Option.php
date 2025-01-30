@@ -158,32 +158,69 @@ class Option extends Builder {
    * @return void
    */
   public function build($key, $params = array()) {
-      $this->admin_menu = Menu::instance();
-      $this->identifier   = $key;
-      $this->args     = apply_filters( "cxf/builder/{$this->identifier}/args", wp_parse_args( $params['args'], $this->args ), $this );
-      $this->sections = apply_filters( "cxf/builder/{$this->identifier}/sections", $params['sections'], $this );
-      $admin_bar_menu_priority = $this->args['admin_bar_menu_priority'] ?? 80;
-      $this->database = $this->args['database'] ?? '';
-      $this->show_in_network = $this->args['show_in_network'] ?? true;
-      $this->ajax_save = $this->args['ajax_save'] ?? true;
-      $this->form_action = $this->args['form_action'] ?? '';
-      $this->tabs     = $this->get_tabs( $this->sections );
-      $this->fields   = $this->get_fields( $this->sections );
-      $this->sorted_sections = $this->get_sections( $this->sections );
 
-      $this->get_options();
-      $this->set_options();
-      $this->save_defaults();
+    // Set admin menu instance.
+    $this->admin_menu = Menu::instance();
+    // Set option identifier.
+    $this->identifier = $key;
 
-      add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
-      add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), $admin_bar_menu_priority );
-      add_action( "wp_ajax_cxf_builder_{$this->identifier}_save", array( $this, 'set_options' ) );
+    // Set default args and apply filters.
+    $this->args = apply_filters(
+        "cxf/builder/{$this->identifier}/args",
+        $this->set_default_args($params['args'] ?? []),
+        $this
+    );
 
-      if ( $this->database === 'network' && $this->show_in_network ) {
-        add_action( 'network_admin_menu', array( $this, 'add_admin_menu' ) );
-      }
+    // Set sections and apply filters.
+    $this->sections = apply_filters(
+        "cxf/builder/{$this->identifier}/sections",
+        $params['sections'] ?? [],
+        $this
+    );
 
+    // Initialize sections.
+    $this->initialize_sections($this->sections);
+
+    // Load options and save defaults.
+    $this->get_options();
+    $this->set_options();
+    $this->save_defaults();
+
+    // Add WordPress hooks.
+    add_action('admin_menu', array($this, 'add_admin_menu'));
+    add_action('admin_bar_menu', array($this, 'add_admin_bar_menu'), $this->args['admin_bar_menu_priority']);
+
+    if ($this->ajax_save) {
+        add_action("wp_ajax_cxf_builder_{$this->identifier}_save", array($this, 'set_options'));
+    }
+
+    if ($this->database === 'network' && $this->show_in_network) {
+        add_action('network_admin_menu', array($this, 'add_admin_menu'));
+    }
   }
+
+  /**
+   * Sets default arguments.
+   */
+  private function set_default_args($args) {
+      return wp_parse_args($args, [
+          'database' => '',
+          'show_in_network' => true,
+          'ajax_save' => true,
+          'form_action' => '',
+          'admin_bar_menu_priority' => 80,
+      ]);
+  }
+
+  /**
+   * Initializes sections, tabs, and fields.
+   */
+  private function initialize_sections($sections) {
+      $this->tabs = $this->get_tabs($sections);
+      $this->fields = $this->get_fields($sections);
+      $this->sorted_sections = $this->get_sections($sections);
+  }
+
 
   /**
    * Add admin bar menu.
@@ -469,137 +506,172 @@ class Option extends Builder {
    * @return array $fields Fields.
    */
   public function set_options() {
+    // Check if the request is an AJAX request.
+    $is_ajax = defined('DOING_AJAX') && DOING_AJAX;
 
-    $is_ajax = defined( 'DOING_AJAX' ) && DOING_AJAX;
+    // Retrieve the nonce key and validate it.
+    $nonce_key = "cxf_options_nonce_{$this->identifier}";
+    $request = wp_unslash($_POST) ?? array();
 
-    $nonce_key     = "cxf_options_nonce_{$this->identifier}";
-    $request =  wp_unslash($_POST) ?? array();
-
-    if ( ! isset( $request[$nonce_key] ) || ! wp_verify_nonce($request[$nonce_key], 'cxf_options_nonce' ) ) {
-      return false; // Exit early if nonce verification fails.
+    if (!isset($request[$nonce_key]) || !wp_verify_nonce($request[$nonce_key], 'cxf_options_nonce')) {
+        return false; // Exit early if nonce verification fails.
     }
 
-    $ajax_data = isset($_POST['data']) ? sanitize_text_field(wp_unslash( $_POST['data'] ) ) : "";
+    // Retrieve AJAX data if available.
+    $ajax_data = isset($request['data']) ? sanitize_text_field(wp_unslash($request['data'])) : '';
+    $request = $is_ajax && $ajax_data ? json_decode(trim($ajax_data), true) : $request;
 
-    $request  = $is_ajax && $ajax_data ? json_decode(trim( $ajax_data ), true ) : $request;
-    $data      = array();
-    $options   = $request[$this->identifier] ?? array();
+    // Initialize variables.
+    $data = array();
+    $options = $request[$this->identifier] ?? array();
     $transient = $request['cxf_option'] ?? array();
 
-    $importing  = false;
+    // Handle transient states.
     $section_id = $transient['section'] ?? '';
-    $import_data = $request[ 'cxf_import_data' ] ?? '';
-    $save = ( isset($transient['save']) && $transient['save'] ) ? true : false;
-    $reset_all = ( isset($transient['reset']) && $transient['reset'] ) ? true : false;
-    $reset_section = ( isset($transient['reset_section']) && $transient['reset_section'] && $section_id ) ? true : false;
+    $import_data = $request['cxf_import_data'] ?? '';
+    $save = !empty($transient['save']);
+    $reset_all = !empty($transient['reset']);
+    $reset_section = !empty($transient['reset_section']) && $section_id;
 
-    if ( ! $is_ajax && $import_data ) {
-      // XSS ok.
-      // No worries, This "POST" requests is sanitizing in the below foreach. see #L337 - #L341
-      $options  = json_decode( wp_unslash( trim( $import_data )) , true );
-      $importing    = true;
-      $this->notice = esc_html__( 'Settings successfully imported.', 'codexshaper-framework' );
+    // Handle importing options.
+    if (!$is_ajax && $import_data) {
+        $options = json_decode(wp_unslash(trim($import_data)), true);
+        $this->notice = esc_html__('Settings successfully imported.', 'codexshaper-framework');
 
-      if ( ! is_array( $options ) || empty( $options ) ) {
-        $options = array();
-        $this->notice = esc_html__('No valid data, please export the string again.', 'codexshaper-framework');
-      }
-    }
-
-    if ( $reset_all ) {
-
-      foreach ( $this->fields as $field ) {
-        if ( ! empty( $field['id'] ) ) {
-          $data[$field['id']] = $this->get_default( $field );
+        if (!is_array($options) || empty($options)) {
+            $options = array();
+            $this->notice = esc_html__('No valid data, please export the string again.', 'codexshaper-framework');
         }
-      }
-
-      $this->notice = esc_html__( 'Default options restored.', 'codexshaper-framework' );
-
-    }
-    
-    if ( $reset_section ) {
-      if ( ! empty( $this->sorted_sections[$section_id - 1]['fields'] ) ) {
-        foreach ( $this->sorted_sections[$section_id - 1]['fields'] as $field ) {
-          if ( ! empty( $field['id'] ) ) {
-            $data[$field['id']] = $this->get_default( $field );
-          }
-        }
-      }
-
-      $data = wp_parse_args( $data, $this->options );
-
-      $this->notice = esc_html__( 'Default options restored.', 'codexshaper-framework' );
-
-    }
-    
-    if ( $save && ! ($reset_all || $reset_section) ) {
-
-      foreach ( $this->fields as $field ) {
-
-        $field_id = $field['id'] ?? '';
-
-        if ( $field_id ) {
-
-          $sanitize = $field['sanitize'] ?? false;
-          $is_callable_sanitize = is_callable( $sanitize );
-          $validate = $field['validate'] ?? false;
-          $is_callable_validate = is_callable( $validate );
-          
-          $field_value = $options[$field_id] ?? '';
-
-          if ( ! $is_ajax && ! $importing ) {
-            $field_value = wp_unslash( $field_value );
-          }
-          
-          if( $sanitize && $is_callable_sanitize ) {
-            $data[$field_id] = call_user_func( $sanitize, $field_value );
-          }
-
-          if ( ! $sanitize ) {
-            $data[$field_id] = is_array( $field_value ) ? wp_kses_post_deep( $field_value ) : wp_kses_post( $field_value );
-          }
-          
-          if (!$sanitize && !$is_callable_sanitize) {
-            $data[$field_id] = $field_value;
-          }
-
-          // Field validation.
-          if ( $validate && $is_callable_validate ) {
-
-            $has_validated = call_user_func( $validate, $field_value );
-
-            if ( $has_validated ) {
-
-              $data[$field_id] = ( isset( $this->options[$field_id] ) ) ? $this->options[$field_id] : '';
-              $this->errors[$field_id] = $has_validated;
-
-            }
-          }
-        }
-      }
     }
 
-    $data = apply_filters( "cxf_{$this->identifier}_save", $data, $this );
+    // Handle resetting all options.
+    if ($reset_all) {
+        $data = $this->reset_all_options();
+        $this->notice = esc_html__('Default options restored.', 'codexshaper-framework');
+    }
 
-    do_action( "cxf_{$this->identifier}_save_before", $data, $this );
+    // Handle resetting a specific section.
+    if ($reset_section) {
+        $data = $this->reset_section_options($section_id);
+        $this->notice = esc_html__('Default section options restored.', 'codexshaper-framework');
+    }
 
+    // Save new options if not resetting.
+    if ($save && !$reset_all && !$reset_section) {
+        $data = $this->sanitize_and_validate_fields($options, $is_ajax, !empty($import_data));
+    }
+
+    // Apply filters and actions before saving.
+    $data = apply_filters("cxf_{$this->identifier}_save", $data, $this);
+    do_action("cxf_{$this->identifier}_save_before", $data, $this);
+
+    // Save options and trigger after save actions.
     $this->options = $data;
+    $this->save_options($data);
+    do_action("cxf_{$this->identifier}_save_after", $data, $this);
 
-    $this->save_options( $data );
-
-    do_action( "cxf_{$this->identifier}_save_after", $data, $this );
-
-    if ( empty( $this->notice ) ) {
-      $this->notice = esc_html__( 'Options saved successfully.', 'codexshaper-framework' );
+    // Set success notice.
+    if (! $this->notice) {
+        $this->notice = esc_html__('Options saved successfully.', 'codexshaper-framework');
     }
 
-    if ( $is_ajax ) {
-      wp_send_json_success( array( 'notice' => $this->notice, 'errors' => $this->errors ) );
+    // Send JSON response for AJAX requests.
+    if ($is_ajax) {
+        wp_send_json_success(array('notice' => $this->notice, 'errors' => $this->errors));
     }
-
   }
-  
+
+  /**
+   * Reset all options to their default values.
+   * 
+   * @since 1.0.0
+   * 
+   * @return array $data Data.
+   */
+  private function reset_all_options() {
+      $data = array();
+      foreach ($this->fields as $field) {
+          if (!empty($field['id'])) {
+              $data[$field['id']] = $this->get_default($field);
+          }
+      }
+      return $data;
+  }
+
+  /**
+   * Reset section options to their default values.
+   * 
+   * @param int $section_id Section ID.
+   * 
+   * @since 1.0.0
+   * 
+   * @return array $data Data.
+   */
+  private function reset_section_options($section_id) {
+      $data = array();
+      if (!empty($this->sorted_sections[$section_id - 1]['fields'])) {
+          foreach ($this->sorted_sections[$section_id - 1]['fields'] as $field) {
+              if (!empty($field['id'])) {
+                  $data[$field['id']] = $this->get_default($field);
+              }
+          }
+      }
+      return wp_parse_args($data, $this->options);
+  }
+
+  /**
+   * Sanitize and validate fields.
+   * 
+   * @param array $options Options.
+   * @param bool $is_ajax Is AJAX request.
+   * @param bool $importing Is importing options.
+   * 
+   * @since 1.0.0
+   * 
+   * @return array $data Data.
+   */
+  private function sanitize_and_validate_fields($options, $is_ajax, $importing) {
+    $data = array();
+
+    foreach ($this->fields as $field) {
+        $field_id = $field['id'] ?? '';
+        if ($field_id) {
+            $sanitize = $field['sanitize'] ?? false;
+            $validate = $field['validate'] ?? false;
+
+            $field_value = $options[$field_id] ?? '';
+            if (!$is_ajax && !$importing) {
+                $field_value = wp_unslash($field_value);
+            }
+
+            // Sanitize textarea fields to trim whitespace.
+            if (!empty($field['type']) && $field['type'] === 'textarea') {
+                $field_value = trim($field_value);
+            }
+
+            // Sanitize field value.
+            if ($sanitize && is_callable($sanitize)) {
+                $data[$field_id] = call_user_func($sanitize, $field_value);
+            } elseif (is_array($field_value)) {
+                $data[$field_id] = wp_kses_post_deep($field_value);
+            } else {
+                $data[$field_id] = wp_kses_post($field_value);
+            }
+
+            // Validate field value.
+            if ($validate && is_callable($validate)) {
+                $has_validated = call_user_func($validate, $field_value);
+                if ($has_validated) {
+                    $data[$field_id] = $this->options[$field_id] ?? '';
+                    $this->errors[$field_id] = $has_validated;
+                }
+            }
+        }
+    }
+
+    return $data;
+  }
+
   /**
    * Save options.
    *

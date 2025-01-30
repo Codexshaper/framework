@@ -36,7 +36,7 @@ class Section {
 	 *
 	 * @return void
 	 */
-	public static function render( $section, $post_id, $identifier, $options ) {
+	public static function render( $section, $identifier, $options, $post_id = 0 ) {
 
 		/**
 		 * Filter section allowed html

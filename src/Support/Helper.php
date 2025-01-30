@@ -721,7 +721,7 @@ class Helper {
 	public static function get_super_global_value( array $superGlobal, string $key, $nonce_action = '' ) {
 
 		if ( $nonce_action && isset( $superGlobal['_wpnonce'] ) && ! wp_verify_nonce( $superGlobal['_wpnonce'],  $nonce_action) ) {
-            wp_die( 'Security check failed.' );
+            return;
         }
 
 		if ( ! array_key_exists( $key, $superGlobal ) ) {

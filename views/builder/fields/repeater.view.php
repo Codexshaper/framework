@@ -37,7 +37,7 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
     <?php
     if ( is_array( $value ) && count( $value ) > 0 ) :
         $num = 0;
-        foreach ( $value as $key => $value ) :
+        foreach ( $value as $key => $repeater_value ) :
     ?>
     <div class="cxf--repeater-item">
         <div class="cxf--repeater-action-wrapper">

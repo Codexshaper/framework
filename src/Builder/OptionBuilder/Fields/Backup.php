@@ -37,6 +37,11 @@ class Backup extends Field {
         $identifier = $this->identifier;
         $nonce  = wp_create_nonce( 'cxf_backup_nonce' );
         $export_data = wp_json_encode( get_option( $identifier ) );
+        
+        if (! $export_data || 'false' === $export_data) {
+            $export_data = '';
+        }
+
         $export = add_query_arg( 
             array( 
                 'action' => 'cxf_backup_export', 

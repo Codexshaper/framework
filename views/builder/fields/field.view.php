@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use CodexShaper\Framework\Builder\OptionBuilder\Field;
 
 $value = '';
+$post_id = $post_id ?? 0;
 
 if ( ! empty( $field['id'] ) ) {
 
@@ -30,6 +31,10 @@ if ( ! empty( $field['id'] ) ) {
     if (isset( $options[$field['id']] )) {
         $value = $options[$field['id']];
     }
+}
+
+if ($post_id) {
+    $value = Field::get_value( $post_id, $field, $identifier, $options );
 }
 
 Field::render( $field, $value, $identifier, $parent );

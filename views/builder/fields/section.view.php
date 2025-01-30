@@ -45,8 +45,19 @@ $is_error       = false;
 
         if ( ! $is_error ) {
             foreach ( $fields as $field ) {
-                $value = Field::get_value( $post_id, $field, $identifier, $options );
-                Field::render( $field, $value, $identifier, 'section' );
+                $parent = 'section';
+                $options = $options ?? [];
+                $post_id = $post_id ?? 0;
+                cxf_view(
+                    'builder.fields.field', 
+                    compact(
+                        'identifier',
+                        'post_id',
+                        'field', 
+                        'options',
+                        'parent',
+                    )
+                );
             }
         }
     ?>

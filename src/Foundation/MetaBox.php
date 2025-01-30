@@ -352,7 +352,7 @@ abstract class MetaBox implements MetaBoxContract {
 					<div class="cxf--sections">
 						<?php
 						foreach ( $this->sections as $section ) {
-							Section::render( $section, $post->ID, $this->id, $this->options );
+							Section::render( $section, $this->id, $this->options, $post->ID );
 						}
 						?>
 					</div>
@@ -362,124 +362,155 @@ abstract class MetaBox implements MetaBoxContract {
 		<?php
 	}
 
+	
+
 	/**
 	 * Save the metabox data.
 	 *
-	 * @param int $post_id  The post ID.
+	 * @param int $post_id The post ID.
 	 *
 	 * @return void
 	 */
-	public function save( int $post_id ) {
-
-		$sections = $this->get_sections();
-
-		if ( ! $post_id || ! is_array( $sections ) ) {
+	public function save(int $post_id) {
+		if (!$post_id || !is_array($sections = $this->get_sections())) {
 			return;
 		}
 
-		$noncekey = "{$this->nonce}_{$this->id}";
-		$nonce    = isset( $_POST[ $noncekey ] ) ? sanitize_text_field( wp_unslash( $_POST[ $noncekey ] ) ) : '';
+		$nonce_key = "{$this->nonce}_{$this->id}";
+		$nonce     = isset($_POST[$nonce_key]) ? sanitize_text_field(wp_unslash($_POST[$nonce_key])) : '';
 
-		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, $this->nonce ) ) {
-			return $post_id;
-		}
-
-		// XSS ok. This "POST" requests is sanitizing below.
-		$request = isset( $_POST[ $this->id ] ) ? cxf_sanitize_recursive( wp_unslash( $_POST[ $this->id ] ) ) : array();
-		$data    = array();
-		$errors  = array();
-
-		if ( count( $request ) > 0 ) {
-
-			foreach ( $sections as $key => $section ) {
-
-				$fields = $section['fields'] ?? array();
-
-				if ( is_array( $fields ) && count( $fields ) > 0 ) {
-
-					foreach ( $fields as $field ) {
-						// Check id is exists or not otherwise use default value.
-						$field_id = $field['id'] ?? '';
-
-						if ( ! $field_id ) {
-							continue;
-						}
-
-						$field_value = $request[ $field_id ] ?? '';
-
-						// Sanitize "post" request.
-						$data[ $field_id ] = $field_value;
-
-						if ( is_string( $field_value ) ) {
-							$data[ $field_id ] = wp_kses_post( $field_value );
-						}
-
-						if ( is_array( $field_value ) && count( $field_value ) > 0 ) {
-							$data[ $field_id ] = wp_kses_post_deep( $field_value );
-						}
-
-						if ( isset( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
-							$data[ $field_id ] = call_user_func( $field['sanitize'], $field_value );
-						}
-
-						// Validate "post" request.
-						if ( isset( $field['validate'] ) && is_callable( $field['validate'] ) ) {
-							// Call validation function(s) or method(s)
-							$has_validated = call_user_func( $field['validate'], $field_value );
-
-							if ( ! $has_validated ) {
-								$errors['sections'][ $key + 1 ] = true;
-								$errors['fields'][ $field_id ]  = $has_validated;
-								$data[ $field_id ]              = Field::get_value( $post_id, $field, $this->id, $this->options );
-							}
-						}
-					}
-				}
-			}
-		}
-
-		$data     = apply_filters( "cxf_{$this->id}_save", $data, $post_id, $this );
-		$is_reset = isset( $request['_reset'] ) && $request['_reset'];
-		do_action( "cxf_{$this->id}_save_before", $data, $post_id, $this );
-
-		// If both reset enable.
-		if ( $is_reset ) {
-
-			if ( $this->is_serialize ) {
-				delete_post_meta( $post_id, $this->id );
-				return;
-			}
-
-			foreach ( $sections as $key => $section ) {
-				$fields = $section['fields'] ?? array();
-				if ( is_array( $fields ) && count( $fields ) > 0 ) {
-					foreach ( $fields as $field ) {
-						if ( isset( $field['id'] ) && $field['id'] ) {
-							delete_post_meta( $post_id, $field['id'] );
-						}
-					}
-				}
-			}
-
+		// Verify nonce and autosave check.
+		if ((defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) || !wp_verify_nonce($nonce, $this->nonce)) {
 			return;
 		}
 
-		// If reset is disabled but serialize is enable.
-		if ( $this->is_serialize ) {
-			update_post_meta( $post_id, $this->id, $data );
-		} else {
-			foreach ( $data as $key => $value ) {
-				update_post_meta( $post_id, $key, $value );
+		// Prepare data, request, and errors.
+		$request = isset($_POST[$this->id]) ? cxf_sanitize_recursive(wp_unslash($_POST[$this->id])) : [];
+		$data    = [];
+		$errors  = [];
+
+		foreach ($sections as $key => $section) {
+			$fields = $section['fields'] ?? [];
+			if (!is_array($fields)) {
+				continue;
+			}
+
+			foreach ($fields as $field) {
+				$field_id = $field['id'] ?? '';
+				if (!$field_id) {
+					continue;
+				}
+
+				$field_value = $request[$field_id] ?? '';
+				$sanitized_value = $this->sanitize_field($field, $field_value);
+
+				// Handle validation.
+				if (!$this->validate_field($field, $field_value)) {
+					$errors['sections'][$key + 1] = true;
+					$errors['fields'][$field_id] = false; // Validation failed.
+					$sanitized_value = Field::get_value($post_id, $field, $this->id, $this->options);
+				}
+
+				$data[$field_id] = $sanitized_value;
 			}
 		}
 
-		// If errors is available update meta date.
-		if ( count( $errors ) > 0 ) {
-			update_post_meta( $post_id, 'cxf_metabox_errors_' . $this->id, $errors );
+		// Filter and reset handling.
+		$data     = apply_filters("cxf_{$this->id}_save", $data, $post_id, $this);
+		$is_reset = isset($request['_reset']) && $request['_reset'];
+		do_action("cxf_{$this->id}_save_before", $data, $post_id, $this);
+
+		if ($is_reset) {
+			$this->handle_reset($post_id, $sections);
+			return;
 		}
 
-		// Perform action after data saved.
-		do_action( "cxf_{$this->id}_saved", $data, $post_id, $this );
-		do_action( "cxf_{$this->id}_save_after", $data, $post_id, $this );
+		// Save data: Serialized or individual fields.
+		$this->save_meta_data($post_id, $data);
+
+		// Save errors if available.
+		if (!empty($errors)) {
+			update_post_meta($post_id, 'cxf_metabox_errors_' . $this->id, $errors);
+		}
+
+		// Perform actions after saving.
+		do_action("cxf_{$this->id}_saved", $data, $post_id, $this);
+		do_action("cxf_{$this->id}_save_after", $data, $post_id, $this);
 	}
+
+	/**
+	 * Sanitize a single field value based on field configuration.
+	 *
+	 * @param array  $field The field configuration.
+	 * @param mixed  $value The field value.
+	 * @return mixed Sanitized value.
+	 */
+	private function sanitize_field(array $field, $value) {
+		if (is_string($value)) {
+			$value = wp_kses_post($value);
+		} elseif (is_array($value)) {
+			$value = wp_kses_post_deep($value);
+		}
+
+		if (isset($field['sanitize']) && is_callable($field['sanitize'])) {
+			$value = call_user_func($field['sanitize'], $value);
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Validate a single field value based on field configuration.
+	 *
+	 * @param array  $field The field configuration.
+	 * @param mixed  $value The field value.
+	 * @return bool True if valid, false otherwise.
+	 */
+	private function validate_field(array $field, $value): bool {
+		if (isset($field['validate']) && is_callable($field['validate'])) {
+			return call_user_func($field['validate'], $value);
+		}
+
+		return true; // Default to valid if no validation callback is provided.
+	}
+
+	/**
+	 * Handle reset logic for meta fields.
+	 *
+	 * @param int   $post_id The post ID.
+	 * @param array $sections The sections configuration.
+	 * @return void
+	 */
+	private function handle_reset(int $post_id, array $sections): void {
+		if ($this->is_serialize) {
+			delete_post_meta($post_id, $this->id);
+		} else {
+			foreach ($sections as $section) {
+				foreach ($section['fields'] ?? [] as $field) {
+					if (!empty($field['id'])) {
+						delete_post_meta($post_id, $field['id']);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Save meta data for the post.
+	 *
+	 * @param int   $post_id The post ID.
+	 * @param array $data    The meta data to save.
+	 * @return void
+	 */
+	private function save_meta_data(int $post_id, array $data): void {
+
+		if ($this->is_serialize) {
+			update_post_meta($post_id, $this->id, $data);
+		} else {
+			foreach ($data as $key => $value) {
+				update_post_meta($post_id, $key, $value);
+			}
+		}
+	}
+
 }
