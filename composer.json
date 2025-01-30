@@ -21,7 +21,7 @@
     {
       "name": "Md Abu Ahsan Basir",
       "email": "maab.career@gmil.com"
-    },
+    }
   ],
   "require": {
     "php": ">=5.4.0",
