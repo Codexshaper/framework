@@ -55,15 +55,19 @@ class MakeMetaBox extends Command {
 			\WP_CLI::error( 'You must provide post type name name and object option.e.g: `php wp cxf-make:metabox OptionPanelMetaBox`.' );
 		}
 
+		$metabox_config = cxf_config( 'metabox' );
+		$app_config   = cxf_config( 'app' );
+		$plugin_namespace = $app_config['plugin_namespaces'] ?? '';
+
 		foreach ( $this->args as $arg ) {
 
 			$title             = cxf_title( $arg );
 			$class_name        = str_replace( ' ', '', $title );
-			$metabox_namespace = 'CodexShaper\Framework\MetaBoxes';
-			$stub_name         = 'metabox';
+			$metabox_namespace = $metabox_config['namespace'] ?? $plugin_namespace . 'MetaBoxes';
+			$stub_name         = $metabox_config['stub_name'] ?? 'metabox';
 			$metabox_id        = str_replace( ' ', '_', strtolower( $title ) );
-			$metabox_dir       = cxf_plugin_base_path() . 'src/MetaBoxes';
-			$metabox_prefix    = 'cxf';
+			$metabox_dir       = $metabox_config['base_path'] ?? cxf_plugin_base_path() . 'src/MetaBoxes';
+			$metabox_prefix    = $metabox_config['prefix'] ?? 'cxf_';
 
 			if ( ! is_dir( $metabox_dir ) ) {
 				wp_mkdir_p( $metabox_dir );
@@ -75,7 +79,7 @@ class MakeMetaBox extends Command {
 				array(
 					'NAMESPACE' => $metabox_namespace,
 					'CLASS'     => $class_name,
-					'ID'        => "{$metabox_prefix}_{$metabox_id}",
+					'ID'        => sanitize_key("{$metabox_prefix}{$metabox_id}"),
 					'TITLE'     => $title,
 					'SCREENS'   => $this->assoc_args['screen'] ?? '',
 				)

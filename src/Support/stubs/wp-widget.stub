@@ -81,7 +81,10 @@ class $CLASS$ extends WidgetBase
      *                        before_widget, and after_widget.
      * @param array $instance The settings for the particular instance of the widget.
      */
-    public function widget($args, $instance) {}
+    public function widget($args, $instance) {
+        // Render view.
+        cxf_view('$VIEW_NAME$');
+    }
 
     /**
      * The widget update handler.

@@ -29,7 +29,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Config {
 
+	/**
+	 * The Configs
+	 *
+	 * @var array The Configs.
+	 */
 	protected $configs = array();
+
+	/**
+	 * The App
+	 *
+	 * @var object The App.
+	 */
+	protected $app;
 
 	/**
 	 * Constructor
@@ -42,8 +54,9 @@ class Config {
 	 *
 	 * @return void
 	 */
-	public function __construct() {
+	public function __construct($app) {
 		// Do your settings here
+		$this->app = $app;
 	}
 
 	/**

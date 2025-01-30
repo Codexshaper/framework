@@ -18,11 +18,18 @@ if ( ! function_exists( 'cxf_app' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_app() {
+	function cxf_app($abstract = null) {
 		if ( ! class_exists( '\CodexShaper\Framework\Application' ) ) {
 			return;
 		}
-		return new CodexShaper\Framework\Application();
+		
+		$app = new CodexShaper\Framework\Application();
+
+		if ( $abstract ) {
+			return $app->get( $abstract );
+		}
+
+		return $app;
 	}
 }
 
@@ -34,10 +41,7 @@ if ( ! function_exists( 'cxf_config' ) ) {
 	 * @package CodexShaper_Framework
 	 */
 	function cxf_config( $name ) {
-		if ( ! class_exists( '\CodexShaper\Framework\Support\Facades\Config' ) ) {
-			return;
-		}
-		return CodexShaper\Framework\Support\Facades\Config::get( $name );
+		return cxf_app('config')->get( $name );
 	}
 }
 

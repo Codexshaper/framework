@@ -1,0 +1,19 @@
+<?php
+/**
+ * $CLASS$ View file
+ *
+ * @category   View
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
+
+// Exit if access directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
+?>
+
+<h2><?php echo esc_html__('$TITLE$', '$TEXT_DOMAIN$'); ?></h2>

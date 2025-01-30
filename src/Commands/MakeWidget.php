@@ -51,28 +51,42 @@ class MakeWidget extends Command {
 	 */
 	public function handle() {
 
+		$module_config = cxf_config( 'module.widget.wordpress' );
+		$app_config   = cxf_config( 'app' );
+		$plugin_namespace = $app_config['plugin_namespaces'] ?? '';
+
 		foreach ( $this->args as $arg ) {
 
-			$title            = cxf_title( $arg );
-			$class_name       = str_replace( ' ', '_', $title );
-			$module_name      = str_replace( ' ', '', $title );
-			$module_namespace = 'CodexShaper\Framework\Widgets\Wordpress\Modules\\' . $module_name;
-			$widget_namespace = 'CodexShaper\Framework\Widgets\Wordpress\Modules\\' . $module_name . '\Widgets';
-			$module_stub_name = 'wp-module';
-			$widget_stub_name = 'wp-widget';
-			$text_domain      = 'codexshaper-framework';
-			$wp_module_prefix = defined( 'CXF_WP_MODULE_PREFIX' ) ? CXF_WP_MODULE_PREFIX . '-' : '';
-			$wp_widget_prefix = defined( 'CXF_WP_WIDGET_PREFIX' ) ? CXF_WP_WIDGET_PREFIX . '-' : '';
-
-			$module             = str_replace( ' ', '-', strtolower( $title ) );
-			$module_dir         = cxf_plugin_base_path() . "widgets/wordpress/modules/{$module}";
-			$module_widgets_dir = cxf_plugin_base_path() . "widgets/wordpress/modules/{$module}/widgets";
-			$widgets_css_dir    = cxf_plugin_base_path() . 'widgets/wordpress/assets/css';
+			$title            		= cxf_title( $arg );
+			$class_name       		= str_replace( ' ', '_', $title );
+			$module_name      		= str_replace( ' ', '', $title );
+			$base_path	 			= trailingslashit(untrailingslashit($module_config['base_path'] ?? cxf_plugin_base_path() . "widgets/wordpress"));
+			$base_namespace	 		= $module_config['namespace'] ?? $plugin_namespace . 'Widgets\\Wordpress\\Modules';
+			$module_namespace 		= "{$base_namespace}\\{$module_name}";
+			$widget_namespace 		= "{$module_namespace}\\Widgets";
+			$module_stub_name 		= $module_config['module_stub_name'] ?? 'wp-module';
+			$widget_stub_name 		= $module_config['widget_stub_name'] ?? 'wp-widget';
+			$view_stub_name     	= $module_config['view_stub_name'] ?? 'wp-view';
+			$view_file_name     	= $module_config['view_file_name'] ?? 'content';
+			$view_extension    		= $module_config['view_extension'] ?? 'view.php';
+			$text_domain      		= $app_config['plugin_text_domain'] ?? 'codexshaper-framework';
+			$module_prefix 			= $module_config['module_prefix'] ?? '';
+			$widget_prefix 			= $module_config['widget_prefix'] ?? '';
+			$module             	= str_replace( ' ', '-', strtolower( $title ) );
+			$module_dir         	= $base_path . "modules/{$module}";
+			$module_view_dir    	= $base_path . "views/{$module}";
+			$module_widgets_dir 	= $base_path . "modules/{$module}/widgets";
+			$widgets_css_dir    	= $base_path . 'assets/css';
 
 			if ( ! is_dir( $module_widgets_dir ) ) {
 				wp_mkdir_p( $module_widgets_dir );
 				\WP_CLI::success( "The module {$module}'s module directory has been created at $module_dir this location." );
 				\WP_CLI::success( "The module {$module}'s widgets directory has been created at $module_widgets_dir this location." );
+			}
+
+			if ( ! is_dir( $module_view_dir ) ) {
+				wp_mkdir_p( $module_view_dir );
+				\WP_CLI::success( "The module {$module}'s module directory has been created at $module_view_dir this location." );
 			}
 
 			if ( key_exists( 'skip-css', $this->assoc_args ) || key_exists( 'skip:css', $this->assoc_args ) ) {
@@ -86,8 +100,8 @@ class MakeWidget extends Command {
 					'NAMESPACE'    => $module_namespace,
 					'CLASS'        => 'Module',
 					'WIDGET_CLASS' => $class_name,
-					'MODULE_NAME'  => $wp_module_prefix . $module,
-					'WIDGET_NAME'  => $wp_widget_prefix . $module,
+					'MODULE_NAME'  => $module_prefix . $module,
+					'WIDGET_NAME'  => $widget_prefix . $module,
 					'TEXT_DOMAIN'  => $text_domain,
 				)
 			) )->saveTo( $module_dir, 'module.php' );
@@ -99,11 +113,22 @@ class MakeWidget extends Command {
 				array(
 					'NAMESPACE'   => $widget_namespace,
 					'CLASS'       => $class_name,
-					'WIDGET_NAME' => $wp_widget_prefix . $module,
+					'WIDGET_NAME' => $widget_prefix . $module,
+					'VIEW_NAME'   => "{$module}.{$view_file_name}",
+					'VIEW_BASE'   => $base_path  . 'views',
 					'TITLE'       => $title,
 					'TEXT_DOMAIN' => $text_domain,
 				)
 			) )->saveTo( $module_widgets_dir, $module . '.php' );
+
+			( new Stub(
+				"{$view_stub_name}.stub",
+				array(
+					'CLASS'           => $class_name,
+					'TITLE'           => $title,
+					'TEXT_DOMAIN'     => $text_domain,
+				)
+			) )->saveTo( $module_view_dir, $view_file_name . '.' . $view_extension );
 
 			\WP_CLI::success( "The module {$module}'s widget file has been created at {$module_widgets_dir}/{$module}.php this location." );
 
@@ -112,13 +137,13 @@ class MakeWidget extends Command {
 					'el-css.stub',
 					array(
 						'CLASS'       => $class_name,
-						'WIDGET_NAME' => $wp_widget_prefix . $module,
+						'WIDGET_NAME' => $widget_prefix . $module,
 						'TITLE'       => $title,
 						'TEXT_DOMAIN' => $text_domain,
 					)
-				) )->saveTo( $widgets_css_dir, $wp_widget_prefix . $module . '.min.css' );
+				) )->saveTo( $widgets_css_dir, $widget_prefix . $module . '.min.css' );
 
-				\WP_CLI::success( "The module {$module}'s css file has been created at {$widgets_css_dir}/{$wp_widget_prefix}{$module}.min.css this location." );
+				\WP_CLI::success( "The module {$module}'s css file has been created at {$widgets_css_dir}/{$widget_prefix}{$module}.min.css this location." );
 			}
 		}
 	}

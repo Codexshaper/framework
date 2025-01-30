@@ -240,7 +240,8 @@ class $CLASS$ extends SliderWidget
 		$this->set_query( $args );
 		while ( $this->query->have_posts() ) {
 			$this->query->the_post();
-			echo get_the_title() . "<br />";
+			// Render view.
+            cxf_view('$VIEW_NAME$', compact('settings'));
 		}
 		wp_reset_postdata();
     }

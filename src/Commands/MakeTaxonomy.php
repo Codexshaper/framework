@@ -55,6 +55,10 @@ class MakeTaxonomy extends Command {
 			\WP_CLI::error( 'You must provide taxonomy name and object option.' );
 		}
 
+		$taxonomy_config = cxf_config( 'taxonomy' );
+		$app_config   = cxf_config( 'app' );
+		$plugin_namespace = $app_config['plugin_namespaces'] ?? '';
+
 		foreach ( $this->args as $arg ) {
 
 			// if (! key_exists( 'object', $this->assoc_args )) {
@@ -64,10 +68,10 @@ class MakeTaxonomy extends Command {
 			$title              = cxf_title( $arg );
 			$class_name         = str_replace( ' ', '', $title );
 			$taxonomy_name      = strtolower( str_replace( ' ', '-', $title ) );
-			$taxonomy_namespace = 'CodexShaper\Framework\Taxonomies';
-			$stub_name          = 'taxonomy';
+			$taxonomy_namespace = $taxonomy_config['namespace'] ?? $plugin_namespace . 'Taxonomies';
+			$stub_name          = $taxonomy_config['stub_name'] ?? 'taxonomy';
 			$taxonomy           = str_replace( ' ', '', strtolower( $title ) );
-			$taxonomy_dir       = cxf_plugin_base_path() . 'src/Taxonomies';
+			$taxonomy_dir       = $taxonomy_config['base_path'] ?? cxf_plugin_base_path() . 'src/Taxonomies';
 
 			if ( ! is_dir( $taxonomy_dir ) ) {
 				wp_mkdir_p( $taxonomy_dir );
@@ -79,7 +83,7 @@ class MakeTaxonomy extends Command {
 				array(
 					'NAMESPACE'     => $taxonomy_namespace,
 					'CLASS'         => $class_name,
-					'TAXONOMY_NAME' => $taxonomy_name,
+					'TAXONOMY_NAME' => substr(sanitize_key($taxonomy_name), 0, 32),
 					'OBJECT_TYPE'   => $this->assoc_args['object'] ?? 'post',
 				)
 			) )->saveTo( $taxonomy_dir, "{$class_name}.php" );

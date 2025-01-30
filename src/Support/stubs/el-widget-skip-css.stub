@@ -162,8 +162,7 @@ class $CLASS$ extends Widget
     protected function render()
     {
         $settings = $this->get_settings_for_display();
-    ?>
-        <h2>$TITLE$</h2>
-    <?php
+        // Render view.
+        cxf_view('$VIEW_NAME$', compact('settings'));
     }
 }

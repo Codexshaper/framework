@@ -2,6 +2,7 @@
 
 namespace CodexShaper\Framework;
 
+use CodexShaper\Framework\Config\Config;
 use CodexShaper\Framework\Container\Container;
 use CodexShaper\Framework\Foundation\Traits\Hook;
 use CodexShaper\Framework\Providers\FoundationServiceProvider;
@@ -71,8 +72,12 @@ class Application extends Container {
 	 *
 	 * @return void
 	 */
-	public function __construct($plugin_base_url, $plugin_base_path = null) {
+	public function __construct($plugin_base_url = null, $plugin_base_path = null) {
 		
+		if (! $plugin_base_url) {
+			$plugin_base_url = plugins_url( '/', dirname(__DIR__, 3));
+		}
+
 		if (! $plugin_base_path) {
 			$plugin_base_path = dirname(__DIR__, 4);
 		}
@@ -86,7 +91,7 @@ class Application extends Container {
 		}
 
 		if (! defined('CXF_APP_CONFIG_PATH')) {
-			define('CXF_APP_CONFIG_PATH', trailingslashit(untrailingslashit(CXF_APP_BASE_PATH)) . '/config');
+			define('CXF_APP_CONFIG_PATH', trailingslashit(untrailingslashit(CXF_APP_BASE_PATH)) . 'config/');
 		}
 
 		if (! defined('CXF_PLUGIN_BASE_URL')) {
@@ -134,6 +139,9 @@ class Application extends Container {
 	protected function register_bindings() {
 		$this->instance( 'app', $this );
 		$this->instance( Container::class, $this );
+		$this->bind( 'config', function($app) {
+			return new Config($app);
+		});
 		// $this->alias(FoundationServiceProvider::class, 'fsp');
 		$this->setParameter( 'fsp', FoundationServiceProvider::class );
 	}

@@ -55,14 +55,18 @@ class MakePostType extends Command {
 			\WP_CLI::error( 'You must provide post type name name and object option.e.g: `php wp cxf-make:post-type book`.' );
 		}
 
+		$post_type_config = cxf_config( 'post-type' );
+		$app_config   = cxf_config( 'app' );
+		$plugin_namespace = $app_config['plugin_namespaces'] ?? '';
+
 		foreach ( $this->args as $arg ) {
 
 			$title               = cxf_title( $arg );
 			$class_name          = str_replace( ' ', '', $title );
-			$post_type_namespace = 'CodexShaper\Framework\PostTypes';
-			$stub_name           = 'post-type';
+			$post_type_namespace = $post_type_config['namespace'] ?? $plugin_namespace . 'PostTypes';
+			$stub_name           = $post_type_config['stub_name'] ?? 'post-type';
 			$post_type           = str_replace( ' ', '-', strtolower( $title ) );
-			$post_type_dir       = cxf_plugin_base_path() . 'src/PostTypes';
+			$post_type_dir       = $post_type_config['base_path'] ?? cxf_plugin_base_path() . 'src/PostTypes';
 
 			if ( ! is_dir( $post_type_dir ) ) {
 				wp_mkdir_p( $post_type_dir );
@@ -74,7 +78,7 @@ class MakePostType extends Command {
 				array(
 					'NAMESPACE' => $post_type_namespace,
 					'CLASS'     => $class_name,
-					'POST_TYPE' => $post_type,
+					'POST_TYPE' => substr(sanitize_key($post_type), 0, 20),
 				)
 			) )->saveTo( $post_type_dir, "{$class_name}.php" );
 
