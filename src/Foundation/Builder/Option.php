@@ -209,6 +209,9 @@ class Option extends Builder {
           'ajax_save' => true,
           'form_action' => '',
           'admin_bar_menu_priority' => 80,
+          'show_section_reset' => true,
+          'show_reset_all' => true,
+          'show_nav' => true,
       ]);
   }
 

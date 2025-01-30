@@ -11,17 +11,18 @@
  * @version    1.0.0
  */
 
-use CodexShaper\Framework\Builder\OptionBuilder\Field;
-
-$section_class = $section['class'] ?? '';
-$section_class .= ' cxf--builder-init';
-$section_title  = $section['title'] ?? '';
-$section_icon   = $section['icon'] ?? '';
-$section_description = $section['description'] ?? '';
-$is_error       = false;
+    $section_class = $section['class'] ?? '';
+    $section_class .= ' cxf--builder-init';
+    $section_title  = $section['title'] ?? '';
+    $section_icon   = $section['icon'] ?? '';
+    $section_description = $section['description'] ?? '';
+    $section_parent = isset($section['parent_title']) ? sanitize_title( $section['parent_title'] ) . '/' : '';
+    $section_slug   =  sanitize_title( $section_title );
+    $section_id = "{$section_parent}{$section_slug}";
+    $is_error       = false;
 ?>
 
-<div class="cxf--section <?php echo esc_attr( $section_class ); ?>">
+<div class="cxf--section <?php echo esc_attr( $section_class ); ?>" id="<?php echo esc_attr( $section_id ); ?>">
     <!-- Title -->
     <?php if ( $section_title || $section_icon ) : ?>
         <div class="cxf--section-title">
