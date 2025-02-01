@@ -1,14 +1,23 @@
+<?php
+/**
+ * Select View
+ *
+ * @category   View
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ * @version    1.0.0
+ */
+?>
+
 <select 
 	name="<?php echo esc_attr( $name ); ?>"
-	<?php echo esc_attr( $field_class ); ?>
 	<?php echo esc_attr( $multiple_attr ); ?>
 	<?php cxf_get_string_attributes( $attributes ); ?>
-	<?php echo esc_attr( $chosen_data_attr ); ?>
 >
-<?php
-	if ( $args['placeholder'] && empty( $args['multiple'] ) ) :
-		$placeholder = empty( $args['chosen'] ) ? esc_html( $args['placeholder'] ) : '';
-?>
+<?php if ( $args['placeholder'] && empty( $args['multiple'] ) ) :?>
 <option value=""><?php echo esc_html( $args['placeholder'] ); ?></option>
 <?php endif; ?>
 

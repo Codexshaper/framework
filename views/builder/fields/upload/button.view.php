@@ -14,7 +14,7 @@
 	</button>
 	<button 
 		type="button" 
-		class="button cxf--a-btn cxf--a-btn-danger cxf--upload-remove <?php echo esc_attr( $hidden ); ?>">
+		class="button cxf--a-btn cxf--a-btn-danger cxf--upload-remove <?php echo ! $value ? esc_attr( 'hidden' ) : ''; ?>">
 		<?php echo esc_html( $args['remove_title'] ); ?>
 	</button>
 </div>

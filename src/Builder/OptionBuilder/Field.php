@@ -134,4 +134,32 @@ class Field extends BaseField {
 			)
 		);
 	}
+
+	public static function build( $data = array() ) {
+		$value = '';
+		$post_id = $data['post_id'] ?? 0;
+		$field = $data['field'] ?? array();
+		$identifier = $data['identifier'] ?? '';
+		$options = $data['options'] ?? array();
+		$parent = $data['parent'] ?? '';
+
+		if ( ! empty( $field['id'] ) ) {
+
+			$field['default'] = $field['default'] ?? '';
+
+			if ( isset($args['defaults'][$field['id']]) ) {
+				$field['default'] = $args['defaults'][$field['id']];
+			}
+
+			if (isset( $options[$field['id']] )) {
+				$value = $options[$field['id']];
+			}
+		}
+
+		if ($post_id) {
+			$value = static::get_value( $post_id, $field, $identifier, $options );
+		}
+
+		static::render( $field, $value, $identifier, $parent );
+	}
 }

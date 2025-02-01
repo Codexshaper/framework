@@ -46,6 +46,13 @@ class Option extends Builder {
   public $identifier      = '';
 
   /**
+   * Title for the option.
+   *
+   * @var string
+   */
+  public $title           = 'CodexShaper Framework';
+
+  /**
    * Notice for the option.
    *
    * @var string
@@ -204,14 +211,15 @@ class Option extends Builder {
    */
   private function set_default_args($args) {
       return wp_parse_args($args, [
-          'database' => '',
-          'show_in_network' => true,
-          'ajax_save' => true,
-          'form_action' => '',
+          'database'                => '',
+          'show_in_network'         => true,
+          'ajax_save'               => true,
+          'form_action'             => '',
           'admin_bar_menu_priority' => 80,
-          'show_section_reset' => true,
-          'show_reset_all' => true,
-          'show_nav' => true,
+          'show_section_reset'      => true,
+          'show_reset_all'          => true,
+          'show_tab'                => true,
+          'title'                   => 'CodexShaper Framework',
       ]);
   }
 
@@ -381,7 +389,7 @@ class Option extends Builder {
       $tabs           = $this->tabs;
       $sections       = $this->sorted_sections;
       $notice         = $this->notice;
-
+      $show_tab       = $this->args['show_tab'] ?? true;
       $has_nav       = count( $this->tabs ) > 1 ? true : false;
       $wrapper_class = $this->args['wrapper_class'] ?? '';
       $form_action   = $this->form_action;
@@ -419,6 +427,7 @@ class Option extends Builder {
               'sections',
               'wrapper_class',
               'form_action',
+              'show_tab',
               'has_nav',
               'notice',
               'allowed_html'

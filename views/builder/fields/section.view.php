@@ -11,6 +11,8 @@
  * @version    1.0.0
  */
 
+use CodexShaper\Framework\Builder\OptionBuilder\Field;
+
     $section_class = $section['class'] ?? '';
     $section_class .= ' cxf--builder-init';
     $section_title  = $section['title'] ?? '';
@@ -22,7 +24,12 @@
     $is_error       = false;
 ?>
 
-<div class="cxf--section <?php echo esc_attr( $section_class ); ?>" id="<?php echo esc_attr( $section_id ); ?>">
+<div 
+    class="cxf--section tab-panel <?php echo esc_attr( $section_class ); ?>" 
+    id="panel_<?php echo esc_attr( $section_id ); ?>" 
+    data-cxf-tab="tab_<?php echo esc_attr( $section_id ); ?>" 
+    role="tabpanel"
+>
     <!-- Title -->
     <?php if ( $section_title || $section_icon ) : ?>
         <div class="cxf--section-title">
@@ -49,16 +56,14 @@
                 $parent = 'section';
                 $options = $options ?? [];
                 $post_id = $post_id ?? 0;
-                cxf_view(
-                    'builder.fields.field', 
-                    compact(
-                        'identifier',
-                        'post_id',
-                        'field', 
-                        'options',
-                        'parent',
-                    )
-                );
+                
+                Field::build( array(
+                    'field' => $field,
+                    'identifier' => $identifier,
+                    'post_id' => $post_id,
+                    'options' => $options,
+                    'parent' => $parent
+                ) );
             }
         }
     ?>

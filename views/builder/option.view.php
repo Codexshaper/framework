@@ -28,10 +28,28 @@
             <div class="cxf--wrapper">
                 <!-- Options Header -->
                 <?php cxf_view('builder.option.header', compact('args')); ?>
-                <!-- Options tabs -->
-                <?php cxf_view('builder.option.tabs', compact('args', 'tabs'))?>
-                <!-- Option Content -->
-                <?php cxf_view('builder.option.content', compact('sections', 'identifier', 'options'))?>
+                <!-- Options tab -->
+                <?php if($show_tab) : ?>
+                <div class="cxf--tabs" data-cxf-tabs>
+                <?php endif; ?>
+                    <?php if($show_tab) : ?>
+                    <!-- Tab Navigation -->
+                    <div class="cxf--tabs-nav" role="tablist">
+                        <?php cxf_view('builder.option.tabs', compact('args', 'tabs'))?>
+                    </div>
+                    <?php endif; ?>
+                    <?php if($show_tab) : ?>
+                    <!-- Tab Panels -->
+                    <div class="cxf--tabs-content">
+                    <?php endif; ?>
+                        <!-- Option Content -->
+                        <?php cxf_view('builder.option.content', compact('sections', 'identifier', 'options')); ?>
+                    <?php if($show_tab) : ?>
+                    </div>
+                    <?php endif; ?>
+                <?php if($show_tab) : ?>
+                </div>
+                <?php endif; ?>
             </div>
         </form>
     </div>

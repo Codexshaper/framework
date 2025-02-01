@@ -1,6 +1,6 @@
 <?php
 /**
- * Text View
+ * Accordion View
  *
  * @category   View
  * @package    CodexShaper_Framework
@@ -10,11 +10,11 @@
  * @since      1.0.0
  * @version    1.0.0
  */
+$tag = $field['tag'] ?? 'h3';
+$id = $field['id'] ?? $identifier;
+$class = $field['class'] ?? 'cxf--heading';
+$content = $field['content'] ?? '';
+
+echo sprintf( '<%s id="%s" class="%s">%s</%s>', $tag, $id, $class, $content, $tag );
 ?>
 
-<input 
-    type="<?php echo esc_attr( $type ); ?>" 
-    name="<?php echo esc_attr( $name ); ?>" 
-    value="<?php echo esc_attr( $value ); ?>"
-    <?php cxf_get_string_attributes($attributes); ?> 
-/>

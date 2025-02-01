@@ -75,6 +75,25 @@ abstract class PostType implements PostTypeContract {
 	 * Constructs the new widget.
 	 */
 	public function __construct() {
+		
+		$this->prepare_options();
+
+		// Register the post type.
+		$this->add_action( 'init', 'register' );
+		// Unregister the post type
+		if ( method_exists( $this, 'is_unregister' ) && true === $this->is_unregister() ) {
+			$this->add_action( 'init', 'unregister' );
+		}
+	}
+
+	/**
+	 * Prepare options
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 */
+	protected function prepare_options() {
+		
 		$this->post_type = strtolower( str_replace( array( ' ', '_' ), '-', $this->get_name() ) );
 
 		if ( ! $this->post_title ) {
@@ -138,13 +157,6 @@ abstract class PostType implements PostTypeContract {
 
 		// Get all options and must be call at the end of all settings.
 		$this->options = $this->get_options();
-
-		// Register the post type.
-		$this->add_action( 'init', 'register' );
-		// Unregister the post type
-		if ( method_exists( $this, 'is_unregister' ) && true === $this->is_unregister() ) {
-			$this->add_action( 'init', 'unregister' );
-		}
 	}
 
 	/**

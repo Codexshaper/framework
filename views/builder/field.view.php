@@ -1,3 +1,16 @@
+<?php
+/**
+ * Field View
+ *
+ * @category   View
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ * @version    1.0.0
+ */
+?>
 <div 
     class="<?php echo esc_attr( "cxf--field cxf--field-{$field_type} {$class}" ); ?>" 
     <?php echo $depend_attributes; ?>
@@ -9,13 +22,13 @@
                 <p class="cxf--subtitle-text"><?php echo esc_html( $subtitle, 'codexshaper-framework' ); ?></p>
             <?php endif; ?>
         </div>
-        <div class="cxf--fieldset">
-            <?php
-                $instance = new $field_class( $field, $value, $identifier, $where, $parent );
-                $instance->render();
-            ?>
-        </div>
     <?php endif; ?>
+    <div class="cxf--fieldset">
+        <?php
+            $instance = new $field_class( $field, $value, $identifier, $where, $parent );
+            $instance->render();
+        ?>
+    </div>
     <?php if ( $error_messsage || ! empty( $error_messsage ) ) : ?>
         <p><?php echo esc_html( $error_messsage, 'codexshaper-framework' ); ?></p>
     <?php endif; ?>

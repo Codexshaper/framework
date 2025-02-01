@@ -13,7 +13,7 @@
 ?>
 <div class="cxf--option-header">
     <div class="cxf--option-header-left">
-        <h1><?php esc_html($args['framework_title']); ?></h1>
+        <h1><?php esc_html($args['title']); ?></h1>
     </div>
 
     <div class="cxf--option-header-right">
@@ -26,7 +26,7 @@
         <?php if($args['show_reset_section']): ?>
             <input 
                 type="submit" 
-                class="cxf--section-reset" 
+                class="button cxf--a-btn cxf--a-btn-danger cxf--section-reset" 
                 name="cxf_option[reset_section]" 
                 value="<?php echo esc_html__( 'Reset Section', 'codexshaper-framework' ); ?>">
         <?php endif; ?>
@@ -34,7 +34,7 @@
         <?php if($args['show_reset_all']): ?>
             <input 
                 type="submit" 
-                class="csf-reset" 
+                class="button cxf--a-btn cxf--a-btn-danger csf-reset" 
                 name="cxf_option[reset]" 
                 value="<?php echo esc_html__( 'Reset All', 'codexshaper-framework' ); ?>">
         <?php endif; ?>

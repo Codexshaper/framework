@@ -1,6 +1,6 @@
 <?php
 /**
- * Upload Field Builder
+ * Media Field Builder
  *
  * @category   Builder
  * @package    CodexShaper_Framework
@@ -15,7 +15,7 @@ namespace CodexShaper\Framework\Builder\OptionBuilder\Fields;
 use CodexShaper\Framework\Foundation\Builder\Field;
 
 /**
- * Upload Field class
+ * Media Field class
  *
  * @category   Class
  * @package    CodexShaper_Framework
@@ -25,23 +25,22 @@ use CodexShaper\Framework\Foundation\Builder\Field;
  * @since      1.0.0
  */
 
-class Upload extends Field {
+class Media extends Field {
 
 	/**
-	 * Render Upload field
+	 * Render Media field
 	 *
 	 * @return void
 	 */
 	public function render() {
-		$args = wp_parse_args(
-			$this->field,
-			array(
-				'library'        => array(),
-				'preview'        => false,
-				'button_title'   => esc_html__( 'Upload', 'codexshaper-framework' ),
-				'remove_title'   => esc_html__( 'Remove', 'codexshaper-framework' ),
-			)
-		);
+		$args = wp_parse_args( $this->field, array(
+			'url'            => true,
+			'preview'        => true,
+			'library'        => array(),
+			'button_title'   => 'Upload',
+			'remove_title'   => 'Remove',
+			'preview_size'   => 'thumbnail',
+		  ) );
 
 		$this->before();
 
@@ -52,21 +51,34 @@ class Upload extends Field {
 		}
 
 		$library = implode( ',', $library );
-		$allowed_mimes = array( 'jpg', 'jpeg', 'gif', 'png', 'svg', 'webp' );
+	
+		$default_values = array(
+			'url'         => '',
+			'id'          => '',
+			'width'       => '',
+			'height'      => '',
+			'thumbnail'   => '',
+			'alt'         => '',
+			'title'       => '',
+			'description' => ''
+		);
+	
+		// Fallback value. 
+		if ( is_numeric( $this->value ) ) {
 
-		if ( isset($args['preview']) && $args['preview'] ) {
+			$this->value  = array(
+				'id'        => $this->value,
+				'url'       => wp_get_attachment_url( $this->value ),
+				'thumbnail' => wp_get_attachment_image_src( $this->value, 'thumbnail', true )[0],
+			);
 
-			$preview_type   = '';
-			$preview_src    = '';
+		}
 
-			if ($this->value) {
-				$preview_type = strtolower( substr( strrchr( $this->value, '.' ), 1 ) );
-			}
+		$this->value = wp_parse_args( $this->value, $default_values );
+		$preview_src = $args['preview_size'] !== 'thumbnail' ? $this->value['url'] : $this->value['thumbnail'];
+		$placeholder = $this->field['placeholder'] ?? 'Not selected';
 
-			if ($preview_type && in_array( $preview_type,  $allowed_mimes) ) {
-				$preview_src =  $this->value;
-			}
-
+		if ( $args['preview'] ) {
 			cxf_view(
 				'builder.fields.upload.preview',
 				array(
@@ -77,13 +89,14 @@ class Upload extends Field {
 		}
 
 		cxf_view(
-			'builder.fields.upload.button',
+			'builder.fields.media',
 			array(
 				'name'       => $this->get_name( $this->field, $this->identifier ),
 				'value'      => $this->value,
 				'attributes' => $this->get_attributes(),
 				'library'    => $library,
 				'args'       => $args,
+				'placeholder' => $placeholder,
 			)
 		);
 

@@ -63,23 +63,17 @@ class Select extends Field {
 			$is_multiple 			= $args['multiple'] ?? false;
 			$placeholder 			= $args['placeholder'] ?? '';
 			$settings 				= $args['settings'] ?? array();
-			$chosen_rtl_class   	= is_rtl() ? ' chosen-rtl' : '';
 			$multiple_name    		= $is_multiple ? '[]' : '';
 			$multiple_attr    		= $is_multiple ? ' multiple' : '';
-			$chosen_sortable_class  = $is_chosen && $is_sortable ? ' cxf--chosen-sortable' : '';
-			$chosen_ajax_class      = $is_chosen && $is_ajax ? ' cxf--chosen-ajax' : '';
 			$placeholder_attr 		= $is_chosen && $placeholder ? ' data-placeholder="' . esc_attr( $placeholder ) . '"' : '';
-			$field_class      		= $is_chosen ? ' class="cxf--chosen' . esc_attr( $chosen_rtl_class . $chosen_sortable_class . $chosen_ajax_class ) . '"' : '';
 			$name             		= $this->get_name( $this->field, $this->identifier, $multiple_name );
-			$pseudo_name      		= $is_chosen && $is_multiple ? '_pseudo' : '';
 			$pseudo_attr      		= '';
 			$value            		= $this->value;
 			$attributes       		= $this->get_attributes();
 			$options          		= $this->field['options'];
-			$chosen_data_attr 		= $is_chosen && ! empty( $settings ) ? ' data-chosen-settings="' . esc_attr( wp_json_encode( $settings ) ) . '"' : '';
 			$errors           		= array();
 
-			if ( ( ! is_array( $options ) || empty( $options ) ) && ( ! $is_chosen || ! $is_ajax ) ) {
+			if ( ! is_array( $options ) || empty( $options ) ) {
 				$errors[] = $this->field['empty_message'] ?? 'No data available.';
 				cxf_view( 'builder.fields.error', compact( 'errors' ) );
 				return;
@@ -88,8 +82,6 @@ class Select extends Field {
 			cxf_view(
 				'builder.fields.select',
 				compact(
-					'field_class',
-					'pseudo_name',
 					'pseudo_attr',
 					'name',
 					'value',
@@ -98,7 +90,6 @@ class Select extends Field {
 					'placeholder_attr',
 					'args',
 					'options',
-					'chosen_data_attr',
 				)
 			);
 		}
