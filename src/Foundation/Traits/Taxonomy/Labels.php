@@ -521,13 +521,13 @@ trait Labels {
 
 		$name = sprintf(
 			/* translators: %s: Name of the post type. */
-			esc_html_x( 'CXF %s', 'taxonomy general name', 'codexshaper-framework' ),
+			esc_html_x( '%s', 'taxonomy general name', 'codexshaper-framework' ),
 			$this->plural_title
 		);
 
 		$singular_name = sprintf(
 			/* translators: %s: Name of the post type. */
-			esc_html_x( 'CXF %s', 'taxonomy singular name', 'codexshaper-framework' ),
+			esc_html_x( '%s', 'taxonomy singular name', 'codexshaper-framework' ),
 			$this->taxonomy_title
 		);
 

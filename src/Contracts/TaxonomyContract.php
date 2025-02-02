@@ -35,9 +35,9 @@ interface TaxonomyContract {
 	public function get_name();
 
 	/**
-	 * Get post type name.
+	 * Get object types.
 	 *
-	 * @return string name.
+	 * @return array|string Object type or array of object types with which the taxonomy should be associated..
 	 */
 	public function get_object_type();
 

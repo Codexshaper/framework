@@ -56,4 +56,98 @@ class $CLASS$ extends PostType
     {
         return '$POST_TYPE$';
     }
+
+	/**
+	 * Get post type activation status.
+	 *
+	 * @return bool  is activate?
+	 */
+	public static function is_active() {
+		return true;
+	}
+
+	/**
+	 * Get post type title.
+	 *
+	 * @return string The post type title.
+	 */
+	public function get_title() {
+		return join( ' ', array_map( 'ucfirst', explode( '-', $this->post_type ) ) );
+	}
+
+	/**
+	 * Get post type capability type.
+	 *
+	 * @return string The post type capability type.
+	 */
+	public function get_capability_type() {
+		return esc_html__( 'post', 'codexshaper-framework' );
+	}
+
+	/**
+	 * Get post type supportse.
+	 *
+	 * @return array The post type supports.
+	 */
+	public function get_supports() {
+		return array(
+			'title',
+			'editor',
+			'thumbnail',
+		);
+	}
+
+	/**
+	 * Get post type public status.
+	 *
+	 * @return bool Is public?
+	 */
+	public function is_public() {
+		return true;
+	}
+
+	/**
+	 * Get post type publicly queryable status.
+	 *
+	 * @return bool Is publickly queryable?
+	 */
+	public function is_publicly_queryable() {
+		return true;
+	}
+
+	/**
+	 * Get post type show url status.
+	 *
+	 * @return bool Is show url?
+	 */
+	public function is_show_ui() {
+		return true;
+	}
+
+	/**
+	 * Get post type show in rest status.
+	 *
+	 * @return bool Is show in rest?
+	 */
+	public function is_show_in_rest() {
+		return true;
+	}
+
+	/**
+	 * Get post type query var status.
+	 *
+	 * @return bool Is query var?
+	 */
+	public function is_query_var() {
+		return true;
+	}
+
+	/**
+	 * Get post type unregister status.
+	 *
+	 * @return bool Do unregister?
+	 */
+	public function is_unregister() {
+		return false;
+	}
 }

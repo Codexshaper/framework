@@ -13,6 +13,8 @@
 namespace CodexShaper\Framework\Builder;
 
 use CodexShaper\Framework\Foundation\Builder\Option;
+use CodexShaper\Framework\Foundation\DynamicPostType;
+use CodexShaper\Framework\Foundation\DynamicTaxonomy;
 use CodexShaper\Framework\Foundation\Traits\Hook;
 use CodexShaper\Framework\Foundation\Traits\Singleton;
 
@@ -67,11 +69,18 @@ class Builder {
         add_action( 'switch_theme', array(static::class, 'build') );
 	}
 
+    /**
+     * Build all elements
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function build() {
         static::buildOptions();
         static::buildCustomizeOptions();
         static::buildMenuOptions();
-        static::buildPostType();
+        static::buildPostTypes();
         static::buildTaxonomies();
         static::buildTaxonomyOptions();
         static::buildMetabox();
@@ -81,7 +90,13 @@ class Builder {
         static::buildShortcodeOptions();
     }
 
-    // Create options
+    /**
+     * Build options
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function buildOptions() {
 
         foreach ( static::$types['options'] as $key => $value ) {
@@ -105,100 +120,319 @@ class Builder {
 
     }
 
-    // Build customize options (Pro)
+    /**
+     * Build customize options
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function buildCustomizeOptions() {}
 
-    // Build menu options (Pro)
+    /**
+     * Build menu options
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function buildMenuOptions() {}
 
-    public static function buildPostType() {}
+    /**
+     * Build post type
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
+    public static function buildPostTypes() {
+        foreach ( static::$types['post_types'] as $key => $args ) {
+            // Check if already bootstrapped.
+            if ( isset( self::$bootstrapped[$key] )) {
+                continue;
+            }
 
-    // Build taxonomies (Pro)
-    public static function buildTaxonomies() {}
+            if ( ! isset($args['post_type']) ) {
+                $args['post_type'] = $key;
+            }
 
-    // Build taxonomy options (Pro)
+            // Create post type.
+           new DynamicPostType($args);
+
+            // Mark as bootstrapped.
+            self::$bootstrapped[$key] = true;
+        }
+    }
+
+    /**
+     * Build options
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
+    public static function buildTaxonomies() {
+        foreach ( static::$types['taxonomies'] as $key => $args ) {
+            // Check if already bootstrapped.
+            if ( isset( self::$bootstrapped[$key] )) {
+                continue;
+            }
+
+            if ( ! isset($args['taxonomy']) ) {
+                $args['taxonomy'] = $key;
+            }
+
+            // Create post type.
+           new DynamicTaxonomy($args);
+
+            // Mark as bootstrapped.
+            self::$bootstrapped[$key] = true;
+        }
+    }
+
+    /**
+     * Build taxonomy options
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function buildTaxonomyOptions() {}
  
-    // Build metabox options (Pro)
+    /**
+     * Build metabox
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function buildMetabox() {}
 
-    // Build comment metabox (Pro)
+    /**
+     * Build comment metabox
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function buildCommentMetabox() {}
-    // Build shortcoder options (Pro)
-
+    
+    /**
+     * Build shortcoder
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function buildShortcodeOptions() {}
 
-    // Build profile options (Pro)
+    /**
+     * Build profile options
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function buildProfileOptions() {}
 
-    // Build widget (Pro)
+    /**
+     * Build widget
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function buildWidget() {}
 
-    // Build section (Pro)
+    /**
+     * Build sections
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function buildSection() {}
 
-    // Create options (Pro)
+    /**
+     * Create options
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createOptions( $identifier, $args = array() ) {
         static::$types['options'][$identifier] = $args;
     }
 
-    // Create customize options (Pro)
+    /**
+     * Create customize options
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array  Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createCustomizeOptions( $identifier, $args = array() ) {
         static::$types['customize_options'][$identifier] = $args;
     }
 
-    // Create menu options (Pro)
+    /**
+     * Create menu options
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array  Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createMenuOptions( $identifier, $args = array() ) {
         static::$types['menu_options'][$identifier] = $args;
     }
 
+    /**
+     * Create post type
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array  Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createPostType( $identifier, $args = array() ) {
         static::$types['post_types'][$identifier] = $args;
     }
 
-    // Create taxonomy (Pro)
+    /**
+     * Create taxonomy
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array  Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createTaxonomy( $identifier, $args = array() ) {
         static::$types['taxonomies'][$identifier] = $args;
     }
 
-    // Create taxonomy options (Pro)
+    /**
+     * Create taxonomy options
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array  Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createTaxonomyOptions( $identifier, $args = array() ) {
         static::$types['taxonomy_options'][$identifier] = $args;
     }
 
-    // Create metabox options (Pro)
+    /**
+     * Create metabox
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array  Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createMetabox( $identifier, $args = array() ) {
         static::$types['metaboxes'][$identifier] = $args;
     }
 
-    // Create comment metabox (Pro)
+    /**
+     * Create comment box
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array  Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createCommentMetabox( $identifier, $args = array() ) {
         static::$types['comment_metaboxes'][$identifier] = $args;
     }
 
-    // Create shortcoder options (Pro)
+    /**
+     * Create shortcoder
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array  Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createShortcoder( $identifier, $args = array() ) {
         static::$types['shortcode_options'][$identifier] = $args;
     }
 
-    // Create profile options (Pro)
+   /**
+     * Create create profile options
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array  Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createProfileOptions( $identifier, $args = array() ) {
         static::$types['profiles'][$identifier] = $args;
     }
 
-    // Create widget (Pro)
+   /**
+     * Create Widget
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array  Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createWidget( $identifier, $args = array() ) {
         static::$types['widgets'][$identifier] = $args;
         static::set_used_fields( $args );
     }
 
 
-    // Create section (Pro)
+    /**
+     * Create Section
+     * 
+     * @param $identifier string Option identifier.
+     * @param $args array  Option arguments.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function createSection( $identifier, $sections ) {
         static::$types['sections'][$identifier][] = $sections;
         static::set_used_fields( $sections );
     }
 
+    /**
+     * Set used fields
+     *
+     * @param array $sections Sections.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     public static function set_used_fields( $sections ) {
 
         if ( ! empty( $sections['fields'] ) ) {

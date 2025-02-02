@@ -12,7 +12,7 @@
 
 namespace CodexShaper\Framework\Foundation\Builder;
 
-use CodexShaper\Framework\Admin\Menu;
+use CodexShaper\Framework\Menu\AdminMenu;
 
 // Exit if access directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -167,7 +167,7 @@ class Option extends Builder {
   public function build($key, $params = array()) {
 
     // Set admin menu instance.
-    $this->admin_menu = Menu::instance();
+    $this->admin_menu = AdminMenu::instance();
     // Set option identifier.
     $this->identifier = $key;
 
@@ -208,6 +208,12 @@ class Option extends Builder {
 
   /**
    * Sets default arguments.
+   * 
+   * @param array $args Arguments.
+   * 
+   * @since 1.0.0
+   * 
+   * @return array $args Arguments.
    */
   private function set_default_args($args) {
       return wp_parse_args($args, [
@@ -225,6 +231,12 @@ class Option extends Builder {
 
   /**
    * Initializes sections, tabs, and fields.
+   * 
+   * @param array $sections Array of sections.
+   * 
+   * @since 1.0.0
+   * 
+   * @return void
    */
   private function initialize_sections($sections) {
       $this->tabs = $this->get_tabs($sections);

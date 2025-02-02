@@ -631,12 +631,12 @@ trait Labels {
 	public function set_default_labels() {
 		$name = sprintf(
 			/* translators: %s: Name of the post type. */
-			esc_html_x( 'CXF %s', 'Post Type General Name', 'codexshaper-framework' ),
+			esc_html_x( '%s', 'Post Type General Name', 'codexshaper-framework' ),
 			$this->plural_title
 		);
 		$singular_name = sprintf(
 			/* translators: %s: Singular name of the post type. */
-			esc_html_x( 'CXF %s', 'Post Type Singular Name', 'codexshaper-framework' ),
+			esc_html_x( '%s', 'Post Type Singular Name', 'codexshaper-framework' ),
 			$this->plural_title
 		);
 		$add_new = sprintf(
@@ -712,7 +712,7 @@ trait Labels {
 		);
 		$menu_name = sprintf(
 			/* translators: %s: Label for the menu name. */
-			esc_html__( 'CXF %s', 'codexshaper-framework' ),
+			esc_html__( '%s', 'codexshaper-framework' ),
 			$this->plural_title
 		);
 		$filter_items_list = sprintf(

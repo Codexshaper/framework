@@ -32,7 +32,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Builder {
 
 	use Hook;
-	
+    
+    /**
+     * Bootstrapped array
+     *
+     * @param array $sections Array of sections.
+     * 
+     * @return array $result Array of sections.
+     */
     public function get_tabs( $sections ) {
 
         $count   = 10;
@@ -70,6 +77,13 @@ class Builder {
 
     }
 
+    /**
+     * Get sections
+     *
+     * @param array $sections Array of sections.
+     * 
+     * @return array $result Array of sections.
+     */
     public function get_sections( $sections ) {
 
         $result = array();
@@ -90,6 +104,13 @@ class Builder {
         return $result;
     }
 
+    /**
+     * Get fields
+     *
+     * @param array $sections Array of sections.
+     * 
+     * @return array $result Array of fields.
+     */
     public function get_fields( $sections ) {
 
         $result = array();

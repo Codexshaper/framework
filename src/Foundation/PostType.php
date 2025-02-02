@@ -74,10 +74,9 @@ abstract class PostType implements PostTypeContract {
 	/**
 	 * Constructs the new widget.
 	 */
-	public function __construct() {
-		
-		$this->prepare_options();
-
+	public function __construct($args = array()) {
+		// Prepare options.
+		$this->prepare_options($args);
 		// Register the post type.
 		$this->add_action( 'init', 'register' );
 		// Unregister the post type
@@ -89,10 +88,41 @@ abstract class PostType implements PostTypeContract {
 	/**
 	 * Prepare options
 	 *
+	 * @param array $args Options array.
+	 * 
 	 * @since 1.0.0
 	 * @access protected
+	 * 
+	 * @return void
 	 */
-	protected function prepare_options() {
+	protected function prepare_options($args = array()) {
+		
+		if ( is_array($args) && !empty($args) ) {
+			$post_type = $args['post_type'] ?? '';
+
+			if ( ! $post_type ) {
+				return;
+			}
+
+			$this->post_type = $post_type;
+			
+			foreach($args as $label => $value) {
+				$setter = "set_label_{$label}";
+
+				if (method_exists($this, $setter)) {
+					$this->{$setter}($value);
+					unset($args[$label]);
+				}
+			}
+
+			foreach($args as $option => $value) {
+				if (property_exists($this, $option)) {
+					$this->{$option} = $value;
+				}
+				
+				$this->{$setter}($value);
+			}
+		}
 		
 		$this->post_type = strtolower( str_replace( array( ' ', '_' ), '-', $this->get_name() ) );
 
@@ -315,9 +345,7 @@ abstract class PostType implements PostTypeContract {
 	 */
 	public function register( $post_type = '', $args = array() ) {
 
-		$this->post_type = $post_type;
-
-		if ( empty( $this->post_type ) ) {
+		if ( empty( $post_type ) ) {
 			$this->post_type = $this->get_name();
 		}
 
@@ -335,7 +363,7 @@ abstract class PostType implements PostTypeContract {
 	}
 
 	/**
-	 * Unregisters a post type.
+	 * Unregister a post type.
 	 *
 	 * Cannot be used to unregister built-in post types.
 	 *
@@ -353,99 +381,5 @@ abstract class PostType implements PostTypeContract {
 		}
 
 		unregister_post_type( $post_type );
-	}
-
-	/**
-	 * Get post type activation status.
-	 *
-	 * @return bool  is activate?
-	 */
-	public static function is_active() {
-		return true;
-	}
-
-	/**
-	 * Get post type title.
-	 *
-	 * @return string The post type title.
-	 */
-	public function get_title() {
-		return join( ' ', array_map( 'ucfirst', explode( '-', $this->post_type ) ) );
-	}
-
-	/**
-	 * Get post type capability type.
-	 *
-	 * @return string The post type capability type.
-	 */
-	public function get_capability_type() {
-		return esc_html__( 'post', 'codexshaper-framework' );
-	}
-
-	/**
-	 * Get post type supportse.
-	 *
-	 * @return array The post type supports.
-	 */
-	public function get_supports() {
-		return array(
-			'title',
-			'editor',
-			'thumbnail',
-		);
-	}
-
-	/**
-	 * Get post type public status.
-	 *
-	 * @return bool Is public?
-	 */
-	public function is_public() {
-		return true;
-	}
-
-	/**
-	 * Get post type publicly queryable status.
-	 *
-	 * @return bool Is publickly queryable?
-	 */
-	public function is_publicly_queryable() {
-		return true;
-	}
-
-	/**
-	 * Get post type show url status.
-	 *
-	 * @return bool Is show url?
-	 */
-	public function is_show_ui() {
-		return true;
-	}
-
-	/**
-	 * Get post type show in rest status.
-	 *
-	 * @return bool Is show in rest?
-	 */
-	public function is_show_in_rest() {
-		return true;
-	}
-
-	/**
-	 * Get post type query var status.
-	 *
-	 * @return bool Is query var?
-	 */
-	public function is_query_var() {
-		return true;
-	}
-
-	/**
-	 * Get post type unregister status.
-	 *
-	 * @return bool Do unregister?
-	 */
-	public function is_unregister() {
-		return false;
 	}
 }

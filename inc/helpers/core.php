@@ -497,3 +497,104 @@ if ( ! function_exists( 'cxf_sanitize_recursive' ) ) {
 		return sanitize_text_field( $data );
 	}
 }
+
+if(!function_exists('cxf_get_post_types')) {
+	/**
+	 * Get all post types
+	 *
+	 * @return array $posts All post types.
+	 */
+	function cxf_get_post_types() {
+		global $wp_post_types;
+		$posts = array();
+		$skip_post_types = [
+			'post',
+			'page',        
+			'custom_css',
+			'wp_navigation',
+			'wp_global_styles',
+			'wp_template_part',
+			'wp_template',
+			'wp_block',
+			'user_request',
+			'oembed_cache',
+			'customize_changeset',
+			'revision',
+			'attachment',
+			'elementor_library'
+		];
+		
+		foreach ($wp_post_types as $post_type) {
+			// Continue if post type is in skip post types.
+			if(in_array($post_type->name, $skip_post_types)){
+				continue;
+			}
+			// Add post type to posts array.
+			$posts[$post_type->name] = $post_type->labels->singular_name;
+		}
+		return $posts;
+	}
+}
+
+if(!function_exists('cxf_get_taxonomies')) {
+	/**
+	 * Get all taxonomies
+	 *
+	 * @return array $taxonomies All taxonomies.
+	 */
+	function cxf_get_taxonomies() {
+		// Get all taxonomies.
+		global $wp_taxonomies;
+		$taxonomies = array();
+		// Loop through all taxonomies.
+		foreach ($wp_taxonomies as $key => $cat_type) {
+			$taxonomies[$key] = $cat_type->label; 
+		}
+		// Return all taxonomies.
+		return $taxonomies;
+	}
+}
+
+if(!function_exists('cxf_get_cache_post_types')) {
+	/**
+	 * Get all post types
+	 *
+	 * @return array $posts All post types.
+	 */
+	function cxf_get_cache_post_types() {
+		// Get all post types.
+		$data = get_option('cxf_post_types_cache');
+		// If no data found, return empty array.
+		if (! $data) {
+			return [];
+		}
+		// If data is not array, convert it to array.
+		if (! is_array($data)) {
+			$data = (array) $data;
+		}
+		// Return all post types.
+		return $data;
+	}
+}
+
+if(!function_exists('cxf_get_cache_taxonomies')) {
+	/**
+	 * Get all taxonomies
+	 *
+	 * @return array $taxonomies All taxonomies.
+	 */
+	function cxf_get_cache_taxonomies() {
+		// Get all taxonomies.
+		$data = get_option('cxf_taxonomies_cache');
+		// If no data found, return empty array.
+		if (! $data) {
+			return [];
+		}
+		// If data is not array, convert it to array.
+		if (! is_array($data)) {
+			$data = (array) $data;
+		}
+		// Return all taxonomies.
+		return $data;
+	}
+}

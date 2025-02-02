@@ -1,8 +1,8 @@
 <?php
 /**
- * $CLASS$ Taxonomy file
+ * Custom Post PostType file
  *
- * @category   Taxonomy
+ * @category   PostType
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
@@ -10,17 +10,15 @@
  * @since      1.0.0
  */
 
-namespace $NAMESPACE$;
+namespace CodexShaper\Framework\Foundation;
 
-use CodexShaper\Framework\Foundation\Taxonomy;
-
-// exit if access directly.
+// Exit if access directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
 /**
- * $CLASS$ taxonomy class
+ * Custom Post post_type class
  *
  * @category   Class
  * @package    CodexShaper_Framework
@@ -29,42 +27,24 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @link       https://codexshaper.com
  * @since      1.0.0
  */
-class $CLASS$ extends Taxonomy
-{
-    /**
-	 * Constructor
+class DynamicTaxonomy extends Taxonomy {
+
+	/**
+	 * Get post type name.
 	 *
-	 * Perform some compatibility checks to make sure basic requirements are meet.
-	 * If all compatibility checks pass, initialize the functionality.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	 * @return void
+	 * @return string Custom Posts name.
 	 */
-	public function __construct() {
-		// Do your settings here
-		parent::__construct();
+	public function get_name() {
+		return $this->taxonomy;
 	}
 
-    /**
-     * Get TAXONOMY name.
-     *
-     * @return string $CLASS$ name.
-     */
-    public function get_name()
-    {
-        return '$TAXONOMY_NAME$';
-    }
-
-    /**
-	 * Get post type name or names.
+	/**
+	 * Get object type.
 	 *
-	 * @return string|string[] name.
+	 * @return array|string Object type or array of object types with which the taxonomy should be associated..
 	 */
-	public function get_object_type()
-	{
-		return array( '$OBJECT_TYPE$' );
+	public function get_object_type() {
+		return $this->object_type;
 	}
 
 	/**
@@ -91,16 +71,16 @@ class $CLASS$ extends Taxonomy
 	 * @return bool Is public?
 	 */
 	public function is_public() {
-		return true;
+		return $this->public ?? true;
 	}
 
 	/**
 	 * Get taxonomy publicly queryable status.
 	 *
-	 * @return bool Is publicly queryable?
+	 * @return bool Is publickly queryable?
 	 */
 	public function is_publicly_queryable() {
-		return true;
+		return $this->publicly_queryable ?? true;
 	}
 
 	/**
@@ -109,7 +89,7 @@ class $CLASS$ extends Taxonomy
 	 * @return bool Is hierarchical?
 	 */
 	public function is_hierarchical() {
-		return true;
+		return $this->hierarchical ?? true;
 	}
 
 	/**
@@ -118,7 +98,7 @@ class $CLASS$ extends Taxonomy
 	 * @return bool Is show url?
 	 */
 	public function is_show_ui() {
-		return true;
+		return $this->show_ui ?? true;
 	}
 
 	/**
@@ -127,7 +107,7 @@ class $CLASS$ extends Taxonomy
 	 * @return bool Is show in rest?
 	 */
 	public function is_show_in_rest() {
-		return true;
+		return $this->show_in_rest ?? true;
 	}
 
 	/**
@@ -136,7 +116,7 @@ class $CLASS$ extends Taxonomy
 	 * @return bool Is query var?
 	 */
 	public function is_query_var() {
-		return true;
+		return $this->query_var ?? true;
 	}
 
 	/**
@@ -145,7 +125,7 @@ class $CLASS$ extends Taxonomy
 	 * @return bool Is show in menu?
 	 */
 	public function is_show_in_menu() {
-		return true;
+		return $this->show_in_menu ?? true;
 	}
 
 	/**
@@ -154,6 +134,6 @@ class $CLASS$ extends Taxonomy
 	 * @return bool Is query show in menus?
 	 */
 	public function is_show_in_nav_menus() {
-		return true;
+		return $this->show_in_nav_menus ?? true;
 	}
 }

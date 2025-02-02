@@ -85,7 +85,57 @@ abstract class Taxonomy implements TaxonomyContract {
 	/**
 	 * Constructs the new widget.
 	 */
-	public function __construct() {
+	public function __construct($args = array()) {
+		
+		$this->prepare_options($args);
+		// Register the taxonomy.
+		$this->add_action( 'init', 'register' );
+
+		// Unregister the post type
+		if ( method_exists( $this, 'is_unregister' ) && true === $this->is_unregister() ) {
+			$this->add_action( 'init', 'unregister' );
+		}
+	}	
+
+	/**
+	 * Prepare options
+	 *
+	 * @param array $args Options array.
+	 * 
+	 * @since 1.0.0
+	 * @access protected
+	 * 
+	 * @return void
+	 */
+	protected function prepare_options( $args = array() ) {
+
+		if ( is_array($args) && !empty($args) ) {
+			// Set taxonomy name.
+			$taxonomy = $args['taxonomy'] ?? '';
+			// Check if taxonomy exists.
+			if ( ! $taxonomy ) {
+				return;
+			}
+			// Set taxonomy labels.
+			foreach($args as $label => $value) {
+				$setter = "set_label_{$label}";
+
+				if (method_exists($this, $setter)) {
+					$this->{$setter}($value);
+					unset($args[$label]);
+				}
+			}
+
+			// Set other options.
+			foreach($args as $option => $value) {
+				if (property_exists($this, $option)) {
+					$this->{$option} = $value;
+				}
+				
+				$this->{$setter}($value);
+			}
+		}
+
 		$this->taxonomy = strtolower( str_replace( array( '_', ' ' ), '-', $this->get_name() ) );
 
 		if ( ! $this->taxonomy_title ) {
@@ -158,9 +208,6 @@ abstract class Taxonomy implements TaxonomyContract {
 
 		// Get all options and must be call at the end of all settings.
 		$this->options = $this->get_options();
-
-		// Register the taxonomy.
-		$this->add_action( 'init', 'register' );
 	}
 
 	/**
@@ -274,19 +321,28 @@ abstract class Taxonomy implements TaxonomyContract {
 	 * @return WP_Taxonomy|WP_Error The registered taxonomy object on success, WP_Error object on failure.
 	 */
 	public function register( $taxonomy = '', $object_type = '', $args = array() ) {
-		$this->taxonomy    = $taxonomy;
-		$this->object_type = $object_type;
-		$this->options     = $args;
+		
+		if ( ! empty( $taxonomy ) ) {
+			$this->taxonomy    = $taxonomy;
+		}
 
-		if ( empty( $this->taxonomy ) ) {
+		if ( ! empty( $object_type ) ) {
+			$this->object_type = $object_type;
+		}
+
+		if ( ! empty( $this->args ) ) {
+			$this->options     = $args;
+		}
+
+		if (empty($this->taxonomy)) {
 			$this->taxonomy = $this->get_name();
 		}
 
-		if ( empty( $this->object_type ) ) {
+		if (empty($this->object_type)) {
 			$this->object_type = $this->get_object_type();
 		}
 
-		if ( empty( $this->options ) ) {
+		if( empty($this->options) ) {
 			$this->options = $this->get_options();
 		}
 
@@ -313,95 +369,5 @@ abstract class Taxonomy implements TaxonomyContract {
 		}
 
 		unregister_taxonomy( $this->taxonomy );
-	}
-
-	/**
-	 * Get taxonomy activation status.
-	 *
-	 * @return bool  is activate?
-	 */
-	public static function is_active() {
-		return true;
-	}
-
-	/**
-	 * Get taxonomy title.
-	 *
-	 * @return string The taxonomy title.
-	 */
-	public function get_title() {
-		return join( ' ', array_map( 'ucfirst', explode( '-', $this->taxonomy ) ) );
-	}
-
-	/**
-	 * Get taxonomy public status.
-	 *
-	 * @return bool Is public?
-	 */
-	public function is_public() {
-		return true;
-	}
-
-	/**
-	 * Get taxonomy publicly queryable status.
-	 *
-	 * @return bool Is publickly queryable?
-	 */
-	public function is_publicly_queryable() {
-		return true;
-	}
-
-	/**
-	 * Get hierarchical.
-	 *
-	 * @return bool Is hierarchical?
-	 */
-	public function is_hierarchical() {
-		return true;
-	}
-
-	/**
-	 * Get taxonomy show url status.
-	 *
-	 * @return bool Is show url?
-	 */
-	public function is_show_ui() {
-		return true;
-	}
-
-	/**
-	 * Get taxonomy show in rest status.
-	 *
-	 * @return bool Is show in rest?
-	 */
-	public function is_show_in_rest() {
-		return true;
-	}
-
-	/**
-	 * Get taxonomy query var status.
-	 *
-	 * @return bool Is query var?
-	 */
-	public function is_query_var() {
-		return true;
-	}
-
-	/**
-	 * Get taxonomy show in rest status.
-	 *
-	 * @return bool Is show in menu?
-	 */
-	public function is_show_in_menu() {
-		return true;
-	}
-
-	/**
-	 * Get taxonomy query var status.
-	 *
-	 * @return bool Is query show in menus?
-	 */
-	public function is_show_in_nav_menus() {
-		return true;
 	}
 }
