@@ -165,8 +165,53 @@ abstract class MetaBox implements MetaBoxContract {
 
 	/**
 	 * MetaBox constructor.
+	 * 
+	 * @param array $args The arguments.
+	 * 
+	 * @return void
 	 */
-	public function __construct() {
+	public function __construct($id = '', $sections = array(), $options = array()) {
+
+		if (!empty($id)) {
+			$this->id = $id;
+		}
+
+		if (!empty($sections)) {
+			$this->sections = $sections;
+		}
+
+		if (!empty($options)) {
+			$this->options = $options;
+		}
+
+		if (isset($this->options['post_type'])) {
+			$this->screen = $this->options['post_type'];
+		}
+		
+		$this->prepare_options($options);
+
+		// Add custom meta box.
+		$this->add_action( 'add_meta_boxes', 'register' );
+		// Save meta box data.
+		$this->add_action( 'save_post', 'save' );
+	}
+
+	/**
+	 * Prepare options.
+	 *
+	 * @return void
+	 */
+	protected function prepare_options($args = array()) {
+
+		if ( is_array($args) && !empty($args) ) {
+
+			foreach($args as $option => $value) {
+				if (property_exists($this, $option)) {
+					$this->{$option} = $value;
+				}
+			}
+		}
+
 		$this->id = strtolower( str_replace( array( ' ', '-' ), '_', $this->get_id() ) );
 
 		if ( ! $this->title ) {
@@ -204,11 +249,6 @@ abstract class MetaBox implements MetaBoxContract {
 		}
 
 		$this->is_serialize = isset( $this->options['data_type'] ) && $this->options['data_type'] === 'serialize';
-
-		// Add custom meta box.
-		$this->add_action( 'add_meta_boxes', 'register' );
-		// Save meta box data.
-		$this->add_action( 'save_post', 'save' );
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom Post Type file
+ * Custom Metabox file
  *
  * @category   PostType
  * @package    CodexShaper_Framework
@@ -12,15 +12,13 @@
 
 namespace CodexShaper\Framework\Foundation;
 
-use CodexShaper\Framework\Foundation\PostType;
-
 // Exit if access directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
 /**
- * Custom post type class
+ * Custom  metabox class
  *
  * @category   Class
  * @package    CodexShaper_Framework
@@ -29,32 +27,32 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @link       https://codexshaper.com
  * @since      1.0.0
  */
-class DynamicPostType extends PostType {
+class DynamicMetabox extends MetaBox {
 
 	/**
-	 * Get post type name.
+	 * Get meta box id.
 	 *
-	 * @return string Custom Posts name.
+	 * @return string MetaBox id.
 	 */
-	public function get_name() {
-		return $this->post_type;
+	public function get_id() {
+		return $this->id;
 	}
 
 	/**
-	 * Get post type activation status.
+	 * Get meta box title.
 	 *
-	 * @return bool  is activate?
+	 * @return string MetaBox title.
 	 */
-	public static function is_active() {
-		return true;
+	public function get_title() {
+		return $this->title;
 	}
 
 	/**
-	 * Get post type unregister status.
+	 * Get meta box screens.
 	 *
-	 * @return bool Do unregister?
+	 * @return array MetaBox screens.
 	 */
-	public function is_unregister() {
-		return false;
+	public function get_screen() {
+		return $this->screen;
 	}
 }

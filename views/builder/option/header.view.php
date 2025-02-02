@@ -13,7 +13,7 @@
 ?>
 <div class="cxf--option-header">
     <div class="cxf--option-header-left">
-        <h1><?php esc_html($args['title']); ?></h1>
+        <h1><?php esc_html($args['title'] ?? ''); ?></h1>
     </div>
 
     <div class="cxf--option-header-right">
@@ -23,7 +23,7 @@
             name="cxf_option[save]"
             value="<?php echo esc_html__( 'Save', 'codexshaper-framework' ); ?>">
 
-        <?php if($args['show_reset_section']): ?>
+        <?php if(isset($args['show_reset_section']) && $args['show_reset_section']): ?>
             <input 
                 type="submit" 
                 class="button cxf--a-btn cxf--a-btn-danger cxf--section-reset" 
@@ -31,7 +31,7 @@
                 value="<?php echo esc_html__( 'Reset Section', 'codexshaper-framework' ); ?>">
         <?php endif; ?>
 
-        <?php if($args['show_reset_all']): ?>
+        <?php if(isset($args['show_reset_all']) && $args['show_reset_all']): ?>
             <input 
                 type="submit" 
                 class="button cxf--a-btn cxf--a-btn-danger csf-reset" 

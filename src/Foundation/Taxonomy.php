@@ -84,6 +84,13 @@ abstract class Taxonomy implements TaxonomyContract {
 
 	/**
 	 * Constructs the new widget.
+	 * 
+	 * @param array $args Options array.
+	 * 
+	 * @since 1.0.0
+	 * @access public
+	 * 
+	 * @return void
 	 */
 	public function __construct($args = array()) {
 		
@@ -131,8 +138,6 @@ abstract class Taxonomy implements TaxonomyContract {
 				if (property_exists($this, $option)) {
 					$this->{$option} = $value;
 				}
-				
-				$this->{$setter}($value);
 			}
 		}
 

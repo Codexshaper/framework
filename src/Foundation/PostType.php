@@ -73,6 +73,13 @@ abstract class PostType implements PostTypeContract {
 
 	/**
 	 * Constructs the new widget.
+	 * 
+	 * @param array $args Post type arguments.
+	 * 
+	 * @since 1.0.0
+	 * @access public
+	 * 
+	 * @return void
 	 */
 	public function __construct($args = array()) {
 		// Prepare options.
@@ -98,13 +105,12 @@ abstract class PostType implements PostTypeContract {
 	protected function prepare_options($args = array()) {
 		
 		if ( is_array($args) && !empty($args) ) {
+
 			$post_type = $args['post_type'] ?? '';
 
 			if ( ! $post_type ) {
 				return;
 			}
-
-			$this->post_type = $post_type;
 			
 			foreach($args as $label => $value) {
 				$setter = "set_label_{$label}";
@@ -119,8 +125,6 @@ abstract class PostType implements PostTypeContract {
 				if (property_exists($this, $option)) {
 					$this->{$option} = $value;
 				}
-				
-				$this->{$setter}($value);
 			}
 		}
 		

@@ -13,6 +13,7 @@
 namespace CodexShaper\Framework\Builder;
 
 use CodexShaper\Framework\Foundation\Builder\Option;
+use CodexShaper\Framework\Foundation\DynamicMetabox;
 use CodexShaper\Framework\Foundation\DynamicPostType;
 use CodexShaper\Framework\Foundation\DynamicTaxonomy;
 use CodexShaper\Framework\Foundation\Traits\Hook;
@@ -206,7 +207,25 @@ class Builder {
      *
      * @return void
      */
-    public static function buildMetabox() {}
+    public static function buildMetabox() {
+        foreach ( static::$types['metaboxes'] as $key => $options ) {
+
+            $sections = static::$types['sections'] ?? []; 
+
+            // Check if already bootstrapped.
+            if ( isset( self::$bootstrapped[$key] ) || empty( $sections[$key] )) {
+                continue;
+            }
+
+            $sections = $sections[$key] ?? [];
+
+            // Create post type.
+           new DynamicMetabox($key, $sections, $options);
+
+            // Mark as bootstrapped.
+            self::$bootstrapped[$key] = true;
+        }
+    }
 
     /**
      * Build comment metabox
