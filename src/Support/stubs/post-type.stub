@@ -58,15 +58,6 @@ class $CLASS$ extends PostType
     }
 
 	/**
-	 * Get post type activation status.
-	 *
-	 * @return bool  is activate?
-	 */
-	public static function is_active() {
-		return true;
-	}
-
-	/**
 	 * Get post type title.
 	 *
 	 * @return string The post type title.

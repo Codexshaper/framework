@@ -386,4 +386,13 @@ abstract class PostType implements PostTypeContract {
 
 		unregister_post_type( $post_type );
 	}
+
+	/**
+	 * Get post type activation status.
+	 *
+	 * @return bool  is activate?
+	 */
+	public static function is_active() {
+		return true;
+	}
 }

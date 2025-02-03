@@ -375,4 +375,13 @@ abstract class Taxonomy implements TaxonomyContract {
 
 		unregister_taxonomy( $this->taxonomy );
 	}
+
+	/**
+	 * Get post type activation status.
+	 *
+	 * @return bool  is activate?
+	 */
+	public static function is_active() {
+		return true;
+	}
 }

@@ -68,15 +68,6 @@ class $CLASS$ extends Taxonomy
 	}
 
 	/**
-	 * Get taxonomy activation status.
-	 *
-	 * @return bool  is activate?
-	 */
-	public static function is_active() {
-		return true;
-	}
-
-	/**
 	 * Get taxonomy title.
 	 *
 	 * @return string The taxonomy title.

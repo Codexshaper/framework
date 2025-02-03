@@ -402,9 +402,9 @@ class Option extends Builder {
       $sections       = $this->sorted_sections;
       $notice         = $this->notice;
       $show_tab       = $this->args['show_tab'] ?? true;
-      $has_nav       = count( $this->tabs ) > 1 ? true : false;
-      $wrapper_class = $this->args['wrapper_class'] ?? '';
-      $form_action   = $this->form_action;
+      $has_nav        = count( $this->tabs ) > 1 ? true : false;
+      $wrapper_class  = $this->args['wrapper_class'] ?? '';
+      $form_action    = $this->form_action;
 
       /**
        * Filter section allowed html

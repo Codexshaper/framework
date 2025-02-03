@@ -598,3 +598,155 @@ if(!function_exists('cxf_get_cache_taxonomies')) {
 		return $data;
 	}
 }
+
+if(!function_exists('cxf_get_cache_metaboxes')) {
+	/**
+	 * Get all taxonomies
+	 *
+	 * @return array $taxonomies All taxonomies.
+	 */
+	function cxf_get_cache_metaboxes($field = '') {
+		$metabox_prefix = cxf_config('options.metabox.prefix') ?? 'cxf_metabox_settings';
+		$metabox_option_name = cxf_config('options.metabox.option_name') ?? 'cxf_metabox_options';
+		// Get all settings.
+		$data = cxf_settings($metabox_prefix);
+		$metaboxes = $data[$metabox_option_name] ?? [];
+
+		if (! empty($field)) {
+			$data 				= [];
+			foreach ($metaboxes as $metabox) {
+				$data[$metabox[$field]] = $metabox['metabox_label'] ?? $metabox[$field];
+			}
+
+			return $data;
+		}
+
+		return $metaboxes;
+	}
+}
+
+if(!function_exists('cxf_get_cache_sections')) {
+	/**
+	 * Get all taxonomies
+	 *
+	 * @return array $taxonomies All taxonomies.
+	 */
+	function cxf_get_cache_sections($field = '') {
+		$section_prefix 		= cxf_config('options.section.prefix') ?? 'cxf_metabox_settings';
+		$section_option_name 	= cxf_config('options.section.option_name') ?? 'cxf_section_settings';
+		// Get all settings.
+		$data 					= cxf_settings($section_prefix);
+		$sections 				= $data[$section_option_name] ?? [];
+
+		if ( ! is_array($sections) || empty($sections)) {
+			return [];
+		}
+
+		if (! empty($field)) {
+			$data 				= [];
+			foreach ($sections as $section) {
+				$data[$section[$field]] = $section['section_name'] ?? $section[$field];
+			}
+
+			return $data;
+		}
+
+		return $sections;
+	}
+}
+
+if(!function_exists('cxf_get_cache_fields')) {
+	/**
+	 * Get all taxonomies
+	 *
+	 * @return array $taxonomies All taxonomies.
+	 */
+	function cxf_get_cache_fields($field = '') {
+		$field_prefix = cxf_config('options.field.prefix') ?? 'cxf_metabox_settings';
+		$field_option_name = cxf_config('options.field.option_name') ?? 'cxf_metabox_section_field_settings';
+		// Get all settings.
+		$data = cxf_settings($field_prefix);
+		$fields = $data[$field_option_name] ?? [];
+
+		if (empty($field)) {
+			return $fields;
+		}
+
+		$fields = wp_list_pluck($fields, $field);
+
+		return $fields;
+	}
+}
+
+if(!function_exists('cxf_get_builder_fields')) {
+	/**
+	 * Get all taxonomies
+	 *
+	 * @return array $taxonomies All taxonomies.
+	 */
+	function cxf_get_builder_fields($keys = '', $skips = array()) {
+		$fields = cxf_config('builder.fields') ?? [];
+
+		/**
+		 * Filter fields
+		 *
+		 * @param array $fields Fields.
+		 */
+		$fields = apply_filters('cxf/builder/fields', $fields);
+
+		// Filter active fields	
+		$fields = array_filter($fields, fn($field) => $field['is_active'] ?? true);
+
+		if (! is_array($fields) || empty($fields)) {
+			return [];
+		}
+
+		if (is_array($skips) && ! empty($skips) ) {
+			foreach ($fields as $idx => $field) {
+
+				if (! in_array($idx, $skips)) {
+					continue;
+				}
+
+				unset($fields[$idx]);
+			}
+		}
+
+		if (! empty($keys)) {
+			
+			$data = array();
+
+			// When keys is an array.
+			if (is_array($keys)) {
+				// Loop through keys.
+				foreach($keys as $key) {
+					if (key_exists($key, $fields)) {
+						$data[$key] = $fields[$key];
+					}
+				}
+				return $data;
+			}
+
+			// Loop through fields.
+			foreach ($fields as $field_id => $field) {
+
+				// When keys is exact equal to 'id'.
+				if ( 'field_id' === $keys || 'id' === $keys || 'ID' === $keys || 'ids' === $keys ) {
+					$data[$field_id] = $field['label'] ?? $field['name'] ?? $field_id;
+					continue;
+				}
+
+				// When keys is exact equal to field key.
+				if ($field_id !== $keys) {
+					continue;
+				}
+
+				$data[$keys] = $field['label'] ?? $field['name'] ?? $keys;
+			}
+
+			return $data;
+		}
+
+		return $fields;
+	}
+}

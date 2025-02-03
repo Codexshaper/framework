@@ -552,5 +552,4 @@ abstract class MetaBox implements MetaBoxContract {
 			}
 		}
 	}
-
 }
