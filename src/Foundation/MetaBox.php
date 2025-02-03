@@ -164,6 +164,16 @@ abstract class MetaBox implements MetaBoxContract {
 	protected $is_serialize = false;
 
 	/**
+	 * Metabox Active status
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 *
+	 * @var string  The Metabox is active?
+	 */
+	protected $is_active = true;
+
+	/**
 	 * MetaBox constructor.
 	 * 
 	 * @param array $args The arguments.

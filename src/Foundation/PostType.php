@@ -72,6 +72,16 @@ abstract class PostType implements PostTypeContract {
 	protected $plural_title;
 
 	/**
+	 * Post Active status
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 *
+	 * @var string  The post is active?
+	 */
+	protected $is_active = true;
+
+	/**
 	 * Constructs the new widget.
 	 * 
 	 * @param array $args Post type arguments.
@@ -128,10 +138,10 @@ abstract class PostType implements PostTypeContract {
 			}
 		}
 		
-		$this->post_type = strtolower( str_replace( array( ' ', '_' ), '-', $this->get_name() ) );
+		$this->post_type = substr(sanitize_key( $this->get_name()), 0, 20);
 
 		if ( ! $this->post_title ) {
-			$this->post_title = join( ' ', array_map( 'ucfirst', explode( '-', $this->post_type ) ) );
+			$this->post_title = join( ' ', array_map( 'ucfirst', explode( '_', $this->post_type ) ) );
 		}
 
 		if ( method_exists( $this, 'get_title' ) ) {

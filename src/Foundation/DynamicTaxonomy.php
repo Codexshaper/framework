@@ -62,7 +62,16 @@ class DynamicTaxonomy extends Taxonomy {
 	 * @return string The taxonomy title.
 	 */
 	public function get_title() {
-		return join( ' ', array_map( 'ucfirst', explode( '-', $this->taxonomy ) ) );
+		return $this->taxonomy_title;
+	}
+
+	/**
+	 * Get taxonomy title.
+	 *
+	 * @return string The taxonomy title.
+	 */
+	public function get_screen() {
+		return $this->screen;
 	}
 
 	/**

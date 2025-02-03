@@ -83,6 +83,16 @@ abstract class Taxonomy implements TaxonomyContract {
 	protected $taxonomy_title;
 
 	/**
+	 * Taxonomy Active status
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 *
+	 * @var string  The Taxonomy is active?
+	 */
+	protected $is_active = true;
+
+	/**
 	 * Constructs the new widget.
 	 * 
 	 * @param array $args Options array.
@@ -141,11 +151,10 @@ abstract class Taxonomy implements TaxonomyContract {
 			}
 		}
 
-		$this->taxonomy = strtolower( str_replace( array( '_', ' ' ), '-', $this->get_name() ) );
+		$this->taxonomy = substr(sanitize_key($this->get_name()), 0, 32);
 
 		if ( ! $this->taxonomy_title ) {
-			$this->taxonomy_title = join( ' ', array_map( 'ucfirst', explode( '-', $this->taxonomy ) ) );
-
+			$this->taxonomy_title = join( ' ', array_map( 'ucfirst', explode( '_', $this->taxonomy ) ) );
 		}
 
 		if ( method_exists( $this, 'get_title' ) ) {

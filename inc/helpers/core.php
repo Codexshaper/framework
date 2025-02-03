@@ -615,7 +615,7 @@ if(!function_exists('cxf_get_cache_metaboxes')) {
 		if (! empty($field)) {
 			$data 				= [];
 			foreach ($metaboxes as $metabox) {
-				$data[$metabox[$field]] = $metabox['metabox_label'] ?? $metabox[$field];
+				$data[$metabox[$field]] = $metabox['label'] ?? $metabox[$field];
 			}
 
 			return $data;
@@ -645,7 +645,7 @@ if(!function_exists('cxf_get_cache_sections')) {
 		if (! empty($field)) {
 			$data 				= [];
 			foreach ($sections as $section) {
-				$data[$section[$field]] = $section['section_name'] ?? $section[$field];
+				$data[$section[$field]] = $section['name'] ?? $section[$field];
 			}
 
 			return $data;
