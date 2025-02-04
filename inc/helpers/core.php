@@ -11,6 +11,8 @@
  * @since      1.0.0
  */
 
+use CodexShaper\Framework\Application;
+
 if ( ! function_exists( 'cxf_app' ) ) {
 
 	/**
@@ -18,19 +20,44 @@ if ( ! function_exists( 'cxf_app' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_app($abstract = null) {
+	function cxf_app($abstract = null, $recreate = false) {
+		global $cxf_app;
+
 		if ( ! class_exists( '\CodexShaper\Framework\Application' ) ) {
 			return;
 		}
-		
-		$app = new CodexShaper\Framework\Application();
 
-		if ( $abstract ) {
-			return $app->get( $abstract );
+		if (! isset( $cxf_app ) || true === $recreate) {
+			$cxf_app = new CodexShaper\Framework\Application();
 		}
 
-		return $app;
+		if ( $abstract ) {
+			return $cxf_app->get( $abstract );
+		}
+
+		return $cxf_app;
 	}
+}
+
+if (! function_exists('cxf_app')) {
+    /**
+     * Get the available container instance.
+     *
+     * @param  string|class|null  $abstract Abstract.
+     * @param  array  $parameters Parameters.
+	 * 
+     * @return mixed|\CodexShaper\Framework\Container\Container Container instance.
+     */
+    function cxf_app($abstract = null, array $parameters = [], $plugin_base_url = '', $plugin_base_path = '')
+    {
+		$app = Application::getInstance($plugin_base_url = '', $plugin_base_path = '');
+
+        if (is_null($abstract)) {
+            return $app;
+        }
+
+        return $app->make($abstract, $parameters);
+    }
 }
 
 if ( ! function_exists( 'cxf_config' ) ) {
@@ -749,4 +776,21 @@ if(!function_exists('cxf_get_builder_fields')) {
 
 		return $fields;
 	}
+}
+
+if (! function_exists('cxf_get_json_data')) {
+	/**
+	 * Get json data
+	 *
+	 * @param string $file_path File path.
+	 *
+	 * @return array $data Json data.
+	 */
+	function cxf_get_json_data( $file_path, $associative = true ) {
+		if ( ! file_exists( $file_path ) || ! is_readable( $file_path ) ) {
+			return [];
+		}
+	
+		return wp_json_file_decode( $file_path, array( 'associative' => $associative ) ) ?: [];
+	}	
 }

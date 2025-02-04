@@ -37,7 +37,7 @@ class Container implements ContainerContract {
 	 *
 	 * @var static
 	 */
-	static $instance = null;
+	protected static $instance = null;
 
 	/**
 	 * The registered bindings.
@@ -81,6 +81,20 @@ class Container implements ContainerContract {
 	 * @var array
 	 */
 	private array $parameters = array();
+
+	/**
+     * Get the globally available instance of the container.
+     *
+     * @return static $instance The globally available instance of the container.
+     */
+    public static function getInstance(...$args): static
+    {
+        if (is_null(static::$instance)) {
+            static::$instance = new static(...$args);
+        }
+
+        return static::$instance;
+    }
 
 	/**
 	 * Resolve the given type from the container.

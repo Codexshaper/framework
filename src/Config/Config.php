@@ -68,15 +68,15 @@ class Config {
 	public function get( $path ) {
 		$path  = str_replace( array( '.', '|' ), ' ', $path );
 		$parts = explode( ' ', $path );
+		$config_name = $parts[0] ?? '';
+		$configs = $this->configs[ $config_name ] ?? array();
 
-		$configs = array();
-
-		if ( count( $parts ) > 0 ) {
+		if ( empty($configs) && count( $parts ) > 0 ) {
 			
-			$config_path = CXF_PLUGIN_CONFIG_PATH . $parts[0] . '.php';
+			$config_path = CXF_PLUGIN_CONFIG_PATH . $config_name . '.php';
 
 			if ( ! file_exists( $config_path ) ) {
-				$config_path = CXF_APP_CONFIG_PATH . $parts[0] . '.php';
+				$config_path = CXF_APP_CONFIG_PATH . $config_name . '.php';
 			}
 
 			if (! file_exists( $config_path ) ) {
@@ -92,6 +92,24 @@ class Config {
 			$configs = $configs[ $part ] ?? array();
 		}
 
+		$this->configs[ $config_name ] = $configs;
+
 		return $configs;
+	}
+
+	/**
+	 * Set the Config
+	 *
+	 * @param string $name The name of the config.
+	 * @param mixed  $value The value of the config.
+	 * 
+	 * @since 1.0.0
+	 * 
+	 * @return Config The Config instance.
+	 */
+	public function set( $name, $value ) {
+		$this->configs[ $name ] = $value;
+
+		return $this;
 	}
 }
