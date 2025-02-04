@@ -108,63 +108,70 @@ class ModuleMake extends Command {
 				$widget_stub_name .= '-slider';
 			}
 
-			( new Stub(
-				"{$module_stub_name}.stub",
-				array(
-					'NAMESPACE'    => $module_namespace,
-					'CLASS'        => 'Module',
-					'WIDGET_CLASS' => $class_name,
-					'MODULE_NAME'  => $module_prefix . $module,
-					'WIDGET_NAME'  => $widget_prefix . $module,
-					'TEXT_DOMAIN'  => $text_domain,
-				)
-			) )->saveTo( $module_dir, 'module.php' );
+			if ( ! file_exists( $module_dir . '/module.php' ) ) {
+				( new Stub(
+					"{$module_stub_name}.stub",
+					array(
+						'NAMESPACE'    => $module_namespace,
+						'CLASS'        => 'Module',
+						'WIDGET_CLASS' => $class_name,
+						'MODULE_NAME'  => $module_prefix . $module,
+						'WIDGET_NAME'  => $widget_prefix . $module,
+						'TEXT_DOMAIN'  => $text_domain,
+					)
+				) )->saveTo( $module_dir, 'module.php' );
+	
+				\WP_CLI::success( "The module {$module}'s module file has been created at {$module_dir}/module.php this location." );	
+			}
 
-			\WP_CLI::success( "The module {$module}'s module file has been created at {$module_dir}/module.php this location." );
+			if ( ! file_exists( $module_dir . '/module.json' ) ) {
+				( new Stub(
+					"{$module_config_stub_name}.stub",
+					array(
+						'MODULE_NAME'  => $module,
+						'MODULE_SLUG'  => $module,
+						'WIDGET_CLASS' => $class_name,
+						'TITLE'        => $title,
+						'VERSION'      => defined( 'CXF_VERSION' ) ? CXF_VERSION : CXF_APP_VERSION,
+						'ICON'         => 'eicon-archive',
+					)
+				) )->saveTo( $module_dir, 'module.json' );
+	
+				\WP_CLI::success( "The module {$module}'s config file has been created at {$module_dir}/module.json this location." );	
+			}
 
-			( new Stub(
-				"{$module_config_stub_name}.stub",
-				array(
-					'MODULE_NAME'  => $module,
-					'MODULE_SLUG'  => $module,
-					'WIDGET_CLASS' => $class_name,
-					'TITLE'        => $title,
-					'VERSION'      => defined( 'CXF_VERSION' ) ? CXF_VERSION : CXF_APP_VERSION,
-					'ICON'         => 'eicon-archive',
-				)
-			) )->saveTo( $module_dir, 'module.json' );
+			if ( ! file_exists( $module_widgets_dir . '/' . $module . '.php' ) ) {
+				( new Stub(
+					"{$widget_stub_name}.stub",
+					array(
+						'NAMESPACE'       => $widget_namespace,
+						'CLASS'           => $class_name,
+						'WIDGET_NAME'     => $widget_prefix . $module,
+						'VIEW_NAME'       => "{$module}.{$view_file_name}",
+						'TITLE'           => $title,
+						'WIDGET_CATEGORY' => $widget_category,
+						'TEXT_DOMAIN'     => $text_domain,
+					)
+				) )->saveTo( $module_widgets_dir, $module . '.php' );
+	
+				\WP_CLI::success( "The module {$module}'s widget file has been created at {$module_widgets_dir}/{$module}.php this location." );	
+			}
 
-			\WP_CLI::success( "The module {$module}'s config file has been created at {$module_dir}/module.json this location." );
-
-			( new Stub(
-				"{$widget_stub_name}.stub",
-				array(
-					'NAMESPACE'       => $widget_namespace,
-					'CLASS'           => $class_name,
-					'WIDGET_NAME'     => $widget_prefix . $module,
-					'VIEW_NAME'       => "{$module}.{$view_file_name}",
-					'TITLE'           => $title,
-					'WIDGET_CATEGORY' => $widget_category,
-					'TEXT_DOMAIN'     => $text_domain,
-				)
-			) )->saveTo( $module_widgets_dir, $module . '.php' );
-
-			\WP_CLI::success( "The module {$module}'s widget file has been created at {$module_widgets_dir}/{$module}.php this location." );
-
-			( new Stub(
-				"{$view_stub_name}.stub",
-				array(
-					'CLASS'           => $class_name,
-					'TITLE'           => $title,
-					'TEXT_DOMAIN'     => $text_domain,
-				)
-			) )->saveTo( $module_view_dir, $module_view_file );
-
-			\WP_CLI::success( "The module {$module}'s view file has been created at {$module_view_dir}/{$module_view_file} this location." );
-
+			if ( ! file_exists( $module_view_dir . '/' . $module_view_file ) ) {
+				( new Stub(
+					"{$view_stub_name}.stub",
+					array(
+						'CLASS'           => $class_name,
+						'TITLE'           => $title,
+						'TEXT_DOMAIN'     => $text_domain,
+					)
+				) )->saveTo( $module_view_dir, $module_view_file );
+	
+				\WP_CLI::success( "The module {$module}'s view file has been created at {$module_view_dir}/{$module_view_file} this location." );	
+			}
 			
 
-			if ( ! key_exists( 'skip-css', $this->assoc_args ) && ! key_exists( 'skip:css', $this->assoc_args ) ) {
+			if ( ! file_exists( $widgets_css_dir . '/' . $widget_prefix . $module . '.min.css' ) && ! key_exists( 'skip-css', $this->assoc_args ) && ! key_exists( 'skip:css', $this->assoc_args ) ) {
 				( new Stub(
 					'el-css.stub',
 					array(
@@ -180,7 +187,7 @@ class ModuleMake extends Command {
 				\WP_CLI::success( "The module {$module}'s css file has been created at {$widgets_css_dir}/{$widget_prefix}{$module}.min.css this location." );
 			}
 
-			if ( key_exists( 'slider', $this->assoc_args ) ) {
+			if ( ! file_exists( $widgets_js_dir . '/' .  $widget_prefix . $module . '.min.js' ) && key_exists( 'slider', $this->assoc_args ) ) {
 				( new Stub(
 					'el-slider-js.stub',
 					array(

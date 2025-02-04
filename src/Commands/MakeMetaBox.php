@@ -74,6 +74,11 @@ class MakeMetaBox extends Command {
 				\WP_CLI::success( "The metabox {$arg}'s metabox directory has been created at $metabox_dir this location." );
 			}
 
+			if ( file_exists( $metabox_dir . "/{$class_name}.php" ) ) {
+				\WP_CLI::warning( "The metabox {$arg}'s metabox file already exists at {$metabox_dir}/{$class_name}.php this location." );
+				return;
+			}
+
 			( new Stub(
 				"{$stub_name}.stub",
 				array(

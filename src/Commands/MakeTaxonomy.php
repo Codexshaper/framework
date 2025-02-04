@@ -78,6 +78,11 @@ class MakeTaxonomy extends Command {
 				\WP_CLI::success( "The taxonomy {$taxonomy}'s taxonomy directory has been created at $taxonomy_dir this location." );
 			}
 
+			if ( file_exists( $taxonomy_dir . "/{$class_name}.php" ) ) {
+				\WP_CLI::warning( "The taxonomy {$taxonomy}'s taxonomy file has been created at {$taxonomy_dir}/{$class_name}.php this location." );
+				return;
+			}
+
 			( new Stub(
 				"{$stub_name}.stub",
 				array(

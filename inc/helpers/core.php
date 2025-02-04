@@ -13,32 +13,6 @@
 
 use CodexShaper\Framework\Application;
 
-if ( ! function_exists( 'cxf_app' ) ) {
-
-	/**
-	 * Get core helper function
-	 *
-	 * @package CodexShaper_Framework
-	 */
-	function cxf_app($abstract = null, $recreate = false) {
-		global $cxf_app;
-
-		if ( ! class_exists( '\CodexShaper\Framework\Application' ) ) {
-			return;
-		}
-
-		if (! isset( $cxf_app ) || true === $recreate) {
-			$cxf_app = new CodexShaper\Framework\Application();
-		}
-
-		if ( $abstract ) {
-			return $cxf_app->get( $abstract );
-		}
-
-		return $cxf_app;
-	}
-}
-
 if (! function_exists('cxf_app')) {
     /**
      * Get the available container instance.
@@ -50,7 +24,7 @@ if (! function_exists('cxf_app')) {
      */
     function cxf_app($abstract = null, array $parameters = [], $plugin_base_url = '', $plugin_base_path = '')
     {
-		$app = Application::getInstance($plugin_base_url = '', $plugin_base_path = '');
+		$app = Application::getInstance($plugin_base_url, $plugin_base_path);
 
         if (is_null($abstract)) {
             return $app;
@@ -792,5 +766,31 @@ if (! function_exists('cxf_get_json_data')) {
 		}
 	
 		return wp_json_file_decode( $file_path, array( 'associative' => $associative ) ) ?: [];
+	}	
+}
+
+if (! function_exists('cxf_elementor_modules')) {
+	/**
+	 * Get json data
+	 *
+	 * @param string $file_path File path.
+	 *
+	 * @return array $data Json data.
+	 */
+	function cxf_elementor_modules( $module_dir ) {
+
+		$module_directory = untrailingslashit($module_dir) . "/*//";
+		$modules = [];
+		foreach ( glob( $module_directory ) as $path ) {
+			if ( is_dir( $path ) ) {
+				$parts  = explode( '/', untrailingslashit( $path ) );
+				$module = end( $parts );
+				if ( ! in_array( $module, $modules, true ) ) {
+					$modules[$module] = cxf_get_json_data( $path . 'module.json' );
+				}
+			}
+		}
+
+		return $modules;
 	}	
 }

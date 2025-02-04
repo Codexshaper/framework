@@ -73,6 +73,11 @@ class MakePostType extends Command {
 				\WP_CLI::success( "The post_type {$post_type}'s post_type directory has been created at $post_type_dir this location." );
 			}
 
+			if ( file_exists( $post_type_dir . "/{$class_name}.php" ) ) {
+				\WP_CLI::warning( "The post_type {$post_type}'s post_type file has been created at {$post_type_dir}/{$class_name}.php this location." );
+				return;
+			}
+
 			( new Stub(
 				"{$stub_name}.stub",
 				array(
