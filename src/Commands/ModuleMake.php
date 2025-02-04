@@ -65,6 +65,7 @@ class ModuleMake extends Command {
 			$module_namespace     	= "{$base_namespace}\\{$module_name}";
 			$widget_namespace     	= "{$module_namespace}\\Widgets";
 			$module_stub_name     	= $module_config['module_stub_name'] ?? 'el-module';
+			$module_config_stub_name = $module_config['module_config_stub_name'] ?? 'el-module-config';
 			$widget_stub_name     	= $module_config['widget_stub_name'] ?? 'el-widget';
 			$view_stub_name     	= $module_config['view_stub_name'] ?? 'el-view';
 			$view_file_name     	= $module_config['view_file_name'] ?? 'content';
@@ -77,8 +78,10 @@ class ModuleMake extends Command {
 			$module_dir           	= $base_path . "modules/{$module}";
 			$module_widgets_dir   	= $base_path . "modules/{$module}/widgets";
 			$module_view_dir        = $base_path . "views/{$module}";
+			$module_view_file 		= $view_file_name . '.' . $view_extension;
 			$widgets_css_dir      	= $base_path . 'assets/css';
 			$widgets_js_dir       	= $base_path . 'assets/js';
+			
 
 			if ( ! is_dir( $module_widgets_dir ) ) {
 				wp_mkdir_p( $module_widgets_dir );
@@ -120,6 +123,20 @@ class ModuleMake extends Command {
 			\WP_CLI::success( "The module {$module}'s module file has been created at {$module_dir}/module.php this location." );
 
 			( new Stub(
+				"{$module_config_stub_name}.stub",
+				array(
+					'MODULE_NAME'  => $module,
+					'MODULE_SLUG'  => $module,
+					'WIDGET_CLASS' => $class_name,
+					'TITLE'        => $title,
+					'VERSION'      => defined( 'CXF_VERSION' ) ? CXF_VERSION : CXF_APP_VERSION,
+					'ICON'         => 'eicon-archive',
+				)
+			) )->saveTo( $module_dir, 'module.json' );
+
+			\WP_CLI::success( "The module {$module}'s config file has been created at {$module_dir}/module.json this location." );
+
+			( new Stub(
 				"{$widget_stub_name}.stub",
 				array(
 					'NAMESPACE'       => $widget_namespace,
@@ -132,6 +149,8 @@ class ModuleMake extends Command {
 				)
 			) )->saveTo( $module_widgets_dir, $module . '.php' );
 
+			\WP_CLI::success( "The module {$module}'s widget file has been created at {$module_widgets_dir}/{$module}.php this location." );
+
 			( new Stub(
 				"{$view_stub_name}.stub",
 				array(
@@ -139,9 +158,11 @@ class ModuleMake extends Command {
 					'TITLE'           => $title,
 					'TEXT_DOMAIN'     => $text_domain,
 				)
-			) )->saveTo( $module_view_dir, $view_file_name . '.' . $view_extension );
+			) )->saveTo( $module_view_dir, $module_view_file );
 
-			\WP_CLI::success( "The module {$module}'s widget file has been created at {$module_widgets_dir}/{$module}.php this location." );
+			\WP_CLI::success( "The module {$module}'s view file has been created at {$module_view_dir}/{$module_view_file} this location." );
+
+			
 
 			if ( ! key_exists( 'skip-css', $this->assoc_args ) && ! key_exists( 'skip:css', $this->assoc_args ) ) {
 				( new Stub(

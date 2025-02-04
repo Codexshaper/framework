@@ -68,7 +68,7 @@ class $CLASS$ extends BaseModule {
 			'$WIDGET_NAME$',
 			$this->get_css_assets_url( '$WIDGET_NAME$', null, true, true ),
 			[],
-			CXF_APP_VERSION
+			CXF_VERSION
 		);
 	}
 }

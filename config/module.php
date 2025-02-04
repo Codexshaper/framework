@@ -6,6 +6,7 @@ return [
             'module_prefix' => 'cxf--',
             'widget_prefix' => 'cxf--',
             'module_stub_name' => 'el-module',
+            'module_config_stub_name' => 'el-module-config',
             'widget_stub_name' => 'el-widget',
             'view_stub_name' => 'el-view',
             'view_filename' => 'content',

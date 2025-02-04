@@ -138,7 +138,7 @@ abstract class PostType implements PostTypeContract {
 			}
 		}
 		
-		$this->post_type = substr(sanitize_key( $this->get_name()), 0, 20);
+		$this->post_type = substr(sanitize_key( str_replace([' ', '-'], '_', $this->get_name())), 0, 20);
 
 		if ( ! $this->post_title ) {
 			$this->post_title = join( ' ', array_map( 'ucfirst', explode( '_', $this->post_type ) ) );

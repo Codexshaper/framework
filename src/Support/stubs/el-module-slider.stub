@@ -65,7 +65,7 @@ class $CLASS$ extends BaseModule {
 	 */
 	public function register_styles() {
 		$widget_css_file = cxf_plugin_base_path() . 'widgets/elementor/assets/css/$WIDGET_NAME$.min.css';
-		$version = file_exists( $widget_css_file ) ? filemtime( $widget_css_file ) : CXF_APP_VERSION;
+		$version = file_exists( $widget_css_file ) ? filemtime( $widget_css_file ) : CXF_VERSION;
 		wp_register_style(
 			'$WIDGET_NAME$',
 			$this->get_css_assets_url( '$WIDGET_NAME$', null, true, true ),
@@ -83,7 +83,7 @@ class $CLASS$ extends BaseModule {
 	 */
 	public function register_scripts() {
 		$widget_js_file = cxf_plugin_base_path() . 'widgets/elementor/assets/js/$WIDGET_NAME$.min.js';
-		$version = file_exists( $widget_js_file ) ? filemtime( $widget_js_file ) : CXF_APP_VERSION;
+		$version = file_exists( $widget_js_file ) ? filemtime( $widget_js_file ) : CXF_VERSION;
 		wp_register_script(
 			'$WIDGET_NAME$',
 			$this->get_js_assets_url( '$WIDGET_NAME$', null, true, true ),

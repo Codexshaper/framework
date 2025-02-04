@@ -151,7 +151,7 @@ abstract class Taxonomy implements TaxonomyContract {
 			}
 		}
 
-		$this->taxonomy = substr(sanitize_key($this->get_name()), 0, 32);
+		$this->taxonomy = substr(sanitize_key(str_replace([' ', '-'], '_', $this->get_name())), 0, 32);
 
 		if ( ! $this->taxonomy_title ) {
 			$this->taxonomy_title = join( ' ', array_map( 'ucfirst', explode( '_', $this->taxonomy ) ) );
