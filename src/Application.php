@@ -86,13 +86,6 @@ class Application extends Container {
 			define('CXF_APP_VERSION', $this->version);
 		}
 
-		if (! defined('CXF_APP_BASE_PATH')) {
-			define('CXF_APP_BASE_PATH', dirname(__DIR__));
-		}
-
-		if (! defined('CXF_APP_CONFIG_PATH')) {
-			define('CXF_APP_CONFIG_PATH', trailingslashit(untrailingslashit(CXF_APP_BASE_PATH)) . 'config/');
-		}
 
 		if (! defined('CXF_PLUGIN_BASE_URL')) {
 			define('CXF_PLUGIN_BASE_URL', $plugin_base_url);
@@ -106,23 +99,8 @@ class Application extends Container {
 			define('CXF_PLUGIN_CONFIG_PATH', trailingslashit(untrailingslashit(CXF_PLUGIN_BASE_PATH)) . 'config/');
 		}
 
-		if ( ! defined( 'CXF_WP_MODULE_PREFIX' ) ) {
-			define( 'CXF_WP_MODULE_PREFIX', 'cxf--wp-module' );
-		}
-		
-		if ( ! defined( 'CXF_WP_WIDGET_PREFIX' ) ) {
-			define( 'CXF_WP_WIDGET_PREFIX', 'cxf--wp' );
-		}
-		
-		if ( ! defined( 'CXF_ELEMENTOR_MODULE_PREFIX' ) ) {
-			define( 'CXF_ELEMENTOR_MODULE_PREFIX', 'cxf-' );
-		}
-		
-		if ( ! defined( 'CXF_ELEMENTOR_WIDGET_PREFIX' ) ) {
-			define( 'CXF_ELEMENTOR_WIDGET_PREFIX', 'cxf-' );
-		}
 
-		$this->app_base_path = CXF_APP_BASE_PATH;
+		$this->app_base_path = dirname(__DIR__);
 		$this->plugin_base_url = CXF_PLUGIN_BASE_URL;
 		$this->plugin_base_path = CXF_PLUGIN_BASE_PATH;
 

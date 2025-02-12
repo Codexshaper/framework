@@ -15,15 +15,18 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
 
 ?>
 
-<div class="cxf--repeater-item cxf--repeater-cloneable" data-depend-id="<?php echo esc_attr( $field['id'] ); ?>">
-    <div class="cxf--repeater-action-wrapper">
+<div class="cxf--repeater-item cxf--foldable cxf--repeater-cloneable" data-depend-id="<?php echo esc_attr( $field['id'] ); ?>">
+    <div class="cxf--repeater-action-wrapper cxf--repeater-sort">
         <div class="cxf--repeater-action-content">
-            <i class="button cxf--a-btn cxf--a-btn-primary cxf--repeater-sort fas fa-arrows-alt"></i>
+            <!-- <i class="button cxf--a-btn cxf--a-btn-primary cxf--repeater-sort fas fa-arrows-alt"></i> -->
             <i class="button cxf--a-btn cxf--a-btn-primary cxf--repeater-clone far fa-clone"></i>
             <i class="button cxf--a-btn cxf--a-btn-danger cxf--repeater-remove fas fa-times"></i>
+            <button type="button" class="button fold-handler" title="Collapse" aria-expanded="false">
+                <i class="fa fold-indicator"></i>
+            </button>
         </div>
     </div>
-    <div class="cxf--repeater-content">
+    <div class="cxf--repeater-content inside">
         <?php
         foreach ( $field['fields'] as $new_field ) {
             $new_field_default = $new_field['default'] ?? '';
@@ -39,15 +42,18 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
         $num = 0;
         foreach ( $value as $key => $repeater_value ) :
     ?>
-    <div class="cxf--repeater-item">
-        <div class="cxf--repeater-action-wrapper">
+    <div class="cxf--repeater-item cxf--foldable">
+        <div class="cxf--repeater-action-wrapper cxf--repeater-sort">
             <div class="cxf--repeater-action-content">
-                <i class="button cxf--a-btn cxf--a-btn-primary cxf--repeater-sort fas fa-arrows-alt"></i>
+                <!-- <i class="button cxf--a-btn cxf--a-btn-primary cxf--repeater-sort fas fa-arrows-alt"></i> -->
                 <i class="button cxf--a-btn cxf--a-btn-primary cxf--repeater-clone far fa-clone"></i>
                 <i class="button cxf--a-btn cxf--a-btn-danger cxf--repeater-remove fas fa-times"></i>
+                <button type="button" class="button fold-handler" title="Collapse" aria-expanded="false">
+                <i class="fa fold-indicator"></i>
+            </button>
             </div>
         </div>
-        <div class="cxf--repeater-content">
+        <div class="cxf--repeater-content inside">
             <?php
             foreach ( $field['fields'] as $new_field ) {
                 $new_field_unique = $identifier ? "{$identifier}[{$field['id']}][{$num}]" : "{$field['id']}[{$num}]";

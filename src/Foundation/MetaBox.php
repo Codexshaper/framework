@@ -161,7 +161,7 @@ abstract class MetaBox implements MetaBoxContract {
 	 *
 	 * @var bool Is data serializeable?
 	 */
-	protected $is_serialize = false;
+	protected $is_serialize = true;
 
 	/**
 	 * Metabox Active status
@@ -258,7 +258,9 @@ abstract class MetaBox implements MetaBoxContract {
 			$this->options = $this->get_options();
 		}
 
-		$this->is_serialize = isset( $this->options['data_type'] ) && $this->options['data_type'] === 'serialize';
+		if (isset( $this->options['data_type'] )) {
+			$this->is_serialize = $this->options['data_type'] === 'serialize';
+		}
 	}
 
 	/**

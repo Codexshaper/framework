@@ -202,12 +202,7 @@ if ( ! function_exists( 'cxf_app_base_path' ) ) {
 	 * @package CodexShaper_Framework
 	 */
 	function cxf_app_base_path() {
-		
-		if ( ! defined('CXF_APP_BASE_PATH') ) {
-			define( 'CXF_APP_BASE_PATH', cxf_app()->getAppBasePath() );
-		}
-
-		return trailingslashit(untrailingslashit(CXF_APP_BASE_PATH));
+		return cxf_app()->getAppBasePath();
 	}
 }
 
@@ -240,12 +235,7 @@ if ( ! function_exists( 'cxf_plugin_base_url' ) ) {
 	 * @package CodexShaper_Framework
 	 */
 	function cxf_plugin_base_url() {
-		
-		if ( ! defined('CXF_PLUGIN_BASE_URL') ) {
-			define( 'CXF_PLUGIN_BASE_URL', cxf_app()->getPluginBaseUrl() );
-		}
-
-		return trailingslashit(untrailingslashit(CXF_PLUGIN_BASE_URL));
+		return cxf_app()->getPluginBaseUrl();
 	}
 }
 

@@ -458,29 +458,26 @@ class Builder {
 
             foreach ( $sections['fields'] as $field ) {
 
-            if ( ! empty( $field['fields'] ) ) {
-                self::set_used_fields( $field );
-            }
+                if ( ! empty( $field['fields'] ) ) {
+                    self::set_used_fields( $field );
+                }
 
-            if ( ! empty( $field['tabs'] ) ) {
-                self::set_used_fields( array( 'fields' => $field['tabs'] ) );
-            }
+                if ( ! empty( $field['tabs'] ) ) {
+                    self::set_used_fields( array( 'fields' => $field['tabs'] ) );
+                }
 
-            if ( ! empty( $field['accordions'] ) ) {
-                self::set_used_fields( array( 'fields' => $field['accordions'] ) );
-            }
+                if ( ! empty( $field['accordions'] ) ) {
+                    self::set_used_fields( array( 'fields' => $field['accordions'] ) );
+                }
 
-            if ( ! empty( $field['elements'] ) ) {
-                self::set_used_fields( array( 'fields' => $field['elements'] ) );
-            }
+                if ( ! empty( $field['elements'] ) ) {
+                    self::set_used_fields( array( 'fields' => $field['elements'] ) );
+                }
 
-            if ( ! empty( $field['type'] ) ) {
-                self::$fields[$field['type']] = $field;
+                if ( ! empty( $field['type'] ) ) {
+                    self::$fields[$field['type']] = $field;
+                }
             }
-
-            }
-
         }
-
     }
 }

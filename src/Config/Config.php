@@ -76,7 +76,7 @@ class Config {
 			$config_path = CXF_PLUGIN_CONFIG_PATH . $config_name . '.php';
 
 			if ( ! file_exists( $config_path ) ) {
-				$config_path = CXF_APP_CONFIG_PATH . $config_name . '.php';
+				$config_path = trailingslashit(untrailingslashit(dirname(__DIR__))) . '../config/' . $config_name . '.php';
 			}
 
 			if (! file_exists( $config_path ) ) {

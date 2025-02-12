@@ -19,7 +19,7 @@ if ( ! $show_tab || count($tabs) < 1 ) {
 ?>
 
 <ul>
-<?php foreach ( $tabs as $tab ):
+<?php foreach ( $tabs as $key => $tab ):
     $tab_title = $tab['title'] ?? '';
     $tab_id    = sanitize_title( $tab_title );
     $tab_error = '';
@@ -28,10 +28,10 @@ if ( ! $show_tab || count($tabs) < 1 ) {
     <!-- Single tab item. -->
     <?php if ( empty( $tab['children'] ) ): ?>
         <li class="cxf--tab-item">
-            <button 
-                type="button" 
-                class="cxf--tab-btn active" 
-                data-cxf-tab="tab_<?php echo esc_attr( $tab_id ); ?>" 
+            <a 
+                href="#<?php echo esc_attr( $tab_id ); ?>" 
+                class="cxf--tab-btn" 
+                data-cxf-tab="<?php echo esc_attr( $tab_id ); ?>" 
                 role="tab" 
                 aria-selected="true" 
                 aria-controls="panel_<?php echo esc_attr( $tab_id ); ?>"
@@ -45,19 +45,19 @@ if ( ! $show_tab || count($tabs) < 1 ) {
                 <?php if($tab_error): ?>
                     <?php echo esc_html($tab_error); ?>
                 <?php endif; ?>
-            </button>
+            </a>
         </li>
         <?php continue; ?>
     <?php endif; ?>
         <!-- Tab item with children. -->
-        <li class="cxf--tab-item cxf--tab-has-children">
-            <button 
-                type="button" 
-                class="cxf--tab-btn active" 
-                data-cxf-tab="tab_<?php echo esc_attr( $tab_id ); ?>" 
+        <li class="cxf--tab-item cxf--tab-has-children <?php echo $key === 0 ? 'expanded' : ''; ?>">
+            <a 
+                href="#<?php echo esc_attr( $tab_id ) . '/' . sanitize_title($tab['children'][0]['title']) ?>"
+                class="cxf--tab-btn" 
+                data-cxf-tab="<?php echo esc_attr( $tab_id ) . '/' . sanitize_title($tab['children'][0]['title']) ?>" 
                 role="tab" 
                 aria-selected="true" 
-                aria-controls="panel_<?php echo esc_attr( $tab_id ); ?>"
+                aria-controls="panel_<?php echo esc_attr( $tab_id ) . '/' . sanitize_title($tab['children'][0]['title']) ?>"
             >
                 <?php if($tab_icon): ?>
                     <i class="cxf--tab-icon <?php echo esc_attr( $tab_icon ); ?>"></i>
@@ -68,20 +68,21 @@ if ( ! $show_tab || count($tabs) < 1 ) {
                 <?php if($tab_error): ?>
                     <?php echo esc_html($tab_error); ?>
                 <?php endif; ?>
-            </button>
+            </a>
             <!-- Tab children. -->
             <ul>
                 <?php foreach ( $tab['children'] as $children ):
 
-                    $children_id    = $tab_id .'/'. sanitize_title( $children['title'] );
+                    $children_title = $children['title'] ?? '';
+                    $children_id    = $tab_id .'/'. sanitize_title( $children_title );
                     $children_error = '';
                     $children_icon  = $children['icon'] ?? '';
                 ?>
-                    <li>
-                        <button 
-                            type="button" 
-                            class="cxf--tab-btn active" 
-                            data-cxf-tab="tab_<?php echo esc_attr( $children_id ); ?>" 
+                    <li class="cxf--tab-item">
+                        <a 
+                            href="#<?php echo esc_attr( $children_id ); ?>" 
+                            class="cxf--tab-btn" 
+                            data-cxf-tab="<?php echo esc_attr( $children_id ); ?>" 
                             role="tab" 
                             aria-selected="true" 
                             aria-controls="panel_<?php echo esc_attr( $children_id ); ?>"
@@ -89,13 +90,13 @@ if ( ! $show_tab || count($tabs) < 1 ) {
                             <?php if($children_icon): ?>
                                 <i class="cxf--tab-icon <?php echo esc_attr( $children_icon ); ?>"></i>
                             <?php endif; ?>
-                            <?php if($tab_title): ?>
-                                <?php echo esc_html($tab_title); ?>
+                            <?php if($children_title): ?>
+                                <?php echo esc_html($children_title); ?>
                             <?php endif; ?>
                             <?php if($children_error): ?>
                                 <?php echo esc_html($children_error); ?>
                             <?php endif; ?>    
-                        </button>
+                        </a>
                     </li>
                 <?php endforeach; ?>
             </ul>

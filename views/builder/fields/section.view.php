@@ -27,7 +27,7 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
 <div 
     class="cxf--section tab-panel <?php echo esc_attr( $section_class ); ?>" 
     id="panel_<?php echo esc_attr( $section_id ); ?>" 
-    data-cxf-tab="tab_<?php echo esc_attr( $section_id ); ?>" 
+    data-cxf-tab="<?php echo esc_attr( $section_id ); ?>" 
     role="tabpanel"
 >
     <!-- Title -->
