@@ -84,12 +84,8 @@ abstract class Widget extends Widget_Base {
 				'orderby'          => 'post_date',
 				'order'            => 'DESC',
 				'include'          => '',
-				'exclude'          => '',
-				'meta_key'         => '',
-				'meta_value'       => '',
 				'post_type'        => $post_type,
 				'post_status'      => 'publish',
-				'suppress_filters' => true,
 			);
 
 			$parsed_args = wp_parse_args( $args, $defaults );

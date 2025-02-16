@@ -436,7 +436,7 @@ abstract class MetaBox implements MetaBoxContract {
 			return;
 		}
 
-		// Prepare data, request, and errors.
+		// XSS ok. This "POST" requests is sanitizing below.
 		$request = isset($_POST[$this->id]) ? cxf_sanitize_recursive(wp_unslash($_POST[$this->id])) : [];
 		$data    = [];
 		$errors  = [];

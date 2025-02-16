@@ -23,12 +23,12 @@
     >
     <span 
         class="switcher-label" 
-        data-on="<?php echo esc_html__( $field['text_on'] ?? 'On', 'codexshaper-framework' ); ?>" 
-        data-off="<?php echo esc_html__( $field['text_off'] ?? 'Off', 'codexshaper-framework' ); ?>"
+        data-on="<?php echo esc_attr( $field['text_on'] ?? 'On' ); ?>" 
+        data-off="<?php echo esc_attr( $field['text_off'] ?? 'Off'); ?>"
     ></span>
     <span class="switcher-indicator"></span>
 </label>
 
 <?php if(isset($field['label']) && $field['label']): ?>
-    <span class="cxf--label"><?php echo esc_html__( $field['label'] ); ?></span>
+    <span class="cxf--label"><?php echo esc_html( $field['label'] ); ?></span>
 <?php endif; ?>

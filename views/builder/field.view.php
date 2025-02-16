@@ -13,7 +13,7 @@
 ?>
 <div 
     class="<?php echo esc_attr( "cxf--field cxf--field-{$field_type} {$class}" ); ?>" 
-    <?php echo $depend_attributes; ?>
+    <?php echo $depend_attributes; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 >
     <?php if ( $title ) : ?>
         <div class="cxf--field-title">

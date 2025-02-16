@@ -144,7 +144,7 @@ if ( ! function_exists( 'cxf_reset_query' ) ) {
 	 * @package CodexShaper_Framework
 	 */
 	function cxf_reset_query() {
-		wp_reset_query();
+		wp_reset_postdata();
 	}
 }
 

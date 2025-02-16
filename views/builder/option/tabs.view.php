@@ -52,12 +52,12 @@ if ( ! $show_tab || count($tabs) < 1 ) {
         <!-- Tab item with children. -->
         <li class="cxf--tab-item cxf--tab-has-children <?php echo $key === 0 ? 'expanded' : ''; ?>">
             <a 
-                href="#<?php echo esc_attr( $tab_id ) . '/' . sanitize_title($tab['children'][0]['title']) ?>"
+                href="#<?php echo esc_attr( $tab_id . '/' . sanitize_title($tab['children'][0]['title'])); ?>"
                 class="cxf--tab-btn" 
-                data-cxf-tab="<?php echo esc_attr( $tab_id ) . '/' . sanitize_title($tab['children'][0]['title']) ?>" 
+                data-cxf-tab="<?php echo esc_attr( $tab_id . '/' . sanitize_title($tab['children'][0]['title'])); ?>" 
                 role="tab" 
                 aria-selected="true" 
-                aria-controls="panel_<?php echo esc_attr( $tab_id ) . '/' . sanitize_title($tab['children'][0]['title']) ?>"
+                aria-controls="panel_<?php echo esc_attr( $tab_id . '/' . sanitize_title($tab['children'][0]['title'])); ?>"
             >
                 <?php if($tab_icon): ?>
                     <i class="cxf--tab-icon <?php echo esc_attr( $tab_icon ); ?>"></i>

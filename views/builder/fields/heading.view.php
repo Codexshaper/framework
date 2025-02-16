@@ -15,6 +15,13 @@ $id = $field['id'] ?? $identifier;
 $class = $field['class'] ?? 'cxf--heading';
 $content = $field['content'] ?? '';
 
-echo sprintf( '<%s id="%s" class="%s">%s</%s>', $tag, $id, $class, $content, $tag );
+echo sprintf( 
+    '<%s id="%s" class="%s">%s</%s>', 
+    esc_attr( $tag ), 
+    esc_attr( $id ), 
+    esc_attr( $class ), 
+    esc_attr( $content ), 
+    esc_attr( $tag ) 
+);
 ?>
 
