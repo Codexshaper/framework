@@ -35,7 +35,6 @@ class FoundationServiceProvider extends ServiceProvider {
 			TaxonomyServiceProvider::class,
 			MetaBoxServiceProvider::class,
 			WidgetServiceProvider::class,
-			ConsoleServiceProvider::class,
 		),
 	);
 
