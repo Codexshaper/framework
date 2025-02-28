@@ -1,0 +1,57 @@
+<?php
+/**
+ * Backup View
+ *
+ * @category   View
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ * @version    1.0.0
+ */
+?>
+<div class="cmf--import-wrapper">
+    <textarea name="cmf_import_data" class="cmf--import-data"></textarea>
+    <button 
+        type="submit" 
+        class="cmf--import button cmf--a-btn cmf--a-btn-primary" 
+        data-identifier="<?php echo esc_attr( $identifier ); ?>" 
+        data-option-name="<?php echo esc_attr( $option_name ); ?>" 
+        data-nonce="<?php echo esc_attr( $nonce ); ?>"
+    >
+        <?php echo esc_html__( 'Import', 'codexshaper-framework' );?>
+    </button>
+</div>
+
+<div class="cmf--export-wrapper">
+    <textarea readonly="readonly" class="cmf--option-export"><?php echo esc_html( $export_data ); ?></textarea>
+    <a 
+        href="<?php echo esc_url( $export ); ?>" 
+        class="cmf--export" 
+        target="_blank"
+    >
+        <?php echo esc_html__( 'Export & Download', 'codexshaper-framework' ); ?>
+    </a>
+    <button 
+        type="submit" 
+        value="reset" 
+        class="cmf--reset-option button cmf--a-btn cmf--a-btn-primary" 
+        data-identifier="<?php echo esc_attr( $identifier ); ?>"
+        data-option-name="<?php echo esc_attr( $option_name ); ?>"
+        data-nonce="<?php echo esc_attr( $nonce ); ?>"
+    >
+        <?php echo esc_html__( 'Reset', 'codexshaper-framework' ); ?>
+    </button>
+
+    <button 
+        type="submit"  
+        value="reset" 
+        class="cmf--delete-option button cmf--a-btn cmf--a-btn-primary" 
+        data-identifier="<?php echo esc_attr( $identifier ); ?>"
+        data-option-name="<?php echo esc_attr( $option_name ); ?>"
+        data-nonce="<?php echo esc_attr( $nonce ); ?>"
+    >
+        <?php echo esc_html__( 'Reset & Delete', 'codexshaper-framework' ); ?>
+    </button>
+</div>

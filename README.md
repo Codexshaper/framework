@@ -1,2 +1,2 @@
-# framework
-WordPress MVC framework
+# foundation
+Foundation for WordPress MVC Framework

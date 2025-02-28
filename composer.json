@@ -1,0 +1,43 @@
+{
+  "name": "codexshaper/framework",
+  "description": "An MVC framework for WordPress.",
+  "type": "library",
+  "license": "gpl-2.0",
+  "keywords": [
+    "wordpress",
+    "plugin"
+  ],
+  "homepage": "https://github.com/Codexshaper/framework/",
+  "autoload": {
+    "psr-4": {
+      "CodexShaper\\Framework\\": "src/"
+    },
+    "files": [
+      "inc/helpers/core.php",
+      "inc/utils/inflector.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Md Abu Ahsan Basir",
+      "email": "maab.career@gmil.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "doctrine/inflector": "^2.0",
+    "psr/container": "^2.0"
+  },
+  "require-dev": {
+    "wp-coding-standards/wpcs": "3.0",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
