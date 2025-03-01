@@ -59,8 +59,8 @@ class Field extends BaseField {
 			return;
 		}
 
+		$value             = ! isset($value) && isset( $field['default'] ) ? $field['default'] : $value;
 		$value             = $field['value'] ?? $value;
-		$value             = ! $value && isset( $field['default'] ) ? $field['default'] : $value;
 		$title             = $field['title'] ?? '';
 		$subtitle          = $field['subtitle'] ?? '';
 		$class             = $field['class'] ?? '';

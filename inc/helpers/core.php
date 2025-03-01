@@ -77,22 +77,6 @@ if ( ! function_exists( 'cmf_option_builder' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cmf_get_option' ) ) {
-
-	/**
-	 * Get CodexShaper Option Builder option
-	 *
-	 * @param string $option Option name.
-	 * @param mixed  $default_value Default value if option doesn't exists.
-	 *
-	 * @package CodexShaper_Framework
-	 */
-	function cmf_get_option( $option = '', $default_value = null ) {
-		$options = get_option( 'cmf_theme_options' );
-		return ( isset( $options[ $option ] ) ) ? $options[ $option ] : $default_value;
-	}
-}
-
 if ( ! function_exists( 'cmf_get_page_by_title' ) ) {
 
 	/**
@@ -470,6 +454,25 @@ if ( ! function_exists( 'cmf_settings' ) ) {
 		}
 
 		return $settings;
+	}
+}
+
+if ( ! function_exists( 'cmf_get_option' ) ) {
+
+	/**
+	 * Get CodexShaper Option Builder option
+	 *
+	 * @param string $option Option name.
+	 * @param mixed  $default Default value if option doesn't exists.
+	 *
+	 * @package CodexShaper_Framework
+	 */
+	function cmf_get_option( $option, $parent = null, $default = '' ) {
+		if ( $parent ) {
+			return  cmf_settings( $parent, $option, $default );
+		}
+
+		return get_option( $option ) ?? $default;
 	}
 }
 

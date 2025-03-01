@@ -490,7 +490,7 @@ class Option extends Builder {
    */
   public function get_default( $field ) {
 
-    $default = $field['default'] ?? array();
+    $default = $field['default'] ?? '';
     $field_id = $field['id'] ?? '';
     $defaults = $this->args['defaults'] ?? array();
 
