@@ -116,7 +116,7 @@ trait Hook {
 		}
 
 		$hook_name = array_shift( $args );
-		$action    = "cmf_{$hook_name}";
+		$action    = "csmf_{$hook_name}";
 
 		// Execute action hooks.
 		do_action( $action, ...$args );
@@ -145,7 +145,7 @@ trait Hook {
 
 		$hook_name = array_shift( $args );
 		$value     = array_shift( $args );
-		$filter    = "cmf_{$hook_name}";
+		$filter    = "csmf_{$hook_name}";
 
 		// Execute filter hooks.
 		return apply_filters( $filter, $value, ...$args );

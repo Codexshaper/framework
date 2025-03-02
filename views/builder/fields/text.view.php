@@ -10,11 +10,15 @@
  * @since      1.0.0
  * @version    1.0.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 ?>
 
 <input 
     type="<?php echo esc_attr( $type ); ?>" 
     name="<?php echo esc_attr( $name ); ?>" 
     value="<?php echo esc_attr( $value ); ?>"
-    <?php cmf_get_string_attributes($attributes); ?> 
+    <?php csmf_get_string_attributes($attributes); ?> 
 />

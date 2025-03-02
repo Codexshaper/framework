@@ -42,13 +42,13 @@ class Repeater extends BaseField {
 		);
 
 		if ( preg_match( '/' . preg_quote( '[' . $this->field['id'] . ']' ) . '/', $this->identifier ) ) {
-			echo '<div class="cmf--notice cmf--notice-danger">' . esc_html__( 'Error: Field ID conflict.', 'codexshaper-framework' ) . '</div>';
+			echo '<div class="csmf--notice csmf--notice-danger">' . esc_html__( 'Error: Field ID conflict.', 'codexshaper-framework' ) . '</div>';
 			return;
 		}
 
 		$this->before();
 
-		cmf_view(
+		csmf_view(
 			'builder.fields.repeater', 
 			array(
 				'identifier' => $this->identifier,

@@ -10,14 +10,18 @@
  * @since      1.0.0
  * @version    1.0.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 ?>
 
 <select 
-	class="<?php echo $is_choice ? 'cmf--choice' : ''?>"
+	class="<?php echo $is_choice ? 'csmf--choice' : ''?>"
 	name="<?php echo esc_attr( $name ); ?>"
 	<?php echo esc_attr( $multiple_attr ); ?>
 	<?php echo $placeholder_attr; ?>
-	<?php cmf_get_string_attributes( $attributes ); ?>
+	<?php csmf_get_string_attributes( $attributes ); ?>
 >
 	<?php if ( $args['placeholder'] && empty( $args['multiple'] ) ) :?>
 		<option value=""><?php echo esc_html( $args['placeholder'] ); ?></option>

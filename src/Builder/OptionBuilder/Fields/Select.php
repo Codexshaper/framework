@@ -74,11 +74,11 @@ class Select extends Field {
 
 			if ( ! is_array( $options ) || empty( $options ) ) {
 				$errors[] = $this->field['empty_message'] ?? 'No data available.';
-				cmf_view( 'builder.fields.error', compact( 'errors' ) );
+				csmf_view( 'builder.fields.error', compact( 'errors' ) );
 				return;
 			}
 
-			cmf_view(
+			csmf_view(
 				'builder.fields.select',
 				compact(
 					'is_choice',

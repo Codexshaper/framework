@@ -39,7 +39,7 @@ abstract class Skin extends Skin_Base {
 	 * @access protected
 	 * @var string
 	 */
-	protected $stack = 'cmf--post';
+	protected $stack = 'csmf--post';
 
 	/**
 	 * Skin sections.

@@ -82,27 +82,27 @@ class Application extends Container {
 			$plugin_base_path = dirname(__DIR__, 4);
 		}
 
-		if (! defined('CMF_APP_VERSION')) {
-			define('CMF_APP_VERSION', $this->version);
+		if (! defined('CSMF_APP_VERSION')) {
+			define('CSMF_APP_VERSION', $this->version);
 		}
 
 
-		if (! defined('CMF_PLUGIN_BASE_URL')) {
-			define('CMF_PLUGIN_BASE_URL', $plugin_base_url);
+		if (! defined('CSMF_PLUGIN_BASE_URL')) {
+			define('CSMF_PLUGIN_BASE_URL', $plugin_base_url);
 		}
 
-		if (! defined('CMF_PLUGIN_BASE_PATH')) {
-			define('CMF_PLUGIN_BASE_PATH', $plugin_base_path);
+		if (! defined('CSMF_PLUGIN_BASE_PATH')) {
+			define('CSMF_PLUGIN_BASE_PATH', $plugin_base_path);
 		}
 
-		if (! defined('CMF_PLUGIN_CONFIG_PATH')) {
-			define('CMF_PLUGIN_CONFIG_PATH', trailingslashit(untrailingslashit(CMF_PLUGIN_BASE_PATH)) . 'config/');
+		if (! defined('CSMF_PLUGIN_CONFIG_PATH')) {
+			define('CSMF_PLUGIN_CONFIG_PATH', trailingslashit(untrailingslashit(CSMF_PLUGIN_BASE_PATH)) . 'config/');
 		}
 
 
 		$this->app_base_path = dirname(__DIR__);
-		$this->plugin_base_url = CMF_PLUGIN_BASE_URL;
-		$this->plugin_base_path = CMF_PLUGIN_BASE_PATH;
+		$this->plugin_base_url = CSMF_PLUGIN_BASE_URL;
+		$this->plugin_base_path = CSMF_PLUGIN_BASE_PATH;
 
 		$this->register_bindings();
 		$this->register_service_providers();

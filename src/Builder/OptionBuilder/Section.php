@@ -59,7 +59,7 @@ class Section {
 			)
 		);
 
-		cmf_view(
+		csmf_view(
 			'builder.fields.section', 
 			compact(
 				'section',

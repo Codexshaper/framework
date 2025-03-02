@@ -50,7 +50,7 @@ final class PostTypeServiceProvider extends ServiceProvider {
 	public function register() {
 		$post_types = array();
 
-		$post_type_directory = cmf_plugin_base_path() . 'src/PostTypes/*';
+		$post_type_directory = csmf_plugin_base_path() . 'src/PostTypes/*';
 
 		foreach ( glob( $post_type_directory ) as $path ) {
 			if ( is_file( $path ) ) {

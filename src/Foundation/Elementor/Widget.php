@@ -74,7 +74,7 @@ abstract class Widget extends Widget_Base {
 	 *
 	 * @return void
 	 */
-	protected function switch_template_post( $post_type = 'cmf-theme-builder', $args = array() ) {
+	protected function switch_template_post( $post_type = 'csmf-theme-builder', $args = array() ) {
 		if ( $post_type === get_post_type() ) {
 
 			$defaults = array(

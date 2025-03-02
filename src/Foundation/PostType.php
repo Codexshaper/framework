@@ -149,7 +149,7 @@ abstract class PostType implements PostTypeContract {
 			$this->post_title = $this->get_title();
 		}
 
-		$this->plural_title = cmf_pluralize( $this->post_title );
+		$this->plural_title = csmf_pluralize( $this->post_title );
 
 		if ( method_exists( $this, 'get_plural_title' ) ) {
 			$this->plural_title = $this->get_plural_title();

@@ -46,16 +46,16 @@ class Field extends BaseField {
 
 		if ( ! $field_type ) {
 			$errors = "You must provide field type.";
-			cmf_view('builder.fields.error', compact('errors'));
+			csmf_view('builder.fields.error', compact('errors'));
 			return;
 		}
 
-		$class_name  = cmf_classify( $field_type );
+		$class_name  = csmf_classify( $field_type );
 		$field_class = "CodexShaper\Framework\Builder\OptionBuilder\Fields\\{$class_name}";
 
 		if ( ! class_exists( $field_class ) ) {
 			$errors = "Field doesn't exists.";
-			cmf_view('builder.fields.error', compact('errors'));
+			csmf_view('builder.fields.error', compact('errors'));
 			return;
 		}
 
@@ -116,7 +116,7 @@ class Field extends BaseField {
 
 		}
 		
-		cmf_view(
+		csmf_view(
 			'builder.field',
 			compact(
 				'field_type',

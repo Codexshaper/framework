@@ -50,7 +50,7 @@ class MetaBoxServiceProvider extends ServiceProvider {
 	public function register() {
 		$meta_boxes = array();
 
-		$meta_box_directory = cmf_plugin_base_path() . 'src/MetaBoxes/*';
+		$meta_box_directory = csmf_plugin_base_path() . 'src/MetaBoxes/*';
 
 		foreach ( glob( $meta_box_directory ) as $path ) {
 			if ( is_file( $path ) ) {

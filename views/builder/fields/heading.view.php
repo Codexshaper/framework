@@ -10,9 +10,14 @@
  * @since      1.0.0
  * @version    1.0.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 $tag = $field['tag'] ?? 'h3';
 $id = $field['id'] ?? $identifier;
-$class = $field['class'] ?? 'cmf--heading';
+$class = $field['class'] ?? 'csmf--heading';
 $content = $field['content'] ?? '';
 
 echo sprintf( 

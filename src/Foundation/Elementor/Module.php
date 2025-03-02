@@ -72,7 +72,7 @@ abstract class Module extends BaseModule {
 	 * @return string
 	 */
 	public function get_assets_base_url(): string {
-		return cmf_plugin_base_url() . 'widgets/elementor/';
+		return csmf_plugin_base_url() . 'widgets/elementor/';
 	}
 
 	/**

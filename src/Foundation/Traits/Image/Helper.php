@@ -147,7 +147,7 @@ trait Helper {
 		$img_src_attr = 'src';
 
 		if ( $is_custom_lazy ) {
-			wp_enqueue_script( 'cmf--lazy-load' );
+			wp_enqueue_script( 'csmf--lazy-load' );
 			$img_src_attr = 'data-src';
 		}
 

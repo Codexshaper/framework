@@ -291,7 +291,7 @@ abstract class Module {
 	 * @return string
 	 */
 	protected function get_assets_base_url() {
-		return cmf_plugin_base_path() . 'widgets/wordpress/assets/';
+		return csmf_plugin_base_path() . 'widgets/wordpress/assets/';
 	}
 
 	/**

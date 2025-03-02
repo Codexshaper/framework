@@ -79,7 +79,7 @@ class Media extends Field {
 		$placeholder = $this->field['placeholder'] ?? 'Not selected';
 
 		if ( $args['preview'] ) {
-			cmf_view(
+			csmf_view(
 				'builder.fields.upload.preview',
 				array(
 					'args' => $args,
@@ -88,7 +88,7 @@ class Media extends Field {
 			);
 		}
 
-		cmf_view(
+		csmf_view(
 			'builder.fields.media',
 			array(
 				'name'       => $this->get_name( $this->field, $this->identifier ),

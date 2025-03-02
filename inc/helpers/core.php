@@ -13,7 +13,7 @@
 
 use CodexShaper\Framework\Application;
 
-if (! function_exists('cmf_app')) {
+if (! function_exists('csmf_app')) {
     /**
      * Get the available container instance.
      *
@@ -22,7 +22,7 @@ if (! function_exists('cmf_app')) {
 	 * 
      * @return mixed|\CodexShaper\Framework\Container\Container Container instance.
      */
-    function cmf_app($abstract = null, array $parameters = [], $plugin_base_url = '', $plugin_base_path = '')
+    function csmf_app($abstract = null, array $parameters = [], $plugin_base_url = '', $plugin_base_path = '')
     {
 		$app = Application::getInstance($plugin_base_url, $plugin_base_path);
 
@@ -34,26 +34,26 @@ if (! function_exists('cmf_app')) {
     }
 }
 
-if ( ! function_exists( 'cmf_config' ) ) {
+if ( ! function_exists( 'csmf_config' ) ) {
 
 	/**
 	 * Get core helper function
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_config( $name ) {
-		return cmf_app('config')->get( $name );
+	function csmf_config( $name ) {
+		return csmf_app('config')->get( $name );
 	}
 }
 
-if ( ! function_exists( 'cmf_helper' ) ) {
+if ( ! function_exists( 'csmf_helper' ) ) {
 
 	/**
 	 * Get core helper function
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_helper() {
+	function csmf_helper() {
 		if ( ! class_exists( '\CodexShaper\Framework\Core\Helper' ) ) {
 			return;
 		}
@@ -61,14 +61,14 @@ if ( ! function_exists( 'cmf_helper' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cmf_option_builder' ) ) {
+if ( ! function_exists( 'csmf_option_builder' ) ) {
 
 	/**
 	 * Get page by page title
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_option_builder() {
+	function csmf_option_builder() {
 		if ( ! class_exists( '\CodexShaper\Framework\Builder\COB' ) ) {
 			return;
 		}
@@ -77,7 +77,7 @@ if ( ! function_exists( 'cmf_option_builder' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cmf_get_page_by_title' ) ) {
+if ( ! function_exists( 'csmf_get_page_by_title' ) ) {
 
 	/**
 	 * Get page by page title
@@ -86,7 +86,7 @@ if ( ! function_exists( 'cmf_get_page_by_title' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_get_page_by_title( $title ) {
+	function csmf_get_page_by_title( $title ) {
 		$query = new WP_Query(
 			array(
 				'post_type'              => 'page',
@@ -106,7 +106,7 @@ if ( ! function_exists( 'cmf_get_page_by_title' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cmf_query' ) ) {
+if ( ! function_exists( 'csmf_query' ) ) {
 
 	/**
 	 * Get query by options
@@ -115,19 +115,19 @@ if ( ! function_exists( 'cmf_query' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_query( $options = '' ) {
+	function csmf_query( $options = '' ) {
 		return new CodexShaper\Framework\Builder\Database\Query( $options );
 	}
 }
 
-if ( ! function_exists( 'cmf_reset_query' ) ) {
+if ( ! function_exists( 'csmf_reset_query' ) ) {
 
 	/**
 	 * Reset current query
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_reset_query() {
+	function csmf_reset_query() {
 		wp_reset_postdata();
 	}
 }
@@ -147,9 +147,9 @@ if ( ! function_exists( 'cmf_reset_query' ) ) {
  *
  * @return WP_Post[]|int[] Array of post objects or post IDs.
  */
-if ( ! function_exists( 'cmf_get_elementor_templates' ) ) {
+if ( ! function_exists( 'csmf_get_elementor_templates' ) ) {
 
-	function cmf_get_elementor_templates( $args = null ) {
+	function csmf_get_elementor_templates( $args = null ) {
 		$templates = array();
 
 		$defaults = array(
@@ -164,7 +164,7 @@ if ( ! function_exists( 'cmf_get_elementor_templates' ) ) {
 
 		$parsed_args = wp_parse_args( $args, $defaults );
 
-		$posts = cmf_query()->get_post_types( $parsed_args );
+		$posts = csmf_query()->get_post_types( $parsed_args );
 
 		if ( $posts ) {
 			foreach ( $posts as $post ) {
@@ -176,7 +176,7 @@ if ( ! function_exists( 'cmf_get_elementor_templates' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cmf_app_base_path' ) ) {
+if ( ! function_exists( 'csmf_app_base_path' ) ) {
 
 	/**
 	 * Get view base
@@ -185,12 +185,12 @@ if ( ! function_exists( 'cmf_app_base_path' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_app_base_path() {
-		return cmf_app()->getAppBasePath();
+	function csmf_app_base_path() {
+		return csmf_app()->getAppBasePath();
 	}
 }
 
-if ( ! function_exists( 'cmf_plugin_base_path' ) ) {
+if ( ! function_exists( 'csmf_plugin_base_path' ) ) {
 
 	/**
 	 * Get view base
@@ -199,17 +199,17 @@ if ( ! function_exists( 'cmf_plugin_base_path' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_plugin_base_path() {
+	function csmf_plugin_base_path() {
 		
-		if ( ! defined('CMF_PLUGIN_BASE_PATH') ) {
-			define( 'CMF_PLUGIN_BASE_PATH', cmf_app()->getPluginBasePath() );
+		if ( ! defined('CSMF_PLUGIN_BASE_PATH') ) {
+			define( 'CSMF_PLUGIN_BASE_PATH', csmf_app()->getPluginBasePath() );
 		}
 
-		return trailingslashit(untrailingslashit(CMF_PLUGIN_BASE_PATH));
+		return trailingslashit(untrailingslashit(CSMF_PLUGIN_BASE_PATH));
 	}
 }
 
-if ( ! function_exists( 'cmf_plugin_base_url' ) ) {
+if ( ! function_exists( 'csmf_plugin_base_url' ) ) {
 
 	/**
 	 * Get view base
@@ -218,12 +218,12 @@ if ( ! function_exists( 'cmf_plugin_base_url' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_plugin_base_url() {
-		return cmf_app()->getPluginBaseUrl();
+	function csmf_plugin_base_url() {
+		return csmf_app()->getPluginBaseUrl();
 	}
 }
 
-if ( ! function_exists( 'cmf_view_base' ) ) {
+if ( ! function_exists( 'csmf_view_base' ) ) {
 
 	/**
 	 * Get view base
@@ -234,16 +234,16 @@ if ( ! function_exists( 'cmf_view_base' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_view_base( $view_base = '' ) {
+	function csmf_view_base( $view_base = '' ) {
 		if ( ! $view_base || empty( $view_base ) ) {
-			$view_base = cmf_plugin_base_path() . 'views';
+			$view_base = csmf_plugin_base_path() . 'views';
 		}
 
 		return $view_base;
 	}
 }
 
-if ( ! function_exists( 'cmf_view_path' ) ) {
+if ( ! function_exists( 'csmf_view_path' ) ) {
 
 	/**
 	 * Render View
@@ -255,15 +255,15 @@ if ( ! function_exists( 'cmf_view_path' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_view_path( $view, $base = '', $extension = 'view.php' ) {
+	function csmf_view_path( $view, $base = '', $extension = 'view.php' ) {
 		// Get the view base path.
-		$view_base = cmf_view_base( $base );
+		$view_base = csmf_view_base( $base );
 		// Sanitize the view name.
 		$path = str_replace( array( '.', '|' ), DIRECTORY_SEPARATOR, $view );
-		$fallback_view_base = cmf_app_base_path() . 'views';
-		$view_base = cmf_plugin_base_path() . 'views';
-		$elementor_view_base = cmf_plugin_base_path() . 'widgets/elementor/views';
-		$wordpress_view_base = cmf_plugin_base_path() . 'widgets/wordpress/views';
+		$fallback_view_base = csmf_app_base_path() . 'views';
+		$view_base = csmf_plugin_base_path() . 'views';
+		$elementor_view_base = csmf_plugin_base_path() . 'widgets/elementor/views';
+		$wordpress_view_base = csmf_plugin_base_path() . 'widgets/wordpress/views';
 
 		// Check if the view file exists.
 		if ( empty( $base ) ) {
@@ -301,7 +301,7 @@ if ( ! function_exists( 'cmf_view_path' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cmf_view_exists' ) ) {
+if ( ! function_exists( 'csmf_view_exists' ) ) {
 
 	/**
 	 * Check view exists
@@ -313,9 +313,9 @@ if ( ! function_exists( 'cmf_view_exists' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_view_exists( $view, $base = '' ) {
+	function csmf_view_exists( $view, $base = '' ) {
 
-		$view_path = cmf_view_path( $view, $base );
+		$view_path = csmf_view_path( $view, $base );
 
 		// Check if the view file exists
 		if ( ! file_exists( $view_path ) ) {
@@ -326,7 +326,7 @@ if ( ! function_exists( 'cmf_view_exists' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cmf_view' ) ) {
+if ( ! function_exists( 'csmf_view' ) ) {
 
     /**
      * Render a View with Full Scope Isolation
@@ -338,11 +338,11 @@ if ( ! function_exists( 'cmf_view' ) ) {
      *
      * @return string|void Rendered output or void if rendered directly.
      */
-    function cmf_view( $view, $data = [], $render = false, $base = '' ) {
+    function csmf_view( $view, $data = [], $render = false, $base = '' ) {
         static $data_stack = []; // Keeps track of view data for nested calls.
 
         // Resolve the full path to the view file.
-        $view_path = cmf_view_path( $view, $base );
+        $view_path = csmf_view_path( $view, $base );
 
         // Check if the view file exists.
         if ( ! file_exists( $view_path ) ) {
@@ -385,7 +385,7 @@ if ( ! function_exists( 'cmf_view' ) ) {
     }
 }
 
-if ( ! function_exists( 'cmf_view_render' ) ) {
+if ( ! function_exists( 'csmf_view_render' ) ) {
 
 	/**
 	 * Render View
@@ -396,12 +396,12 @@ if ( ! function_exists( 'cmf_view_render' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_view_render( $view, $data = array(), $base = '' ) {
-		return cmf_view( $view, $data, true, $base );
+	function csmf_view_render( $view, $data = array(), $base = '' ) {
+		return csmf_view( $view, $data, true, $base );
 	}
 }
 
-if ( ! function_exists( 'cmf_get_string_attributes' ) ) {
+if ( ! function_exists( 'csmf_get_string_attributes' ) ) {
 
 	/**
 	 * Get settings
@@ -412,7 +412,7 @@ if ( ! function_exists( 'cmf_get_string_attributes' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_get_string_attributes( $attributes, $render = false ) {
+	function csmf_get_string_attributes( $attributes, $render = false ) {
 
 		$attributes_html = implode( ' ', $attributes );
 
@@ -424,7 +424,7 @@ if ( ! function_exists( 'cmf_get_string_attributes' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cmf_settings' ) ) {
+if ( ! function_exists( 'csmf_settings' ) ) {
 
 	/**
 	 * Get settings
@@ -438,7 +438,7 @@ if ( ! function_exists( 'cmf_settings' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_settings( $option_name, $key = null, $default = false, $sanitize_callback = '' ) {
+	function csmf_settings( $option_name, $key = null, $default = false, $sanitize_callback = '' ) {
 		$settings = get_option( $option_name, array() );
 
 		if ( $key !== null && ! empty( $key ) ) {
@@ -457,7 +457,7 @@ if ( ! function_exists( 'cmf_settings' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cmf_get_option' ) ) {
+if ( ! function_exists( 'csmf_get_option' ) ) {
 
 	/**
 	 * Get CodexShaper Option Builder option
@@ -467,38 +467,38 @@ if ( ! function_exists( 'cmf_get_option' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cmf_get_option( $option, $parent = null, $default = '' ) {
+	function csmf_get_option( $option, $parent = null, $default = '' ) {
 		if ( $parent ) {
-			return  cmf_settings( $parent, $option, $default );
+			return  csmf_settings( $parent, $option, $default );
 		}
 
 		return get_option( $option ) ?? $default;
 	}
 }
 
-if ( ! function_exists( 'cmf_sanitize_recursive' ) ) {
+if ( ! function_exists( 'csmf_sanitize_recursive' ) ) {
 	/**
 	 * Recursively sanitize an array or string.
 	 *
 	 * @param mixed $data The data to sanitize (string or array).
 	 * @return mixed The sanitized data.
 	 */
-	function cmf_sanitize_recursive( $data ) {
+	function csmf_sanitize_recursive( $data ) {
 		if ( is_array( $data ) ) {
-			return array_map( 'cmf_sanitize_recursive', $data );
+			return array_map( 'csmf_sanitize_recursive', $data );
 		}
 
 		return sanitize_text_field( $data );
 	}
 }
 
-if(!function_exists('cmf_get_post_types')) {
+if(!function_exists('csmf_get_post_types')) {
 	/**
 	 * Get all post types
 	 *
 	 * @return array $posts All post types.
 	 */
-	function cmf_get_post_types() {
+	function csmf_get_post_types() {
 		global $wp_post_types;
 		$posts = array();
 		$skip_post_types = [
@@ -516,8 +516,8 @@ if(!function_exists('cmf_get_post_types')) {
 			'revision',
 			'attachment',
 			'elementor_library',
-			'cmf-theme-builder',
-			'cmf-custom-fonts',
+			'csmf-theme-builder',
+			'csmf-custom-fonts',
 		];
 		
 		foreach ($wp_post_types as $post_type) {
@@ -532,13 +532,13 @@ if(!function_exists('cmf_get_post_types')) {
 	}
 }
 
-if(!function_exists('cmf_get_taxonomies')) {
+if(!function_exists('csmf_get_taxonomies')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cmf_get_taxonomies() {
+	function csmf_get_taxonomies() {
 		// Get all taxonomies.
 		global $wp_taxonomies;
 		$taxonomies = array();
@@ -551,15 +551,15 @@ if(!function_exists('cmf_get_taxonomies')) {
 	}
 }
 
-if(!function_exists('cmf_get_cache_post_types')) {
+if(!function_exists('csmf_get_cache_post_types')) {
 	/**
 	 * Get all post types
 	 *
 	 * @return array $posts All post types.
 	 */
-	function cmf_get_cache_post_types() {
+	function csmf_get_cache_post_types() {
 		// Get all post types.
-		$data = get_option('cmf_post_types_cache');
+		$data = get_option('csmf_post_types_cache');
 		// If no data found, return empty array.
 		if (! $data) {
 			return [];
@@ -573,15 +573,15 @@ if(!function_exists('cmf_get_cache_post_types')) {
 	}
 }
 
-if(!function_exists('cmf_get_cache_taxonomies')) {
+if(!function_exists('csmf_get_cache_taxonomies')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cmf_get_cache_taxonomies() {
+	function csmf_get_cache_taxonomies() {
 		// Get all taxonomies.
-		$data = get_option('cmf_taxonomies_cache');
+		$data = get_option('csmf_taxonomies_cache');
 		// If no data found, return empty array.
 		if (! $data) {
 			return [];
@@ -595,17 +595,17 @@ if(!function_exists('cmf_get_cache_taxonomies')) {
 	}
 }
 
-if(!function_exists('cmf_get_cache_metaboxes')) {
+if(!function_exists('csmf_get_cache_metaboxes')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cmf_get_cache_metaboxes($field = '') {
-		$metabox_prefix = cmf_config('options.metabox.prefix') ?? 'cmf_metabox_settings';
-		$metabox_option_name = cmf_config('options.metabox.option_name') ?? 'cmf_metabox_options';
+	function csmf_get_cache_metaboxes($field = '') {
+		$metabox_prefix = csmf_config('options.metabox.prefix') ?? 'csmf_metabox_settings';
+		$metabox_option_name = csmf_config('options.metabox.option_name') ?? 'csmf_metabox_options';
 		// Get all settings.
-		$data = cmf_settings($metabox_prefix);
+		$data = csmf_settings($metabox_prefix);
 		$metaboxes = $data[$metabox_option_name] ?? [];
 
 		if (! empty($field)) {
@@ -621,17 +621,17 @@ if(!function_exists('cmf_get_cache_metaboxes')) {
 	}
 }
 
-if(!function_exists('cmf_get_cache_sections')) {
+if(!function_exists('csmf_get_cache_sections')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cmf_get_cache_sections($field = '') {
-		$section_prefix 		= cmf_config('options.section.prefix') ?? 'cmf_metabox_settings';
-		$section_option_name 	= cmf_config('options.section.option_name') ?? 'cmf_section_settings';
+	function csmf_get_cache_sections($field = '') {
+		$section_prefix 		= csmf_config('options.section.prefix') ?? 'csmf_metabox_settings';
+		$section_option_name 	= csmf_config('options.section.option_name') ?? 'csmf_section_settings';
 		// Get all settings.
-		$data 					= cmf_settings($section_prefix);
+		$data 					= csmf_settings($section_prefix);
 		$sections 				= $data[$section_option_name] ?? [];
 
 		if ( ! is_array($sections) || empty($sections)) {
@@ -651,17 +651,17 @@ if(!function_exists('cmf_get_cache_sections')) {
 	}
 }
 
-if(!function_exists('cmf_get_cache_fields')) {
+if(!function_exists('csmf_get_cache_fields')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cmf_get_cache_fields($field = '') {
-		$field_prefix = cmf_config('options.field.prefix') ?? 'cmf_metabox_settings';
-		$field_option_name = cmf_config('options.field.option_name') ?? 'cmf_metabox_section_field_settings';
+	function csmf_get_cache_fields($field = '') {
+		$field_prefix = csmf_config('options.field.prefix') ?? 'csmf_metabox_settings';
+		$field_option_name = csmf_config('options.field.option_name') ?? 'csmf_metabox_section_field_settings';
 		// Get all settings.
-		$data = cmf_settings($field_prefix);
+		$data = csmf_settings($field_prefix);
 		$fields = $data[$field_option_name] ?? [];
 
 		if (empty($field)) {
@@ -674,14 +674,14 @@ if(!function_exists('cmf_get_cache_fields')) {
 	}
 }
 
-if(!function_exists('cmf_get_builder_fields')) {
+if(!function_exists('csmf_get_builder_fields')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cmf_get_builder_fields($keys = '', $skips = array()) {
-		$fields = cmf_config('builder.fields') ?? [];
+	function csmf_get_builder_fields($keys = '', $skips = array()) {
+		$fields = csmf_config('builder.fields') ?? [];
 
 		/**
 		 * Filter fields
@@ -747,7 +747,7 @@ if(!function_exists('cmf_get_builder_fields')) {
 	}
 }
 
-if (! function_exists('cmf_get_json_data')) {
+if (! function_exists('csmf_get_json_data')) {
 	/**
 	 * Get json data
 	 *
@@ -755,7 +755,7 @@ if (! function_exists('cmf_get_json_data')) {
 	 *
 	 * @return array $data Json data.
 	 */
-	function cmf_get_json_data( $file_path, $associative = true ) {
+	function csmf_get_json_data( $file_path, $associative = true ) {
 		if ( ! file_exists( $file_path ) || ! is_readable( $file_path ) ) {
 			return [];
 		}
@@ -764,7 +764,7 @@ if (! function_exists('cmf_get_json_data')) {
 	}	
 }
 
-if (! function_exists('cmf_elementor_modules')) {
+if (! function_exists('csmf_elementor_modules')) {
 	/**
 	 * Get json data
 	 *
@@ -772,7 +772,7 @@ if (! function_exists('cmf_elementor_modules')) {
 	 *
 	 * @return array $data Json data.
 	 */
-	function cmf_elementor_modules( $module_dir ) {
+	function csmf_elementor_modules( $module_dir ) {
 
 		$module_directory = untrailingslashit($module_dir) . "/*//";
 		$modules = [];
@@ -781,7 +781,7 @@ if (! function_exists('cmf_elementor_modules')) {
 				$parts  = explode( '/', untrailingslashit( $path ) );
 				$module = end( $parts );
 				if ( ! in_array( $module, $modules, true ) ) {
-					$modules[$module] = cmf_get_json_data( $path . 'module.json' );
+					$modules[$module] = csmf_get_json_data( $path . 'module.json' );
 				}
 			}
 		}
@@ -790,7 +790,7 @@ if (! function_exists('cmf_elementor_modules')) {
 	}	
 }
 
-if (! function_exists('cmf_builder_template_tab_filter')) {
+if (! function_exists('csmf_builder_template_tab_filter')) {
 	/**
 	 * Get add tab filter query
 	 *
@@ -800,7 +800,7 @@ if (! function_exists('cmf_builder_template_tab_filter')) {
 	 *
 	 * @return array $data Json data.
 	 */
-	function cmf_builder_template_tab_filter(\WP_Query $query, $template_type, $meta_key) {
+	function csmf_builder_template_tab_filter(\WP_Query $query, $template_type, $meta_key) {
 		if ( ! is_admin() ) {
 			return;
 		}
@@ -810,7 +810,7 @@ if (! function_exists('cmf_builder_template_tab_filter')) {
 	}
 }
 
-if (! function_exists('cmf_get_current_post_by_condition')) {
+if (! function_exists('csmf_get_current_post_by_condition')) {
 	/**
 	 * Get current post by condition
 	 *
@@ -820,7 +820,7 @@ if (! function_exists('cmf_get_current_post_by_condition')) {
 	 *
 	 * @return array $data Json data.
 	 */
-	function cmf_get_current_post_by_condition($post_type, $template_type, $meta_key) {
+	function csmf_get_current_post_by_condition($post_type, $template_type, $meta_key) {
 
 		$query_args = array(
 			'post_type'      => $post_type,
@@ -848,11 +848,11 @@ if (! function_exists('cmf_get_current_post_by_condition')) {
  * @since 1.0.0
  * @return void
  */
-if ( ! function_exists( 'cmf_export_option' ) ) {
-	function cmf_export_option() {
+if ( ! function_exists( 'csmf_export_option' ) ) {
+	function csmf_export_option() {
 		// Verify nonce.
 		$nonce = isset( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'cmf_backup_nonce' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'csmf_backup_nonce' ) ) {
 			wp_die( esc_html__( 'Error: Invalid nonce verification.', 'codexshaper-framework' ) );
 		}
 
@@ -907,11 +907,11 @@ if ( ! function_exists( 'cmf_export_option' ) ) {
  * @version 1.0.0
  * @return void
  */
-if ( ! function_exists( 'cmf_import_option' ) ) {
-	function cmf_import_option() {
+if ( ! function_exists( 'csmf_import_option' ) ) {
+	function csmf_import_option() {
 		// Verify nonce.
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'cmf_backup_nonce' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'csmf_backup_nonce' ) ) {
 			wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'codexshaper-framework' ) ) );
 		}
 
@@ -956,11 +956,11 @@ if ( ! function_exists( 'cmf_import_option' ) ) {
  * @version 1.0.0
  * @return void
  */
-if ( ! function_exists( 'cmf_reset_option' ) ) {
-	function cmf_reset_option() {
+if ( ! function_exists( 'csmf_reset_option' ) ) {
+	function csmf_reset_option() {
 		// Verify nonce
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'cmf_backup_nonce' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'csmf_backup_nonce' ) ) {
 			wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'codexshaper-framework' ) ) );
 		}
 
@@ -990,11 +990,11 @@ if ( ! function_exists( 'cmf_reset_option' ) ) {
  * @version 1.0.0
  * @return void
  */
-if ( ! function_exists( 'cmf_delete_option' ) ) {
-	function cmf_delete_option() {
+if ( ! function_exists( 'csmf_delete_option' ) ) {
+	function csmf_delete_option() {
 		// Verify nonce
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'cmf_backup_nonce' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'csmf_backup_nonce' ) ) {
 			wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'codexshaper-framework' ) ) );
 		}
 
@@ -1017,7 +1017,7 @@ if ( ! function_exists( 'cmf_delete_option' ) ) {
 	}
 }
 
-add_action( "wp_ajax_cmf_settings_backup_export", 'cmf_export_option' );
-add_action( 'wp_ajax_cmf_import_option', 'cmf_import_option' );
-add_action( 'wp_ajax_cmf_reset_option', 'cmf_reset_option' );
-add_action( 'wp_ajax_cmf_delete_option', 'cmf_delete_option' );
+add_action( "wp_ajax_csmf_settings_backup_export", 'csmf_export_option' );
+add_action( 'wp_ajax_csmf_import_option', 'csmf_import_option' );
+add_action( 'wp_ajax_csmf_reset_option', 'csmf_reset_option' );
+add_action( 'wp_ajax_csmf_delete_option', 'csmf_delete_option' );

@@ -161,7 +161,7 @@ abstract class Taxonomy implements TaxonomyContract {
 			$this->taxonomy_title = $this->get_title();
 		}
 
-		$this->plural_title = cmf_pluralize( $this->taxonomy_title );
+		$this->plural_title = csmf_pluralize( $this->taxonomy_title );
 
 		if ( method_exists( $this, 'get_plural_title' ) ) {
 			$this->plural_title = $this->get_plural_title();

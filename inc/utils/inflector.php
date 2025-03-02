@@ -1,13 +1,13 @@
 <?php
 
-if ( ! function_exists( 'cmf_inflector' ) ) {
+if ( ! function_exists( 'csmf_inflector' ) ) {
 
 	/**
 	 * Get inflector instance
 	 *
 	 * @return \CodexShaper\Framework\Supports\Inflector The single instance of the class.
 	 */
-	function cmf_inflector() {
+	function csmf_inflector() {
 		if ( ! class_exists( '\CodexShaper\Framework\Support\Inflector' ) ) {
 			return;
 		}
@@ -15,7 +15,7 @@ if ( ! function_exists( 'cmf_inflector' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cmf_tableize' ) ) {
+if ( ! function_exists( 'csmf_tableize' ) ) {
 
 	/**
 	 * Get tableize name from given string name.
@@ -25,12 +25,12 @@ if ( ! function_exists( 'cmf_tableize' ) ) {
 	 *
 	 * @return string The tableized name.
 	 */
-	function cmf_tableize( $word ) {
-		return cmf_inflector()->tableize( $word );
+	function csmf_tableize( $word ) {
+		return csmf_inflector()->tableize( $word );
 	}
 }
 
-if ( ! function_exists( 'cmf_classify' ) ) {
+if ( ! function_exists( 'csmf_classify' ) ) {
 
 	/**
 	 * Get classify name from given string name.
@@ -40,12 +40,12 @@ if ( ! function_exists( 'cmf_classify' ) ) {
 	 *
 	 * @return string The classified name.
 	 */
-	function cmf_classify( $word ) {
-		return cmf_inflector()->classify( $word );
+	function csmf_classify( $word ) {
+		return csmf_inflector()->classify( $word );
 	}
 }
 
-if ( ! function_exists( 'cmf_camelize' ) ) {
+if ( ! function_exists( 'csmf_camelize' ) ) {
 
 	/**
 	 * Get camelize name from given string name.
@@ -56,12 +56,12 @@ if ( ! function_exists( 'cmf_camelize' ) ) {
 	 *
 	 * @return string The camelized name.
 	 */
-	function cmf_camelize( $word ) {
-		return cmf_inflector()->camelize( $word );
+	function csmf_camelize( $word ) {
+		return csmf_inflector()->camelize( $word );
 	}
 }
 
-if ( ! function_exists( 'cmf_capitalize' ) ) {
+if ( ! function_exists( 'csmf_capitalize' ) ) {
 
 	/**
 	 * Get capitalize name from given string name.
@@ -71,12 +71,12 @@ if ( ! function_exists( 'cmf_capitalize' ) ) {
 	 *
 	 * @return string The capitalized name.
 	 */
-	function cmf_capitalize( $word ) {
-		return cmf_inflector()->capitalize( $word );
+	function csmf_capitalize( $word ) {
+		return csmf_inflector()->capitalize( $word );
 	}
 }
 
-if ( ! function_exists( 'cmf_pluralize' ) ) {
+if ( ! function_exists( 'csmf_pluralize' ) ) {
 
 	/**
 	 * Get pluralize name from given string name.
@@ -86,12 +86,12 @@ if ( ! function_exists( 'cmf_pluralize' ) ) {
 	 *
 	 * @return string The pluralized name.
 	 */
-	function cmf_pluralize( $word ) {
-		return cmf_inflector()->pluralize( $word );
+	function csmf_pluralize( $word ) {
+		return csmf_inflector()->pluralize( $word );
 	}
 }
 
-if ( ! function_exists( 'cmf_singularize' ) ) {
+if ( ! function_exists( 'csmf_singularize' ) ) {
 
 	/**
 	 * Get singularize name from given string name.
@@ -101,12 +101,12 @@ if ( ! function_exists( 'cmf_singularize' ) ) {
 	 *
 	 * @return string Singularized name.
 	 */
-	function cmf_singularize( $word ) {
-		return cmf_inflector()->singularize( $word );
+	function csmf_singularize( $word ) {
+		return csmf_inflector()->singularize( $word );
 	}
 }
 
-if ( ! function_exists( 'cmf_slug' ) ) {
+if ( ! function_exists( 'csmf_slug' ) ) {
 
 	/**
 	 * Get slug name from given string name.
@@ -116,12 +116,12 @@ if ( ! function_exists( 'cmf_slug' ) ) {
 	 *
 	 * @return string The slug.
 	 */
-	function cmf_slug( $word ) {
-		return cmf_inflector()->slug( $word );
+	function csmf_slug( $word ) {
+		return csmf_inflector()->slug( $word );
 	}
 }
 
-if ( ! function_exists( 'cmf_title' ) ) {
+if ( ! function_exists( 'csmf_title' ) ) {
 
 	/**
 	 * Get title name from given text.
@@ -131,7 +131,7 @@ if ( ! function_exists( 'cmf_title' ) ) {
 	 *
 	 * @return string The title.
 	 */
-	function cmf_title( $text ) {
+	function csmf_title( $text ) {
 		$string = preg_replace( '/([a-z])([A-Z])/', '\\1 \\2', $text );
 		$string = preg_replace( '/[-_]/', ' ', $string );
 		return ucwords( $string );

@@ -46,7 +46,7 @@ class Accordion extends Field {
 
         $this->before();
 
-        cmf_view( 'builder.fields.accordion', [
+        csmf_view( 'builder.fields.accordion', [
             'field' => $this->field,
             'value' => $this->value,
             'identifier'    => $this->identifier,

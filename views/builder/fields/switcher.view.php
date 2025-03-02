@@ -10,15 +10,19 @@
  * @since      1.0.0
  * @version    1.0.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 ?>
 
-<label class="cmf--switcher" <?php echo isset($field['width']) && $field['width'] ? 'style="width: ' . $field['width'] . 'px;"' : ''; ?>>
+<label class="csmf--switcher" <?php echo isset($field['width']) && $field['width'] ? 'style="width: ' . $field['width'] . 'px;"' : ''; ?>>
     <input 
         type="checkbox" 
         class="switcher-input"
         name="<?php echo esc_attr( $name ); ?>" 
         value="1" 
-        <?php cmf_get_string_attributes( $attributes ); ?>
+        <?php csmf_get_string_attributes( $attributes ); ?>
         <?php checked( $value, true ); ?>
     >
     <span 
@@ -30,5 +34,5 @@
 </label>
 
 <?php if(isset($field['label']) && $field['label']): ?>
-    <span class="cmf--label"><?php echo esc_html__( $field['label'] ); ?></span>
+    <span class="csmf--label"><?php echo esc_html__( $field['label'] ); ?></span>
 <?php endif; ?>

@@ -41,7 +41,7 @@ class Switcher extends Field {
         $attributes = $this->get_attributes();
         $this->before();
 
-        cmf_view( 'builder.fields.switcher', compact(
+        csmf_view( 'builder.fields.switcher', compact(
                 'identifier',
                 'value',
                 'field',

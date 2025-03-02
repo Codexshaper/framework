@@ -10,12 +10,16 @@
  * @since      1.0.0
  * @version    1.0.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 ?>
-<div class="cmf--import-wrapper">
-    <textarea name="cmf_import_data" class="cmf--import-data"></textarea>
+<div class="csmf--import-wrapper">
+    <textarea name="csmf_import_data" class="csmf--import-data"></textarea>
     <button 
         type="submit" 
-        class="cmf--import button cmf--a-btn cmf--a-btn-primary" 
+        class="csmf--import button csmf--a-btn csmf--a-btn-primary" 
         data-identifier="<?php echo esc_attr( $identifier ); ?>" 
         data-option-name="<?php echo esc_attr( $option_name ); ?>" 
         data-nonce="<?php echo esc_attr( $nonce ); ?>"
@@ -24,11 +28,11 @@
     </button>
 </div>
 
-<div class="cmf--export-wrapper">
-    <textarea readonly="readonly" class="cmf--option-export"><?php echo esc_html( $export_data ); ?></textarea>
+<div class="csmf--export-wrapper">
+    <textarea readonly="readonly" class="csmf--option-export"><?php echo esc_html( $export_data ); ?></textarea>
     <a 
         href="<?php echo esc_url( $export ); ?>" 
-        class="cmf--export" 
+        class="csmf--export" 
         target="_blank"
     >
         <?php echo esc_html__( 'Export & Download', 'codexshaper-framework' ); ?>
@@ -36,7 +40,7 @@
     <button 
         type="submit" 
         value="reset" 
-        class="cmf--reset-option button cmf--a-btn cmf--a-btn-primary" 
+        class="csmf--reset-option button csmf--a-btn csmf--a-btn-primary" 
         data-identifier="<?php echo esc_attr( $identifier ); ?>"
         data-option-name="<?php echo esc_attr( $option_name ); ?>"
         data-nonce="<?php echo esc_attr( $nonce ); ?>"
@@ -47,7 +51,7 @@
     <button 
         type="submit"  
         value="reset" 
-        class="cmf--delete-option button cmf--a-btn cmf--a-btn-primary" 
+        class="csmf--delete-option button csmf--a-btn csmf--a-btn-primary" 
         data-identifier="<?php echo esc_attr( $identifier ); ?>"
         data-option-name="<?php echo esc_attr( $option_name ); ?>"
         data-nonce="<?php echo esc_attr( $nonce ); ?>"

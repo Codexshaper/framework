@@ -58,7 +58,7 @@ class Helper {
 
 		add_filter(
 			'wp_check_filetype_and_ext',
-			array( $this, 'cmf_disable_real_mime_check' ),
+			array( $this, 'csmf_disable_real_mime_check' ),
 			10,
 			4
 		);
@@ -97,12 +97,12 @@ class Helper {
 
 		if ( is_singular() ) :
 			?>
-			<?php the_post_thumbnail( 'cmf_classic' ); ?>
+			<?php the_post_thumbnail( 'csmf_classic' ); ?>
 		<?php else : ?>
 			<a href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 				<?php
 				the_post_thumbnail(
-					'cmf_classic',
+					'csmf_classic',
 					array(
 						'alt' => the_title_attribute(
 							array(

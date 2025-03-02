@@ -40,7 +40,7 @@ class Textarea extends Field {
 
                 $this->before();
 
-                cmf_view( 'builder.fields.textarea', compact( 'name', 'value', 'attributes' ) );
+                csmf_view( 'builder.fields.textarea', compact( 'name', 'value', 'attributes' ) );
 
                 $this->after();
 	}

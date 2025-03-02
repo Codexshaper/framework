@@ -151,7 +151,7 @@ trait Field {
 		$before = $this->field['before'] ?? '';
 		$name   = $this->get_name( $this->field, $this->identifier );
 		if ( $before ) {
-			$before = "<div class='cmf--field-before'>{$before}</div>";
+			$before = "<div class='csmf--field-before'>{$before}</div>";
 		}
 
 		$before = apply_filters( "cmf/option/field/{$name}/before", $before );
@@ -179,19 +179,19 @@ trait Field {
 		$error       = $this->field['error'] ?? '';
 
 		if ( $after ) {
-			$after = "<div class='cmf--field-after'>{$after}</div>";
+			$after = "<div class='csmf--field-after'>{$after}</div>";
 		}
 
 		if ( $description ) {
-			$after .= "<div class='cmf--field-description'>{$description}</div>";
+			$after .= "<div class='csmf--field-description'>{$description}</div>";
 		}
 
 		if ( $help ) {
-			$after .= "<div class='cmf--field-help' data-help='{$help}'><i class='fas fa-question-circle'></i></div>";
+			$after .= "<div class='csmf--field-help' data-help='{$help}'><i class='fas fa-question-circle'></i></div>";
 		}
 
 		if ( $error ) {
-			$after .= "<div class='cmf--field-error'>{$error}</div>";
+			$after .= "<div class='csmf--field-error'>{$error}</div>";
 		}
 
 		$after = apply_filters( "cmf/option/field/{$name}/after", $after );

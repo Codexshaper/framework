@@ -46,8 +46,8 @@ trait Singleton {
 			// Create new instance and store in the instances.
 			static::$instances[ $called_class_name ] = new $called_class_name( ...$args );
 
-			// Use the `cmf_theme_singleton_init_{$instance}` hook to execute code for the dependent class or items.
-			do_action( sprintf( 'cmf_theme_singleton_init_%s', $called_class_name ) ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+			// Use the `csmf_theme_singleton_init_{$instance}` hook to execute code for the dependent class or items.
+			do_action( sprintf( 'csmf_theme_singleton_init_%s', $called_class_name ) ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		}
 

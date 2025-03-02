@@ -198,7 +198,7 @@ class Option extends Builder {
     add_action('admin_bar_menu', array($this, 'add_admin_bar_menu'), $this->args['admin_bar_menu_priority']);
 
     if ($this->ajax_save) {
-        add_action("wp_ajax_cmf_builder_{$this->identifier}_save", array($this, 'set_options'));
+        add_action("wp_ajax_csmf_builder_{$this->identifier}_save", array($this, 'set_options'));
     }
 
     if ($this->database === 'network' && $this->show_in_network) {
@@ -271,7 +271,7 @@ class Option extends Builder {
       global $submenu;
 
       $menu_slug = $this->args['menu_slug'];
-      $menu_icon = ( ! empty( $this->args['admin_bar_menu_icon'] ) ) ? '<span class="cmf--ab-icon ab-icon '. esc_attr( $this->args['admin_bar_menu_icon'] ) .'"></span>' : '';
+      $menu_icon = ( ! empty( $this->args['admin_bar_menu_icon'] ) ) ? '<span class="csmf--ab-icon ab-icon '. esc_attr( $this->args['admin_bar_menu_icon'] ) .'"></span>' : '';
 
       $wp_admin_bar->add_node( array(
         'id'    => $menu_slug,
@@ -429,7 +429,7 @@ class Option extends Builder {
       
       do_action( 'cmf/builder/options/before' );
 
-      cmf_view(
+      csmf_view(
           'builder.option', 
           compact(
               'identifier',
@@ -534,10 +534,10 @@ class Option extends Builder {
     $is_ajax = defined('DOING_AJAX') && DOING_AJAX;
 
     // Retrieve the nonce key and validate it.
-    $nonce_key = "cmf_options_nonce_{$this->identifier}";
+    $nonce_key = "csmf_options_nonce_{$this->identifier}";
     $request = wp_unslash($_POST) ?? array();
 
-    if (!isset($request[$nonce_key]) || !wp_verify_nonce($request[$nonce_key], 'cmf_options_nonce')) {
+    if (!isset($request[$nonce_key]) || !wp_verify_nonce($request[$nonce_key], 'csmf_options_nonce')) {
         return false; // Exit early if nonce verification fails.
     }
 
@@ -548,11 +548,11 @@ class Option extends Builder {
     // Initialize variables.
     $data = array();
     $options = $request[$this->identifier] ?? array();
-    $transient = $request['cmf_option'] ?? array();
+    $transient = $request['csmf_option'] ?? array();
 
     // Handle transient states.
     $section_id = $transient['section'] ?? '';
-    $import_data = $request['cmf_import_data'] ?? '';
+    $import_data = $request['csmf_import_data'] ?? '';
     $save = !empty($transient['save']);
     $reset_all = !empty($transient['reset']);
     $reset_section = !empty($transient['reset_section']) && $section_id;
@@ -586,13 +586,13 @@ class Option extends Builder {
     }
 
     // Apply filters and actions before saving.
-    $data = apply_filters("cmf_{$this->identifier}_save", $data, $this);
-    do_action("cmf_{$this->identifier}_save_before", $data, $this);
+    $data = apply_filters("csmf_{$this->identifier}_save", $data, $this);
+    do_action("csmf_{$this->identifier}_save_before", $data, $this);
 
     // Save options and trigger after save actions.
     $this->options = $data;
     $this->save_options($data);
-    do_action("cmf_{$this->identifier}_save_after", $data, $this);
+    do_action("csmf_{$this->identifier}_save_after", $data, $this);
 
     // Set success notice.
     if (! $this->notice) {

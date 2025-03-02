@@ -73,7 +73,7 @@ class Config {
 
 		if ( empty($configs) && count( $parts ) > 0 ) {
 			
-			$config_path = CMF_PLUGIN_CONFIG_PATH . $config_name . '.php';
+			$config_path = CSMF_PLUGIN_CONFIG_PATH . $config_name . '.php';
 
 			if ( ! file_exists( $config_path ) ) {
 				$config_path = trailingslashit(untrailingslashit(dirname(__DIR__))) . '../config/' . $config_name . '.php';

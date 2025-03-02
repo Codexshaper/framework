@@ -31,7 +31,7 @@ class Backup extends Field {
      *
      * @var string
      */
-    protected $action = 'cmf_settings_backup_export';
+    protected $action = 'csmf_settings_backup_export';
 
     /**
 	 * Constructor
@@ -61,7 +61,7 @@ class Backup extends Field {
 	 */
 	public function render() {
         $identifier = $this->identifier;
-        $nonce  = wp_create_nonce( 'cmf_backup_nonce' );
+        $nonce  = wp_create_nonce( 'csmf_backup_nonce' );
         $option_name = $this->field['option_name'] ?? $identifier;
         $export_data = wp_json_encode( get_option( $option_name ) );
         
@@ -84,7 +84,7 @@ class Backup extends Field {
 
         $this->before();
 
-        cmf_view( 'builder.fields.backup', compact(
+        csmf_view( 'builder.fields.backup', compact(
                 'identifier',
                 'option_name',
                 'nonce',
