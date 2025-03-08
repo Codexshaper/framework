@@ -629,14 +629,14 @@ class Helper {
 	}
 
 	/**
-	 * Check cmf active
+	 * Check csmf active
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return bool
 	 */
-	public function isCmfActive() {
-		$theme_name_array   = array( 'CodexShaper_Framework', 'CMF Child' );
+	public function isCsmfActive() {
+		$theme_name_array   = array( 'CodexShaper_Framework', 'CSMF Child' );
 		$current_theme      = wp_get_theme();
 		$current_theme_name = $current_theme->get( 'Name' );
 		return in_array( $current_theme_name, $theme_name_array, true ) ? true : false;

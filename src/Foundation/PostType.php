@@ -6,7 +6,7 @@
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cmf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 
@@ -26,7 +26,7 @@ use CodexShaper\Framework\Foundation\Traits\Setter;
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cmf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 abstract class PostType implements PostTypeContract {
@@ -139,10 +139,11 @@ abstract class PostType implements PostTypeContract {
 			}
 		}
 		
-		$this->post_type = substr(sanitize_key( str_replace([' ', '-'], '_', $this->get_name())), 0, 20);
+		$this->post_type = substr(str_replace([' ', '_'], '-', $this->get_name()), 0, 20);
+
 
 		if ( ! $this->post_title ) {
-			$this->post_title = join( ' ', array_map( 'ucfirst', explode( '_', $this->post_type ) ) );
+			$this->post_title = join( ' ', array_map( 'ucfirst', explode( '-', $this->post_type ) ) );
 		}
 
 		if ( method_exists( $this, 'get_title' ) ) {
@@ -173,6 +174,10 @@ abstract class PostType implements PostTypeContract {
 
 		if ( ! $this->query_var ) {
 			$this->query_var = true;
+		}
+
+		if ( method_exists( $this, 'get_post_type' ) ) {
+			$this->post_type = $this->get_post_type();
 		}
 
 		if ( method_exists( $this, 'is_public' ) ) {
@@ -360,8 +365,8 @@ abstract class PostType implements PostTypeContract {
 	 */
 	public function register( $post_type = '', $args = array() ) {
 
-		if ( empty( $post_type ) ) {
-			$this->post_type = $this->get_name();
+		if ( ! empty( $post_type ) ) {
+			$this->post_type = $post_type;
 		}
 
 		if ( ! empty( $args ) ) {

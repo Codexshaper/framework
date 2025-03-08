@@ -6,7 +6,7 @@
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cmf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 
@@ -28,7 +28,7 @@ use CodexShaper\Framework\Foundation\Traits\Taxonomy\Options;
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cmf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 abstract class Taxonomy implements TaxonomyContract {
@@ -151,10 +151,14 @@ abstract class Taxonomy implements TaxonomyContract {
 			}
 		}
 
-		$this->taxonomy = substr(sanitize_key(str_replace([' ', '-'], '_', $this->get_name())), 0, 32);
+		$this->taxonomy = substr(str_replace([' ', '_'], '-', $this->get_name()), 0, 32);
 
 		if ( ! $this->taxonomy_title ) {
-			$this->taxonomy_title = join( ' ', array_map( 'ucfirst', explode( '_', $this->taxonomy ) ) );
+			$this->taxonomy_title = join( ' ', array_map( 'ucfirst', explode( '-', $this->taxonomy ) ) );
+		}
+
+		if ( method_exists( $this, 'get_taxonomy' ) ) {
+			$this->taxonomy = $this->get_taxonomy();
 		}
 
 		if ( method_exists( $this, 'get_title' ) ) {
@@ -376,10 +380,9 @@ abstract class Taxonomy implements TaxonomyContract {
 	 * @return true|WP_Error True on success, WP_Error on failure or if the taxonomy doesn't exist.
 	 */
 	public function unregister( $taxonomy = '' ) {
-		$this->taxonomy = $taxonomy;
 
-		if ( empty( $this->taxonomy ) ) {
-			$this->taxonomy = $this->get_name();
+		if (! empty( $this->taxonomy ) ) {
+			$this->taxonomy = $taxonomy;
 		}
 
 		unregister_taxonomy( $this->taxonomy );

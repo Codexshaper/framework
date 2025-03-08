@@ -27,7 +27,7 @@ trait Singleton {
 	/**
 	 * Store all instances and keep remember.
 	 *
-	 * @var \CmfTheme\Inc\Traits\Singleton The single instance of the called class.
+	 * @var \CsmfTheme\Inc\Traits\Singleton The single instance of the called class.
 	 */
 	private static $instances = array();
 

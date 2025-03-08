@@ -10,10 +10,6 @@
  * @since      1.0.0
  * @version    1.0.0
  */
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
 ?>
 
 <label class="csmf--switcher" <?php echo isset($field['width']) && $field['width'] ? 'style="width: ' . $field['width'] . 'px;"' : ''; ?>>

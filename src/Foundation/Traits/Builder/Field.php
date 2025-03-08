@@ -154,7 +154,7 @@ trait Field {
 			$before = "<div class='csmf--field-before'>{$before}</div>";
 		}
 
-		$before = apply_filters( "cmf/option/field/{$name}/before", $before );
+		$before = apply_filters( "csmf/option/field/{$name}/before", $before );
 
 		if ( $render ) {
 			return $before; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Intentional unescaped output.
@@ -194,7 +194,7 @@ trait Field {
 			$after .= "<div class='csmf--field-error'>{$error}</div>";
 		}
 
-		$after = apply_filters( "cmf/option/field/{$name}/after", $after );
+		$after = apply_filters( "csmf/option/field/{$name}/after", $after );
 
 		if ( $render ) {
 			return $after; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Intentional unescaped output.;

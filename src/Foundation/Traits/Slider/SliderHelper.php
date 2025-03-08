@@ -32,7 +32,7 @@ trait SliderHelper {
 	 *
 	 * @var string
 	 */
-	protected $slider_control_prefix = 'cmf';
+	protected $slider_control_prefix = 'csmf';
 
 	/**
 	 * Thumb Slider Control Prefix

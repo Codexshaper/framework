@@ -273,7 +273,7 @@ if ( ! function_exists( 'csmf_view_path' ) ) {
 			 * @param array $bases View bases.
 			 */
 			$bases = apply_filters( 
-				'cmf/view/bases', 
+				'csmf/view/bases', 
 				array( 
 					$elementor_view_base, 
 					$wordpress_view_base, 
@@ -688,7 +688,7 @@ if(!function_exists('csmf_get_builder_fields')) {
 		 *
 		 * @param array $fields Fields.
 		 */
-		$fields = apply_filters('cmf/builder/fields', $fields);
+		$fields = apply_filters('csmf/builder/fields', $fields);
 
 		// Filter active fields	
 		$fields = array_filter($fields, fn($field) => $field['is_active'] ?? true);

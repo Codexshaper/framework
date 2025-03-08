@@ -11,11 +11,7 @@
  * @version    1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
-
-$show_tab = $args['show_tab'] ?? true;
+ $show_tab = $args['show_tab'] ?? true;
 
 if ( ! $show_tab || count($tabs) < 1 ) {
     return;

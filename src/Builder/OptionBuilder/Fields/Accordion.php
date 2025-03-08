@@ -42,7 +42,7 @@ class Accordion extends Field {
          *
          * @param array $block_fields Accordion block fields.
          */
-		$block_fields = apply_filters( 'cmf/builder/fields/accordion/block_fields', array( 'accordion' ) );
+		$block_fields = apply_filters( 'csmf/builder/fields/accordion/block_fields', array( 'accordion' ) );
 
         $this->before();
 

@@ -7,7 +7,7 @@
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cmf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 
@@ -24,7 +24,7 @@ use CodexShaper\Framework\Foundation\Traits\Singleton;
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cmf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 abstract class Extension implements ExtensionContract {

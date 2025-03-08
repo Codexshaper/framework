@@ -46,7 +46,7 @@ class Section {
 		 * @param array $allowed_html Allowed html.
 		 */
 		$allowed_html = apply_filters(
-			'cmf/builder/section/allowed_html', 
+			'csmf/builder/section/allowed_html', 
 			array(
 				'p' => array(
 					'class' => array()

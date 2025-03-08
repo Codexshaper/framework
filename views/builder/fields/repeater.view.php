@@ -11,11 +11,8 @@
  * @version    1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
-
 use CodexShaper\Framework\Builder\OptionBuilder\Field;
+
 ?>
 
 <div class="csmf--repeater-item csmf--foldable csmf--repeater-cloneable" data-depend-id="<?php echo esc_attr( $field['id'] ); ?>">

@@ -6,7 +6,7 @@
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cmf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 
@@ -27,7 +27,7 @@ use WP_Post;
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cmf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 abstract class MetaBox implements MetaBoxContract {
@@ -407,7 +407,7 @@ abstract class MetaBox implements MetaBoxContract {
 		wp_nonce_field( $this->nonce, "{$this->nonce}_{$this->id}" );
 
 		?>
-		<div class="cmf csmf--metabox">
+		<div class="csmf csmf--metabox">
 			<div class="csmf--wrapper">
 				<div class="csmf--content">
 					<div class="csmf--sections">

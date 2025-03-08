@@ -10,13 +10,9 @@
  * @since      1.0.0
  * @version    1.0.0
  */
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
 ?>
 
-<div class="cmf csmf--options-wrapper <?php echo esc_attr( $wrapper_class );?>">
+<div class="csmf csmf--options-wrapper <?php echo esc_attr( $wrapper_class );?>">
     <div class="csmf--container">
         <form 
             method="post" 
