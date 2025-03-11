@@ -42,6 +42,7 @@ class Select extends Field {
 			$this->field,
 			array(
 				'placeholder' => '',
+				'chosen'      => false,
 				'multiple'    => false,
 				'sortable'    => false,
 				'ajax'        => false,
@@ -56,15 +57,15 @@ class Select extends Field {
 
 		if ( isset( $this->field['options'] ) ) {
 
+			$is_chosen 				= $args['chosen'] ?? false;
 			$is_sortable 			= $args['sortable'] ?? false;
 			$is_ajax 				= $args['ajax'] ?? false;
 			$is_multiple 			= $args['multiple'] ?? false;
-			$is_choice 				= $args['choice'] ?? $is_multiple ? true : false;
 			$placeholder 			= $args['placeholder'] ?? '';
 			$settings 				= $args['settings'] ?? array();
 			$multiple_name    		= $is_multiple ? '[]' : '';
 			$multiple_attr    		= $is_multiple ? ' multiple' : '';
-			$placeholder_attr 		= $is_choice && $placeholder ? ' data-placeholder="' . esc_attr( $placeholder ) . '"' : '';
+			$placeholder_attr 		= $is_chosen && $placeholder ? ' data-placeholder="' . esc_attr( $placeholder ) . '"' : '';
 			$name             		= $this->get_name( $this->field, $this->identifier, $multiple_name );
 			$pseudo_attr      		= '';
 			$value            		= $this->value;
@@ -74,14 +75,13 @@ class Select extends Field {
 
 			if ( ! is_array( $options ) || empty( $options ) ) {
 				$errors[] = $this->field['empty_message'] ?? 'No data available.';
-				csmf_view( 'builder.fields.error', compact( 'errors' ) );
+				cxf_view( 'builder.fields.error', compact( 'errors' ) );
 				return;
 			}
 
-			csmf_view(
+			cxf_view(
 				'builder.fields.select',
 				compact(
-					'is_choice',
 					'pseudo_attr',
 					'name',
 					'value',

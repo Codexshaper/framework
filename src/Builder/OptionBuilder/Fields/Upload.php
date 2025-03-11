@@ -67,7 +67,7 @@ class Upload extends Field {
 				$preview_src =  $this->value;
 			}
 
-			csmf_view(
+			cxf_view(
 				'builder.fields.upload.preview',
 				array(
 					'args' => $args,
@@ -76,7 +76,7 @@ class Upload extends Field {
 			);
 		}
 
-		csmf_view(
+		cxf_view(
 			'builder.fields.upload.button',
 			array(
 				'name'       => $this->get_name( $this->field, $this->identifier ),

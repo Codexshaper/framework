@@ -6,7 +6,7 @@
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/csmf
+ * @link       https://github.com/CodexShaper-Devs/cxf
  * @since      1.0.0
  */
 
@@ -291,7 +291,7 @@ abstract class Module {
 	 * @return string
 	 */
 	protected function get_assets_base_url() {
-		return csmf_plugin_base_path() . 'widgets/wordpress/assets/';
+		return cxf_plugin_base_path() . 'widgets/wordpress/assets/';
 	}
 
 	/**

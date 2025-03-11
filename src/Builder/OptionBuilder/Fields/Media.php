@@ -75,11 +75,11 @@ class Media extends Field {
 		}
 
 		$this->value = wp_parse_args( $this->value, $default_values );
-		$preview_src = $args['preview_size'] === 'thumbnail' ? $this->value['url'] : $this->value['thumbnail'];
+		$preview_src = $args['preview_size'] !== 'thumbnail' ? $this->value['url'] : $this->value['thumbnail'];
 		$placeholder = $this->field['placeholder'] ?? 'Not selected';
 
 		if ( $args['preview'] ) {
-			csmf_view(
+			cxf_view(
 				'builder.fields.upload.preview',
 				array(
 					'args' => $args,
@@ -88,7 +88,7 @@ class Media extends Field {
 			);
 		}
 
-		csmf_view(
+		cxf_view(
 			'builder.fields.media',
 			array(
 				'name'       => $this->get_name( $this->field, $this->identifier ),

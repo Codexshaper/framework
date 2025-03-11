@@ -1,8 +1,8 @@
-<div class="csmf--upload-preview <?php echo !$src ? esc_attr( 'hidden' ) : ''; ?>">
-	<div class="csmf--image-preview">
-		<span class="csmf--upload-remove-wrap">
-			<i class="csmf--upload-remove fas fa-times"></i>
+<div class="cxf--upload-preview <?php echo !$src ? esc_attr( 'hidden' ) : ''; ?>">
+	<div class="cxf--image-preview">
+		<span class="cxf--upload-remove-wrap">
+			<i class="cxf--upload-remove fas fa-times"></i>
 		</span>
-		<img class="csmf--upload-preview-img" src="<?php echo esc_url( $src ); ?>" alt="<?php echo esc_attr( $args['alt'] ?? 'Media' ); ?>" />
+		<img class="cxf--upload-preview-img" src="<?php echo esc_url( $src ); ?>" />
 	</div>
 </div>

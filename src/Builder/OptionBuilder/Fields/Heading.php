@@ -39,7 +39,7 @@ class Heading extends Field {
 
         $this->before();
 
-        csmf_view( 'builder.fields.heading', compact( 'field', 'identifier' ) );
+        cxf_view( 'builder.fields.heading', compact( 'field', 'identifier' ) );
 
         $this->after();
 	}

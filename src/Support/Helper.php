@@ -58,7 +58,7 @@ class Helper {
 
 		add_filter(
 			'wp_check_filetype_and_ext',
-			array( $this, 'csmf_disable_real_mime_check' ),
+			array( $this, 'cxf_disable_real_mime_check' ),
 			10,
 			4
 		);
@@ -97,12 +97,12 @@ class Helper {
 
 		if ( is_singular() ) :
 			?>
-			<?php the_post_thumbnail( 'csmf_classic' ); ?>
+			<?php the_post_thumbnail( 'cxf_classic' ); ?>
 		<?php else : ?>
 			<a href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 				<?php
 				the_post_thumbnail(
-					'csmf_classic',
+					'cxf_classic',
 					array(
 						'alt' => the_title_attribute(
 							array(
@@ -629,14 +629,14 @@ class Helper {
 	}
 
 	/**
-	 * Check csmf active
+	 * Check cxf active
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return bool
 	 */
-	public function isCsmfActive() {
-		$theme_name_array   = array( 'CodexShaper_Framework', 'CSMF Child' );
+	public function isCxfActive() {
+		$theme_name_array   = array( 'CodexShaper_Framework', 'CXF Child' );
 		$current_theme      = wp_get_theme();
 		$current_theme_name = $current_theme->get( 'Name' );
 		return in_array( $current_theme_name, $theme_name_array, true ) ? true : false;

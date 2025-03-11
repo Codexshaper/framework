@@ -15,18 +15,18 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
 
 ?>
 
-<div class="csmf--repeater-item csmf--foldable csmf--repeater-cloneable" data-depend-id="<?php echo esc_attr( $field['id'] ); ?>">
-    <div class="csmf--repeater-action-wrapper csmf--repeater-sort">
-        <div class="csmf--repeater-action-content">
-            <!-- <i class="button csmf--a-btn csmf--a-btn-primary csmf--repeater-sort fas fa-arrows-alt"></i> -->
-            <i class="button csmf--a-btn csmf--a-btn-primary csmf--repeater-clone far fa-clone"></i>
-            <i class="button csmf--a-btn csmf--a-btn-danger csmf--repeater-remove fas fa-times"></i>
+<div class="cxf--repeater-item cxf--foldable cxf--repeater-cloneable" data-depend-id="<?php echo esc_attr( $field['id'] ); ?>">
+    <div class="cxf--repeater-action-wrapper cxf--repeater-sort">
+        <div class="cxf--repeater-action-content">
+            <!-- <i class="button cxf--a-btn cxf--a-btn-primary cxf--repeater-sort fas fa-arrows-alt"></i> -->
+            <i class="button cxf--a-btn cxf--a-btn-primary cxf--repeater-clone far fa-clone"></i>
+            <i class="button cxf--a-btn cxf--a-btn-danger cxf--repeater-remove fas fa-times"></i>
             <button type="button" class="button fold-handler" title="Collapse" aria-expanded="false">
                 <i class="fa fold-indicator"></i>
             </button>
         </div>
     </div>
-    <div class="csmf--repeater-content inside">
+    <div class="cxf--repeater-content inside">
         <?php
         foreach ( $field['fields'] as $new_field ) {
             $new_field_default = $new_field['default'] ?? '';
@@ -36,24 +36,24 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
         ?>
     </div>
 </div>
-<div class="csmf--repeater-wrapper" data-field-id="[<?php echo esc_attr( $field['id'] ); ?>]" data-max="<?php echo esc_attr( $options['max'] ); ?>" data-min="<?php echo esc_attr( $options['min'] ); ?>">
+<div class="cxf--repeater-wrapper" data-field-id="[<?php echo esc_attr( $field['id'] ); ?>]" data-max="<?php echo esc_attr( $options['max'] ); ?>" data-min="<?php echo esc_attr( $options['min'] ); ?>">
     <?php
     if ( is_array( $value ) && count( $value ) > 0 ) :
         $num = 0;
         foreach ( $value as $key => $repeater_value ) :
     ?>
-    <div class="csmf--repeater-item csmf--foldable">
-        <div class="csmf--repeater-action-wrapper csmf--repeater-sort">
-            <div class="csmf--repeater-action-content">
-                <!-- <i class="button csmf--a-btn csmf--a-btn-primary csmf--repeater-sort fas fa-arrows-alt"></i> -->
-                <i class="button csmf--a-btn csmf--a-btn-primary csmf--repeater-clone far fa-clone"></i>
-                <i class="button csmf--a-btn csmf--a-btn-danger csmf--repeater-remove fas fa-times"></i>
+    <div class="cxf--repeater-item cxf--foldable">
+        <div class="cxf--repeater-action-wrapper cxf--repeater-sort">
+            <div class="cxf--repeater-action-content">
+                <!-- <i class="button cxf--a-btn cxf--a-btn-primary cxf--repeater-sort fas fa-arrows-alt"></i> -->
+                <i class="button cxf--a-btn cxf--a-btn-primary cxf--repeater-clone far fa-clone"></i>
+                <i class="button cxf--a-btn cxf--a-btn-danger cxf--repeater-remove fas fa-times"></i>
                 <button type="button" class="button fold-handler" title="Collapse" aria-expanded="false">
                 <i class="fa fold-indicator"></i>
             </button>
             </div>
         </div>
-        <div class="csmf--repeater-content inside">
+        <div class="cxf--repeater-content inside">
             <?php
             foreach ( $field['fields'] as $new_field ) {
                 $new_field_unique = $identifier ? "{$identifier}[{$field['id']}][{$num}]" : "{$field['id']}[{$num}]";
@@ -70,8 +70,8 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
     ?>
 
 </div>
-<div class="csmf--repeater-footer">
-    <button type="button" class="button csmf--a-btn csmf--a-btn-primary csmf--repeater-add">
+<div class="cxf--repeater-footer">
+    <button type="button" class="button cxf--a-btn cxf--a-btn-primary cxf--repeater-add">
         <?php echo wp_kses( $options['button_title'], array( 'i' => array( 'class' => array() ) ) ); ?>
     </button>
 </div>

@@ -108,50 +108,7 @@ trait Labels {
 	 * }
 	 */
 	function get_labels() {
-
-		$properties = array(
-			'name'. // General name for the taxonomy, usually plural. The same as and overridden by $tax->label. Default 'Tags'/'Categories'.
-			'singular_name', // Name for one object of this taxonomy. Default 'Tag'/'Category'.
-			'search_items', // Default ‘Search Tags'/'Search Categories’.
-			'popular_items', // This label is only used for non-hierarchical taxonomies.
-			'all_items', // Default ‘All Tags'/'All Categories’.
-			'parent_item', // This label is only used for hierarchical taxonomies.
-			'parent_item_colon', // The same as parent_item, but with colon : in the end.
-			'name_field_description', // Description for the Name field on Edit Tags screen.
-			'slug_field_description', // Description for the Slug field on Edit Tags screen.
-			'parent_field_description', // Description for the Parent field on Edit Tags screen.
-			'desc_field_description', // Description for the Description field on Edit Tags screen.
-			'edit_item', // Default 'Edit Tag'/'Edit Category'.
-			'view_item', // Default 'View Tag'/'View Category'.
-			'update_item', // Default 'Update Tag'/'Update Category'.
-			'add_new_item', // Default 'Add New Tag'/'Add New Category'.
-			'new_item_name', // Default 'New Tag Name'/'New Category Name'.
-			'template_name', // Default 'Tag Archives'/'Category Archives'.
-			'separate_items_with_commas', // This label is only used for non-hierarchical taxonomies.
-			'add_or_remove_items', // This label is only used for non-hierarchical taxonomies.
-			'choose_from_most_used', // This label is only used on non-hierarchical taxonomies.
-			'not_found', // Default 'No tags found'/'No categories found', used in the meta box and taxonomy list table.
-			'no_terms', // Default 'No tags'/'No categories', used in the posts and media list tables.
-			'filter_by_item', // This label is only used for hierarchical taxonomies. Default 'Filter by category', used in the posts list table.
-			'items_list_navigation', // Label for the table pagination hidden heading.
-			'items_list', // Label for the table hidden heading.
-			'most_used', // Title for the Most Used tab. Default 'Most Used'.
-			'back_to_items', // Label displayed after a term has been updated.
-			'item_link', // Used in the block editor. Title for a navigation link block variation.
-			'item_link_description', // Used in the block editor. Description for a navigation link block
-		);
-
-		$labels     = $this->labels ?? [];
-		$properties = array_merge( $properties, array_keys( $labels ) );
-
-		foreach ( $properties as $property ) {
-			$method_name = "get_label_{$property}";
-			if ( key_exists( $property, $labels ) && $this->{$method_name}() ) {
-				$labels[ $property ] = $this->{$method_name}();
-			}
-		}
-
-		return $labels;
+			return $this->labels;
 	}
 
 	/**
@@ -162,7 +119,10 @@ trait Labels {
 	 * @return Taxonomy The name.
 	 */
 	public function get_label_name() {
-		return $this->labels['name'] ?? '';
+		if ( isset( $this->labels['name'] ) ) {
+			return $this->labels['name'];
+		}
+		return '';
 	}
 
 	/**
@@ -173,7 +133,10 @@ trait Labels {
 	 * @return string The singular_name.
 	 */
 	public function get_label_singular_name() {
-		return $this->labels['singular_name'] ?? '';
+		if ( isset( $this->labels['singular_name'] ) ) {
+			return $this->labels['singular_name'];
+		}
+		return '';
 	}
 
 	/**
@@ -184,7 +147,10 @@ trait Labels {
 	 * @return string The search_items.
 	 */
 	public function get_label_search_items() {
-		return $this->labels['search_items'] ?? '';
+		if ( isset( $this->labels['search_items'] ) ) {
+			return $this->labels['search_items'];
+		}
+		return '';
 	}
 
 	/**
@@ -195,7 +161,10 @@ trait Labels {
 	 * @return string The popular_items.
 	 */
 	public function get_label_popular_items() {
-		return $this->labels['popular_items'] ?? '';
+		if ( isset( $this->labels['popular_items'] ) ) {
+			return $this->labels['popular_items'];
+		}
+		return '';
 	}
 
 	/**
@@ -206,7 +175,10 @@ trait Labels {
 	 * @return string The all_items.
 	 */
 	public function get_label_all_items() {
-		return $this->labels['all_items'] ?? '';
+		if ( isset( $this->labels['all_items'] ) ) {
+			return $this->labels['all_items'];
+		}
+		return '';
 	}
 
 	/**
@@ -217,7 +189,10 @@ trait Labels {
 	 * @return string The parent_item.
 	 */
 	public function get_label_parent_item() {
-		return $this->labels['parent_item'] ?? '';
+		if ( isset( $this->labels['parent_item'] ) ) {
+			return $this->labels['parent_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -228,7 +203,10 @@ trait Labels {
 	 * @return string The parent_item_colon.
 	 */
 	public function get_label_parent_item_colon() {
-		return $this->labels['parent_item_colon'] ?? '';
+		if ( isset( $this->labels['parent_item_colon'] ) ) {
+			return $this->labels['parent_item_colon'];
+		}
+		return '';
 	}
 
 	/**
@@ -239,7 +217,10 @@ trait Labels {
 	 * @return string The name_field_description.
 	 */
 	public function get_label_name_field_description() {
-		return $this->labels['name_field_description'] ?? '';
+		if ( isset( $this->labels['name_field_description'] ) ) {
+			return $this->labels['name_field_description'];
+		}
+		return '';
 	}
 
 	/**
@@ -250,7 +231,10 @@ trait Labels {
 	 * @return Taxonomy The slug_field_description.
 	 */
 	public function get_label_slug_field_description() {
-		return $this->labels['slug_field_description'] ?? '';
+		if ( isset( $this->labels['slug_field_description'] ) ) {
+			return $this->labels['slug_field_description'];
+		}
+		return '';
 	}
 
 	/**
@@ -261,7 +245,10 @@ trait Labels {
 	 * @return string The parent_field_description.
 	 */
 	public function get_label_parent_field_description() {
-		return $this->labels['parent_field_description'] ?? '';
+		if ( isset( $this->labels['parent_field_description'] ) ) {
+			return $this->labels['parent_field_description'];
+		}
+		return '';
 	}
 
 	/**
@@ -272,7 +259,10 @@ trait Labels {
 	 * @return string The desc_field_description.
 	 */
 	public function get_label_desc_field_description() {
-		return $this->labels['desc_field_description'] ?? '';
+		if ( isset( $this->labels['desc_field_description'] ) ) {
+			return $this->labels['desc_field_description'];
+		}
+		return '';
 	}
 
 	/**
@@ -283,7 +273,10 @@ trait Labels {
 	 * @return string The edit_item.
 	 */
 	public function get_label_edit_item() {
-		return $this->labels['edit_item'] ?? '';
+		if ( isset( $this->labels['edit_item'] ) ) {
+			return $this->labels['edit_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -294,7 +287,10 @@ trait Labels {
 	 * @return string The view_item.
 	 */
 	public function get_label_view_item() {
-		return $this->labels['view_item'] ?? '';
+		if ( isset( $this->labels['view_item'] ) ) {
+			return $this->labels['view_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -305,7 +301,10 @@ trait Labels {
 	 * @return string The update_item.
 	 */
 	public function get_label_update_item() {
-		return $this->labels['update_item'] ?? '';
+		if ( isset( $this->labels['update_item'] ) ) {
+			return $this->labels['update_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -316,7 +315,10 @@ trait Labels {
 	 * @return string The add_new_item.
 	 */
 	public function get_label_add_new_item() {
-		return $this->labels['add_new_item'] ?? '';
+		if ( isset( $this->labels['add_new_item'] ) ) {
+			return $this->labels['add_new_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -327,7 +329,10 @@ trait Labels {
 	 * @return string The new_item_name.
 	 */
 	public function get_label_new_item_name() {
-		return $this->labels['new_item_name'] ?? '';
+		if ( isset( $this->labels['new_item_name'] ) ) {
+			return $this->labels['new_item_name'];
+		}
+		return '';
 	}
 
 	/**
@@ -338,7 +343,10 @@ trait Labels {
 	 * @return Taxonomy The template_name.
 	 */
 	public function get_label_template_name() {
-		return $this->labels['template_name'] ?? '';
+		if ( isset( $this->labels['template_name'] ) ) {
+			return $this->labels['template_name'];
+		}
+		return '';
 	}
 
 	/**
@@ -349,7 +357,10 @@ trait Labels {
 	 * @return string The separate_items_with_commas.
 	 */
 	public function get_label_separate_items_with_commas() {
-		return $this->labels['separate_items_with_commas'] ?? '';
+		if ( isset( $this->labels['separate_items_with_commas'] ) ) {
+			return $this->labels['separate_items_with_commas'];
+		}
+		return '';
 	}
 
 	/**
@@ -360,7 +371,10 @@ trait Labels {
 	 * @return string The add_or_remove_items.
 	 */
 	public function get_label_add_or_remove_items() {
-		return $this->labels['add_or_remove_items'] ?? '';
+		if ( isset( $this->labels['add_or_remove_items'] ) ) {
+			return $this->labels['add_or_remove_items'];
+		}
+		return '';
 	}
 
 	/**
@@ -371,7 +385,10 @@ trait Labels {
 	 * @return string The choose_from_most_used.
 	 */
 	public function get_label_choose_from_most_used() {
-		return $this->labels['choose_from_most_used'] ?? '';
+		if ( isset( $this->labels['choose_from_most_used'] ) ) {
+			return $this->labels['choose_from_most_used'];
+		}
+		return '';
 	}
 
 	/**
@@ -382,7 +399,10 @@ trait Labels {
 	 * @return string The not_found.
 	 */
 	public function get_label_not_found() {
-		return $this->labels['not_found'] ?? '';
+		if ( isset( $this->labels['not_found'] ) ) {
+			return $this->labels['not_found'];
+		}
+		return '';
 	}
 
 	/**
@@ -393,7 +413,10 @@ trait Labels {
 	 * @return string The no_terms.
 	 */
 	public function get_label_no_terms() {
-		return $this->labels['no_terms'] ?? '';
+		if ( isset( $this->labels['no_terms'] ) ) {
+			return $this->labels['no_terms'];
+		}
+		return '';
 	}
 
 	/**
@@ -404,7 +427,10 @@ trait Labels {
 	 * @return string The filter_by_item.
 	 */
 	public function get_label_filter_by_item() {
-		return $this->labels['filter_by_item'] ?? '';
+		if ( isset( $this->labels['filter_by_item'] ) ) {
+			return $this->labels['filter_by_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -415,7 +441,10 @@ trait Labels {
 	 * @return string The items_list_navigation.
 	 */
 	public function get_label_items_list_navigation() {
-		return $this->labels['items_list_navigation'] ?? '';
+		if ( isset( $this->labels['items_list_navigation'] ) ) {
+			return $this->labels['items_list_navigation'];
+		}
+		return '';
 	}
 
 	/**
@@ -426,7 +455,10 @@ trait Labels {
 	 * @return Taxonomy The items_list.
 	 */
 	public function get_label_items_list() {
-		return $this->labels['items_list'] ?? '';
+		if ( isset( $this->labels['items_list'] ) ) {
+			return $this->labels['items_list'];
+		}
+		return '';
 	}
 
 	/**
@@ -437,7 +469,10 @@ trait Labels {
 	 * @return string The most_used.
 	 */
 	public function get_label_most_used() {
-		return $this->labels['most_used'] ?? '';
+		if ( isset( $this->labels['most_used'] ) ) {
+			return $this->labels['most_used'];
+		}
+		return '';
 	}
 
 	/**
@@ -448,7 +483,10 @@ trait Labels {
 	 * @return string The back_to_items.
 	 */
 	public function get_label_back_to_items() {
-		return $this->labels['back_to_items'] ?? '';
+		if ( isset( $this->labels['back_to_items'] ) ) {
+			return $this->labels['back_to_items'];
+		}
+		return '';
 	}
 
 	/**
@@ -459,7 +497,10 @@ trait Labels {
 	 * @return string The item_link.
 	 */
 	public function get_label_item_link() {
-		return $this->labels['item_link'] ?? '';
+		if ( isset( $this->labels['item_link'] ) ) {
+			return $this->labels['item_link'];
+		}
+		return '';
 	}
 
 	/**
@@ -470,7 +511,10 @@ trait Labels {
 	 * @return string The item_link_description.
 	 */
 	public function get_label_item_link_description() {
-		return $this->labels['item_link_description'] ?? '';
+		if ( isset( $this->labels['item_link_description'] ) ) {
+			return $this->labels['item_link_description'];
+		}
+		return '';
 	}
 
 	public function set_default_labels() {

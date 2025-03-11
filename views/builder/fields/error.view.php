@@ -13,11 +13,11 @@
 ?>
 
 <?php if ( is_string( $errors ) ) : ?>
-	<p class="csmf--error-text"><?php echo esc_html( $errors ); ?></p>
+	<p class="cxf--error-text"><?php echo esc_html( $errors ); ?></p>
 <?php endif; ?>
 
 <?php if ( is_array( $errors ) ) : ?>
 	<?php foreach ( $errors as $error ) : ?>
-		<p class="csmf--error-text"><?php echo esc_html( $error ); ?></p>
+		<p class="cxf--error-text"><?php echo esc_html( $error ); ?></p>
 	<?php endforeach; ?>
 <?php endif; ?>

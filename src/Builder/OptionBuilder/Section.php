@@ -36,7 +36,7 @@ class Section {
 	 *
 	 * @return void
 	 */
-	public static function render( $section, $identifier, $options, $post_id = 0, $is_serialize = true ) {
+	public static function render( $section, $identifier, $options, $post_id = 0 ) {
 
 		/**
 		 * Filter section allowed html
@@ -46,7 +46,7 @@ class Section {
 		 * @param array $allowed_html Allowed html.
 		 */
 		$allowed_html = apply_filters(
-			'csmf/builder/section/allowed_html', 
+			'cxf/builder/section/allowed_html', 
 			array(
 				'p' => array(
 					'class' => array()
@@ -59,15 +59,14 @@ class Section {
 			)
 		);
 
-		csmf_view(
+		cxf_view(
 			'builder.fields.section', 
 			compact(
 				'section',
 				'allowed_html', 
 				'options', 
 				'post_id', 
-				'identifier',
-				'is_serialize'
+				'identifier'
 			)
 		);
 	}

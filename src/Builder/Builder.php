@@ -43,6 +43,7 @@ class Builder {
 
     protected static $types = array(
         'options' => array(),
+        'options' => array(),
         'menu_options' => array(),
         'customize_options' => array(),
         'post_types' => array(),

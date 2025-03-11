@@ -51,7 +51,7 @@ class WidgetServiceProvider extends ServiceProvider {
 	public function register() {
 		$widgets = array();
 
-		$widget_directory = csmf_plugin_base_path() . 'widgets/wordpress/modules/*/';
+		$widget_directory = cxf_plugin_base_path() . 'widgets/wordpress/modules/*/';
 		foreach ( glob( $widget_directory ) as $path ) {
 			if ( is_dir( $path ) ) {
 				$parts  = explode( '/', untrailingslashit( $path ) );

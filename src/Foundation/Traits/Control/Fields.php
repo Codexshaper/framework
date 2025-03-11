@@ -120,7 +120,7 @@ trait Fields {
 		$selector   = $options['selector'] ?? '';
 		$selectors  = $options['selectors'] ?? array();
 		$conditions = $options['conditions'] ?? array();
-		$excludes    = $options['excludes'] ?? array();
+		$exclude    = $options['exclude'] ?? array();
 
 		$fields = array(
 			Group_Control_Typography::get_type()  => array(
@@ -166,7 +166,7 @@ trait Fields {
 		$fields = array_replace_recursive( $fields, $controls );
 
 		foreach ( $fields as $name => $field ) {
-			if ( in_array( $name, $excludes ) ) {
+			if ( in_array( $name, $exclude ) ) {
 				continue;
 			}
 
@@ -209,7 +209,7 @@ trait Fields {
 		$selector   = $options['selector'] ?? '';
 		$selectors  = $options['selectors'] ?? array();
 		$conditions = $options['conditions'] ?? array();
-		$excludes    = $options['excludes'] ?? array();
+		$exclude    = $options['exclude'] ?? array();
 
 		$fields = array(
 
@@ -245,7 +245,7 @@ trait Fields {
 		$fields = array_replace_recursive( $fields, $controls );
 
 		foreach ( $fields as $name => $field ) {
-			if ( in_array( $name, $excludes ) ) {
+			if ( in_array( $name, $exclude ) ) {
 				continue;
 			}
 
@@ -289,7 +289,7 @@ trait Fields {
 		$selector_hover = $options['selector_hover'] ?? '';
 		$selectors      = $options['selectors'] ?? array();
 		$conditions     = $options['conditions'] ?? array();
-		$excludes        = $options['excludes'] ?? array();
+		$exclude        = $options['exclude'] ?? array();
 
 		$fields = array(
 			"{$prefix}_width"                    => array(
@@ -416,7 +416,7 @@ trait Fields {
 		$fields = array_replace_recursive( $fields, $controls );
 
 		foreach ( $fields as $name => $field ) {
-			if ( in_array( $name, $excludes ) ) {
+			if ( in_array( $name, $exclude ) ) {
 				continue;
 			}
 
@@ -459,7 +459,7 @@ trait Fields {
 		$selector   = $options['selector'] ?? '';
 		$selectors  = $options['selectors'] ?? array();
 		$conditions = $options['conditions'] ?? array();
-		$excludes    = $options['excludes'] ?? array();
+		$exclude    = $options['exclude'] ?? array();
 
 		$fields = array(
 			"{$prefix}_icon_size"  => array(
@@ -494,7 +494,7 @@ trait Fields {
 		$fields = array_replace_recursive( $fields, $controls );
 
 		foreach ( $fields as $name => $field ) {
-			if ( in_array( $name, $excludes ) ) {
+			if ( in_array( $name, $exclude ) ) {
 				continue;
 			}
 
@@ -537,7 +537,7 @@ trait Fields {
 		$selector   = $options['selector'] ?? '';
 		$selectors  = $options['selectors'] ?? array();
 		$conditions = $options['conditions'] ?? array();
-		$excludes    = $options['excludes'] ?? array();
+		$exclude    = $options['exclude'] ?? array();
 
 		$fields = array(
 
@@ -613,7 +613,7 @@ trait Fields {
 		$fields = array_replace_recursive( $fields, $controls );
 
 		foreach ( $fields as $name => $field ) {
-			if ( in_array( $name, $excludes ) ) {
+			if ( in_array( $name, $exclude ) ) {
 				continue;
 			}
 

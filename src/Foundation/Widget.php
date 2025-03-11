@@ -7,7 +7,7 @@
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/csmf
+ * @link       https://github.com/CodexShaper-Devs/cxf
  * @since      1.0.0
  */
 
@@ -24,7 +24,7 @@ use CodexShaper\Framework\Foundation\Traits\Singleton;
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/csmf
+ * @link       https://github.com/CodexShaper-Devs/cxf
  * @since      1.0.0
  */
 abstract class Widget extends WP_Widget implements WidgetContract {
@@ -51,7 +51,7 @@ abstract class Widget extends WP_Widget implements WidgetContract {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'CSMF Widget Title', 'codexshaper-framework' );
+		return __( 'CXF Widget Title', 'codexshaper-framework' );
 	}
 
 	/**
@@ -60,7 +60,7 @@ abstract class Widget extends WP_Widget implements WidgetContract {
 	 * @return string Widget description.
 	 */
 	public function get_description() {
-		return __( 'CSMF Widget Description', 'codexshaper-framework' );
+		return __( 'CXF Widget Description', 'codexshaper-framework' );
 	}
 
 	/**

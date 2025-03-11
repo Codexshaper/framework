@@ -6,7 +6,7 @@
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/csmf
+ * @link       https://github.com/CodexShaper-Devs/cxf
  * @since      1.0.0
  */
 
@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/csmf
+ * @link       https://github.com/CodexShaper-Devs/cxf
  * @since      1.0.0
  */
 class Taxonomy extends Model {
@@ -169,7 +169,7 @@ class Taxonomy extends Model {
 		 *
 		 * @param array $current_query_vars Current query variables.
 		 */
-		$current_query_vars = apply_filters( 'csmf/query/get_query_args/current_query', $current_query_vars );
+		$current_query_vars = apply_filters( 'cxf/query/get_query_args/current_query', $current_query_vars );
 
 		return $current_query_vars;
 	}

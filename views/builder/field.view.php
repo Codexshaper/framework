@@ -12,18 +12,18 @@
  */
 ?>
 <div 
-    class="<?php echo esc_attr( "csmf--field csmf--field-{$field_type} {$class}" ); ?>" 
-    <?php echo $depend_attributes; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+    class="<?php echo esc_attr( "cxf--field cxf--field-{$field_type} {$class}" ); ?>" 
+    <?php echo $depend_attributes; ?>
 >
     <?php if ( $title ) : ?>
-        <div class="csmf--field-title">
+        <div class="cxf--field-title">
             <h4><?php echo esc_html( $title, 'codexshaper-framework' ); ?> </h4>
             <?php if ( $subtitle ) : ?>
-                <p class="csmf--subtitle-text"><?php echo esc_html( $subtitle, 'codexshaper-framework' ); ?></p>
+                <p class="cxf--subtitle-text"><?php echo esc_html( $subtitle, 'codexshaper-framework' ); ?></p>
             <?php endif; ?>
         </div>
     <?php endif; ?>
-    <div class="csmf--fieldset">
+    <div class="cxf--fieldset">
         <?php
             $instance = new $field_class( $field, $value, $identifier, $where, $parent );
             $instance->render();

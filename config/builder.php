@@ -68,11 +68,5 @@ return [
             'is_active' => true,
             'is_group' => false,
         ],
-        'icon' => [
-            'name' => 'Icon',
-            'label' => 'Icon',
-            'is_active' => true,
-            'is_group' => false,
-        ],
     ],
 ];

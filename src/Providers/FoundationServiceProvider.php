@@ -35,6 +35,7 @@ class FoundationServiceProvider extends ServiceProvider {
 			TaxonomyServiceProvider::class,
 			MetaBoxServiceProvider::class,
 			WidgetServiceProvider::class,
+			ConsoleServiceProvider::class,
 		),
 	);
 
@@ -69,6 +70,6 @@ class FoundationServiceProvider extends ServiceProvider {
 	public function register() {
 		// Registered code.
 
-		$this->providers = apply_filters( 'csmf_foundation_providers', $this->providers );
+		$this->providers = apply_filters( 'cxf_foundation_providers', $this->providers );
 	}
 }

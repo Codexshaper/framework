@@ -132,7 +132,7 @@ trait Labels {
 			'item_link_description', // Description for a navigation link block variation.
 		);
 
-		$labels     = $this->labels ?? [];
+		$labels     = $this->labels;
 		$properties = array_merge( $properties, array_keys( $labels ) );
 
 		foreach ( $properties as $property ) {
@@ -153,7 +153,10 @@ trait Labels {
 	 * @return PostType The name.
 	 */
 	public function get_label_name() {
-		return $this->labels['name'] ?? '';
+		if ( isset( $this->labels['name'] ) ) {
+			return $this->labels['name'];
+		}
+		return '';
 	}
 
 	/**
@@ -164,7 +167,10 @@ trait Labels {
 	 * @return string The singular_name.
 	 */
 	public function get_label_singular_name() {
-		return $this->labels['singular_name'] ?? '';
+		if ( isset( $this->labels['singular_name'] ) ) {
+			return $this->labels['singular_name'];
+		}
+		return '';
 	}
 
 	/**
@@ -175,7 +181,10 @@ trait Labels {
 	 * @return string The add_new.
 	 */
 	public function get_label_add_new() {
-		return $this->labels['add_new'] ?? '';
+		if ( isset( $this->labels['add_new'] ) ) {
+			return $this->labels['add_new'];
+		}
+		return '';
 	}
 
 	/**
@@ -186,7 +195,10 @@ trait Labels {
 	 * @return string The add_new_item.
 	 */
 	public function get_label_add_new_item() {
-		return $this->labels['add_new_item'] ?? '';
+		if ( isset( $this->labels['add_new_item'] ) ) {
+			return $this->labels['add_new_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -197,7 +209,10 @@ trait Labels {
 	 * @return string The edit_item.
 	 */
 	public function get_label_edit_item() {
-		return $this->labels['edit_item'] ?? '';
+		if ( isset( $this->labels['edit_item'] ) ) {
+			return $this->labels['edit_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -208,7 +223,10 @@ trait Labels {
 	 * @return string The new_item.
 	 */
 	public function get_label_new_item() {
-		return $this->labels['new_item'] ?? '';
+		if ( isset( $this->labels['new_item'] ) ) {
+			return $this->labels['new_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -219,7 +237,10 @@ trait Labels {
 	 * @return string The view_item.
 	 */
 	public function get_label_view_item() {
-		return $this->labels['view_item'] ?? '';
+		if ( isset( $this->labels['view_item'] ) ) {
+			return $this->labels['view_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -230,7 +251,10 @@ trait Labels {
 	 * @return string The view_items.
 	 */
 	public function get_label_view_items() {
-		return $this->labels['view_items'] ?? '';
+		if ( isset( $this->labels['view_items'] ) ) {
+			return $this->labels['view_items'];
+		}
+		return '';
 	}
 
 	/**
@@ -241,7 +265,10 @@ trait Labels {
 	 * @return string The search_items.
 	 */
 	public function get_label_search_items() {
-		return $this->labels['search_items'] ?? '';
+		if ( isset( $this->labels['search_items'] ) ) {
+			return $this->labels['search_items'];
+		}
+		return '';
 	}
 
 	/**
@@ -252,7 +279,10 @@ trait Labels {
 	 * @return string The not_found.
 	 */
 	public function get_label_not_found() {
-		return $this->labels['not_found'] ?? '';
+		if ( isset( $this->labels['not_found'] ) ) {
+			return $this->labels['not_found'];
+		}
+		return '';
 	}
 
 	/**
@@ -263,7 +293,10 @@ trait Labels {
 	 * @return string The not_found_in_trash.
 	 */
 	public function get_label_not_found_in_trash() {
-		return $this->labels['not_found_in_trash'] ?? '';
+		if ( isset( $this->labels['not_found_in_trash'] ) ) {
+			return $this->labels['not_found_in_trash'];
+		}
+		return '';
 	}
 
 	/**
@@ -274,7 +307,10 @@ trait Labels {
 	 * @return string The parent_item_colon.
 	 */
 	public function get_label_parent_item_colon() {
-		return $this->labels['parent_item_colon'] ?? '';
+		if ( isset( $this->labels['parent_item_colon'] ) ) {
+			return $this->labels['parent_item_colon'];
+		}
+		return '';
 	}
 
 	/**
@@ -285,7 +321,10 @@ trait Labels {
 	 * @return string The all_items.
 	 */
 	public function get_label_all_items() {
-		return $this->labels['all_items'] ?? '';
+		if ( isset( $this->labels['all_items'] ) ) {
+			return $this->labels['all_items'];
+		}
+		return '';
 	}
 
 	/**
@@ -296,7 +335,10 @@ trait Labels {
 	 * @return string The archives.
 	 */
 	public function get_label_archives() {
-		return $this->labels['archives'] ?? '';
+		if ( isset( $this->labels['archives'] ) ) {
+			return $this->labels['archives'];
+		}
+		return '';
 	}
 
 	/**
@@ -307,7 +349,10 @@ trait Labels {
 	 * @return string The attributes.
 	 */
 	public function get_label_attributes() {
-		return $this->labels['attributes'] ?? '';
+		if ( isset( $this->labels['attributes'] ) ) {
+			return $this->labels['attributes'];
+		}
+		return '';
 	}
 
 	/**
@@ -318,7 +363,10 @@ trait Labels {
 	 * @return string The insert_into_item.
 	 */
 	public function get_label_insert_into_item() {
-		return $this->labels['insert_into_item'] ?? '';
+		if ( isset( $this->labels['insert_into_item'] ) ) {
+			return $this->labels['insert_into_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -329,7 +377,10 @@ trait Labels {
 	 * @return string The uploaded_to_this_item.
 	 */
 	public function get_label_uploaded_to_this_item() {
-		return $this->labels['uploaded_to_this_item'] ?? '';
+		if ( isset( $this->labels['uploaded_to_this_item'] ) ) {
+			return $this->labels['uploaded_to_this_item'];
+		}
+		return '';
 	}
 
 	/**
@@ -340,7 +391,10 @@ trait Labels {
 	 * @return string The featured_image.
 	 */
 	public function get_label_featured_image() {
-		return $this->labels['featured_image'] ?? '';
+		if ( isset( $this->labels['featured_image'] ) ) {
+			return $this->labels['featured_image'];
+		}
+		return '';
 	}
 
 	/**
@@ -351,7 +405,10 @@ trait Labels {
 	 * @return string The get_featured_image.
 	 */
 	public function get_label_get_featured_image() {
-		return $this->labels['get_featured_image'] ?? '';
+		if ( isset( $this->labels['get_featured_image'] ) ) {
+			return $this->labels['get_featured_image'];
+		}
+		return '';
 	}
 
 	/**
@@ -362,7 +419,10 @@ trait Labels {
 	 * @return string The remove_featured_image.
 	 */
 	public function get_label_remove_featured_image() {
-		return $this->labels['remove_featured_image'] ?? '';
+		if ( isset( $this->labels['remove_featured_image'] ) ) {
+			return $this->labels['remove_featured_image'];
+		}
+		return '';
 	}
 
 	/**
@@ -373,7 +433,10 @@ trait Labels {
 	 * @return string The use_featured_image.
 	 */
 	public function get_label_use_featured_image() {
-		return $this->labels['use_featured_image'] ?? '';
+		if ( isset( $this->labels['use_featured_image'] ) ) {
+			return $this->labels['use_featured_image'];
+		}
+		return '';
 	}
 
 	/**
@@ -384,11 +447,10 @@ trait Labels {
 	 * @return string The menu_name.
 	 */
 	public function get_label_menu_name() {
-		if (isset($this->labels['menu_name']) && ! empty($this->labels['menu_name'])) {
+		if ( isset( $this->labels['menu_name'] ) ) {
 			return $this->labels['menu_name'];
 		}
-
-		return $this->labels['name'] ?? $this->plural_title;
+		return '';
 	}
 
 	/**
@@ -399,7 +461,10 @@ trait Labels {
 	 * @return string The filter_items_list.
 	 */
 	public function get_label_filter_items_list() {
-		return $this->labels['filter_items_list'] ?? '';
+		if ( isset( $this->labels['filter_items_list'] ) ) {
+			return $this->labels['filter_items_list'];
+		}
+		return '';
 	}
 
 	/**
@@ -410,7 +475,10 @@ trait Labels {
 	 * @return string The filter_by_date.
 	 */
 	public function get_label_filter_by_date() {
-		return $this->labels['filter_by_date'] ?? '';
+		if ( isset( $this->labels['filter_by_date'] ) ) {
+			return $this->labels['filter_by_date'];
+		}
+		return '';
 	}
 
 	/**
@@ -421,7 +489,10 @@ trait Labels {
 	 * @return string The items_list_navigation.
 	 */
 	public function get_label_items_list_navigation() {
-		return $this->labels['items_list_navigation'] ?? '';
+		if ( isset( $this->labels['items_list_navigation'] ) ) {
+			return $this->labels['items_list_navigation'];
+		}
+		return '';
 	}
 
 	/**
@@ -432,7 +503,10 @@ trait Labels {
 	 * @return string The items_list.
 	 */
 	public function get_label_items_list() {
-		return $this->labels['items_list'] ?? '';
+		if ( isset( $this->labels['items_list'] ) ) {
+			return $this->labels['items_list'];
+		}
+		return '';
 	}
 
 	/**
@@ -443,7 +517,10 @@ trait Labels {
 	 * @return string The item_published.
 	 */
 	public function get_label_item_published() {
-		return $this->labels['item_published'] ?? '';
+		if ( isset( $this->labels['item_published'] ) ) {
+			return $this->labels['item_published'];
+		}
+		return '';
 	}
 
 	/**
@@ -454,7 +531,10 @@ trait Labels {
 	 * @return string The item_published_privately.
 	 */
 	public function get_label_item_published_privately() {
-		return $this->labels['item_published_privately'] ?? '';
+		if ( isset( $this->labels['item_published_privately'] ) ) {
+			return $this->labels['item_published_privately'];
+		}
+		return '';
 	}
 
 	/**
@@ -465,7 +545,10 @@ trait Labels {
 	 * @return string The item_reverted_to_draft.
 	 */
 	public function get_label_item_reverted_to_draft() {
-		return $this->labels['item_reverted_to_draft'] ?? '';
+		if ( isset( $this->labels['item_reverted_to_draft'] ) ) {
+			return $this->labels['item_reverted_to_draft'];
+		}
+		return '';
 	}
 
 	/**
@@ -476,7 +559,10 @@ trait Labels {
 	 * @return string The item_trashed.
 	 */
 	public function get_label_item_trashed() {
-		return $this->labels['item_trashed'] ?? '';
+		if ( isset( $this->labels['item_trashed'] ) ) {
+			return $this->labels['item_trashed'];
+		}
+		return '';
 	}
 
 	/**
@@ -487,7 +573,10 @@ trait Labels {
 	 * @return string The item_scheduled.
 	 */
 	public function get_label_item_scheduled() {
-		return $this->labels['item_scheduled'] ?? '';
+		if ( isset( $this->labels['item_scheduled'] ) ) {
+			return $this->labels['item_scheduled'];
+		}
+		return '';
 	}
 
 	/**
@@ -498,7 +587,10 @@ trait Labels {
 	 * @return string The item_updated.
 	 */
 	public function get_label_item_updated() {
-		return $this->labels['item_updated'] ?? '';
+		if ( isset( $this->labels['item_updated'] ) ) {
+			return $this->labels['item_updated'];
+		}
+		return '';
 	}
 
 	/**
@@ -509,7 +601,10 @@ trait Labels {
 	 * @return string The item link.
 	 */
 	public function get_label_item_link() {
-		return $this->labels['item_link'] ?? '';
+		if ( isset( $this->labels['item_link'] ) ) {
+			return $this->labels['item_link'];
+		}
+		return '';
 	}
 
 	/**
@@ -520,7 +615,10 @@ trait Labels {
 	 * @return string The item link description.
 	 */
 	public function get_label_item_link_description() {
-		return $this->labels['item_link_description'] ?? '';
+		if ( isset( $this->labels['item_link_description'] ) ) {
+			return $this->labels['item_link_description'];
+		}
+		return '';
 	}
 
 	/**

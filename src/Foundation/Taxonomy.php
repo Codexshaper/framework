@@ -6,7 +6,7 @@
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/csmf
+ * @link       https://github.com/CodexShaper-Devs/cxf
  * @since      1.0.0
  */
 
@@ -28,7 +28,7 @@ use CodexShaper\Framework\Foundation\Traits\Taxonomy\Options;
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/csmf
+ * @link       https://github.com/CodexShaper-Devs/cxf
  * @since      1.0.0
  */
 abstract class Taxonomy implements TaxonomyContract {
@@ -151,21 +151,17 @@ abstract class Taxonomy implements TaxonomyContract {
 			}
 		}
 
-		$this->taxonomy = substr(str_replace([' ', '_'], '-', $this->get_name()), 0, 32);
+		$this->taxonomy = substr(sanitize_key(str_replace([' ', '-'], '_', $this->get_name())), 0, 32);
 
 		if ( ! $this->taxonomy_title ) {
-			$this->taxonomy_title = join( ' ', array_map( 'ucfirst', explode( '-', $this->taxonomy ) ) );
-		}
-
-		if ( method_exists( $this, 'get_taxonomy' ) ) {
-			$this->taxonomy = $this->get_taxonomy();
+			$this->taxonomy_title = join( ' ', array_map( 'ucfirst', explode( '_', $this->taxonomy ) ) );
 		}
 
 		if ( method_exists( $this, 'get_title' ) ) {
 			$this->taxonomy_title = $this->get_title();
 		}
 
-		$this->plural_title = csmf_pluralize( $this->taxonomy_title );
+		$this->plural_title = cxf_pluralize( $this->taxonomy_title );
 
 		if ( method_exists( $this, 'get_plural_title' ) ) {
 			$this->plural_title = $this->get_plural_title();
@@ -220,7 +216,7 @@ abstract class Taxonomy implements TaxonomyContract {
 		}
 
 		// Set default labels and must be call before get_options().
-		if ( empty( $this->labels ) ) {
+		if ( property_exists( $this, 'labels' ) || ! $this->labels || empty( $this->labels ) ) {
 			$this->set_default_labels();
 		}
 
@@ -380,9 +376,10 @@ abstract class Taxonomy implements TaxonomyContract {
 	 * @return true|WP_Error True on success, WP_Error on failure or if the taxonomy doesn't exist.
 	 */
 	public function unregister( $taxonomy = '' ) {
+		$this->taxonomy = $taxonomy;
 
-		if (! empty( $this->taxonomy ) ) {
-			$this->taxonomy = $taxonomy;
+		if ( empty( $this->taxonomy ) ) {
+			$this->taxonomy = $this->get_name();
 		}
 
 		unregister_taxonomy( $this->taxonomy );

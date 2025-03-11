@@ -65,7 +65,7 @@ class COB {
 	 * @return void
 	 */
 	public static function create_options( $identifier, $options = array() ) {
-		if ( class_exists( '\CSMF' ) ) {
+		if ( class_exists( '\CXF' ) ) {
 			Option::create( $identifier, $options );
 		}
 	}
@@ -83,7 +83,7 @@ class COB {
 	 * @return void
 	 */
 	public static function create_customize_options( $identifier, $options = array() ) {
-		if ( class_exists( '\CSMF' ) ) {
+		if ( class_exists( '\CXF' ) ) {
 			Option::customize( $identifier, $options );
 		}
 	}
@@ -101,7 +101,7 @@ class COB {
 	 * @return void
 	 */
 	public static function create_section( $identifier, $options = array() ) {
-		if ( class_exists( '\CSMF' ) ) {
+		if ( class_exists( '\CXF' ) ) {
 			Section::create( $identifier, $options );
 		}
 	}
@@ -119,7 +119,7 @@ class COB {
 	 * @return void
 	 */
 	public static function create_metabox( $identifier, $options = array() ) {
-		if ( class_exists( '\CSMF' ) ) {
+		if ( class_exists( '\CXF' ) ) {
 			Metabox::create( $identifier, $options );
 		}
 	}
@@ -137,7 +137,7 @@ class COB {
 	 * @return void
 	 */
 	public static function create_taxonomy_options( $identifier, $options = array() ) {
-		if ( class_exists( '\CSMF' ) ) {
+		if ( class_exists( '\CXF' ) ) {
 			Taxonomy::create( $identifier, $options );
 		}
 	}
@@ -155,7 +155,7 @@ class COB {
 	 * @return void
 	 */
 	public static function create_widget( $identifier, $options = array() ) {
-		if ( class_exists( '\CSMF' ) ) {
+		if ( class_exists( '\CXF' ) ) {
 			Widget::create( $identifier, $options );
 		}
 	}
@@ -173,7 +173,7 @@ class COB {
 	 * @return void
 	 */
 	public static function create_nav_menu_options( $identifier, $options = array() ) {
-		if ( class_exists( '\CSMF' ) ) {
+		if ( class_exists( '\CXF' ) ) {
 			Menu::create( $identifier, $options );
 		}
 	}
@@ -191,7 +191,7 @@ class COB {
 	 * @return void
 	 */
 	public static function create_profile_options( $identifier, $options = array() ) {
-		if ( class_exists( '\CSMF' ) ) {
+		if ( class_exists( '\CXF' ) ) {
 			Profile::create( $identifier, $options );
 		}
 	}
@@ -209,7 +209,7 @@ class COB {
 	 * @return void
 	 */
 	public static function create_comment_metabox( $identifier, $options = array() ) {
-		if ( class_exists( '\CSMF' ) ) {
+		if ( class_exists( '\CXF' ) ) {
 			Comment::create( $identifier, $options );
 		}
 	}
@@ -227,7 +227,7 @@ class COB {
 	 * @return void
 	 */
 	public static function create_shortcoder( $identifier, $options = array() ) {
-		if ( class_exists( '\CSMF' ) ) {
+		if ( class_exists( '\CXF' ) ) {
 			Shortcode::create( $identifier, $options );
 		}
 	}

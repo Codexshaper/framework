@@ -15,8 +15,8 @@ use CodexShaper\Framework\Builder\OptionBuilder\Section;
 
 ?>
 
-<div class="csmf--options-content">
-    <div class="csmf--sections">
+<div class="cxf--options-content">
+    <div class="cxf--sections">
         <?php 
             foreach ( $sections as $section ){
                 Section::render( $section, $identifier, $options );

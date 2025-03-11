@@ -42,7 +42,7 @@ class Text extends Field {
 
         $this->before();
 
-        csmf_view( 'builder.fields.text', compact( 'type', 'name', 'value', 'attributes' ) );
+        cxf_view( 'builder.fields.text', compact( 'type', 'name', 'value', 'attributes' ) );
 
         $this->after();
 	}

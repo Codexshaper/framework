@@ -51,7 +51,7 @@ class TaxonomyServiceProvider extends ServiceProvider {
 	public function register() {
 		$taxonomies = array();
 
-		$taxonomy_directory = csmf_plugin_base_path() . 'src/Taxonomies/*';
+		$taxonomy_directory = cxf_plugin_base_path() . 'src/Taxonomies/*';
 
 		foreach ( glob( $taxonomy_directory ) as $path ) {
 			if ( is_file( $path ) ) {

@@ -14,7 +14,7 @@
 use CodexShaper\Framework\Builder\OptionBuilder\Field;
 
     $section_class = $section['class'] ?? '';
-    $section_class .= ' csmf--builder-init';
+    $section_class .= ' cxf--builder-init';
     $section_title  = $section['title'] ?? '';
     $section_icon   = $section['icon'] ?? '';
     $section_description = $section['description'] ?? '';
@@ -25,17 +25,17 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
 ?>
 
 <div 
-    class="csmf--section tab-panel <?php echo esc_attr( $section_class ); ?>" 
+    class="cxf--section tab-panel <?php echo esc_attr( $section_class ); ?>" 
     id="panel_<?php echo esc_attr( $section_id ); ?>" 
-    data-csmf-tab="<?php echo esc_attr( $section_id ); ?>" 
+    data-cxf-tab="<?php echo esc_attr( $section_id ); ?>" 
     role="tabpanel"
 >
     <!-- Title -->
     <?php if ( $section_title || $section_icon ) : ?>
-        <div class="csmf--section-title">
+        <div class="cxf--section-title">
             <h3>
                 <?php if ( $section_icon ): ?>
-                    <i class="csmf--section-icon <?php echo esc_attr( $section_icon ); ?>"></i>
+                    <i class="cxf--section-icon <?php echo esc_attr( $section_icon ); ?>"></i>
                 <?php endif; ?>
                 <?php echo wp_kses($section_title, $allowed_html); ?>
             </h3>
@@ -43,7 +43,7 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
     <?php endif; ?>
     <!-- Description -->
     <?php if ( $section_description ) : ?>
-        <div class="csmf--field csmf--section-description"><?php echo wp_kses($section_description, $allowed_html); ?></div>
+        <div class="cxf--field cxf--section-description"><?php echo wp_kses($section_description, $allowed_html); ?></div>
     <?php endif; ?>
     <!-- Fields -->
     <?php
@@ -62,14 +62,13 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
                     'identifier' => $identifier,
                     'post_id' => $post_id,
                     'options' => $options,
-                    'parent' => $parent,
-                    'is_serialize' => $is_serialize,
+                    'parent' => $parent
                 ) );
             }
         }
     ?>
     <!-- No option found -->
     <?php if ( $is_error ) : ?>
-        <div class="csmf--no-option"><?php esc_html__( 'No section data found.', 'codexshaper-framework' ); ?></div>
+        <div class="cxf--no-option"><?php esc_html__( 'No section data found.', 'codexshaper-framework' ); ?></div>
     <?php endif; ?>
 </div>

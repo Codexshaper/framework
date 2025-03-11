@@ -76,7 +76,7 @@ trait Field {
 	 *
 	 * @return string Field value.
 	 */
-	public static function get_value( $post_id, $field, $metabox_id = '', $options = array(), $is_serialize = true ) {
+	public static function get_value( $post_id, $field, $metabox_id = '', $options = array() ) {
 
 		$value = '';
 
@@ -87,7 +87,7 @@ trait Field {
 		$data  = get_post_meta( $post_id, $field['id'] );
 		$value = $data[0] ?? '';
 
-		if ( $metabox_id && $is_serialize ) {
+		if ( $metabox_id && isset( $options['data_type'] ) && $options['data_type'] === 'serialize' ) {
 			$data  = get_post_meta( $post_id, $metabox_id, true );
 			$value = $data[ $field['id'] ] ?? '';
 		}
@@ -151,10 +151,10 @@ trait Field {
 		$before = $this->field['before'] ?? '';
 		$name   = $this->get_name( $this->field, $this->identifier );
 		if ( $before ) {
-			$before = "<div class='csmf--field-before'>{$before}</div>";
+			$before = "<div class='cxf--field-before'>{$before}</div>";
 		}
 
-		$before = apply_filters( "csmf/option/field/{$name}/before", $before );
+		$before = apply_filters( "cxf/option/field/{$name}/before", $before );
 
 		if ( $render ) {
 			return $before; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Intentional unescaped output.
@@ -179,22 +179,22 @@ trait Field {
 		$error       = $this->field['error'] ?? '';
 
 		if ( $after ) {
-			$after = "<div class='csmf--field-after'>{$after}</div>";
+			$after = "<div class='cxf--field-after'>{$after}</div>";
 		}
 
 		if ( $description ) {
-			$after .= "<div class='csmf--field-description'>{$description}</div>";
+			$after .= "<div class='cxf--field-description'>{$description}</div>";
 		}
 
 		if ( $help ) {
-			$after .= "<div class='csmf--field-help' data-help='{$help}'><i class='fas fa-question-circle'></i></div>";
+			$after .= "<div class='cxf--field-help'>{$help}</div>";
 		}
 
 		if ( $error ) {
-			$after .= "<div class='csmf--field-error'>{$error}</div>";
+			$after .= "<div class='cxf--field-error'>{$error}</div>";
 		}
 
-		$after = apply_filters( "csmf/option/field/{$name}/after", $after );
+		$after = apply_filters( "cxf/option/field/{$name}/after", $after );
 
 		if ( $render ) {
 			return $after; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Intentional unescaped output.;
