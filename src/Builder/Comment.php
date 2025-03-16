@@ -12,6 +12,10 @@
 
 namespace CodexShaper\Framework\Builder;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Comment option class
  *

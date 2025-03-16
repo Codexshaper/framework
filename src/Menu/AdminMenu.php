@@ -73,7 +73,7 @@ class AdminMenu {
           global $submenu;
   
           $menu_slug = $options['menu_slug'];
-          $menu_icon = ( ! empty( $options['admin_bar_menu_icon'] ) ) ? '<span class="cxf--ab-icon ab-icon '. esc_attr( $options['admin_bar_menu_icon'] ) .'"></span>' : '';
+          $menu_icon = ( ! empty( $options['admin_bar_menu_icon'] ) ) ? '<span class="csmf--ab-icon ab-icon '. esc_attr( $options['admin_bar_menu_icon'] ) .'"></span>' : '';
   
           $wp_admin_bar->add_node( array(
             'id'    => $menu_slug,

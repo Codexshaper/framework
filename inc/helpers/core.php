@@ -11,9 +11,13 @@
  * @since      1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use CodexShaper\Framework\Application;
 
-if (! function_exists('cxf_app')) {
+if (! function_exists('csmf_app')) {
     /**
      * Get the available container instance.
      *
@@ -22,7 +26,7 @@ if (! function_exists('cxf_app')) {
 	 * 
      * @return mixed|\CodexShaper\Framework\Container\Container Container instance.
      */
-    function cxf_app($abstract = null, array $parameters = [], $plugin_base_url = '', $plugin_base_path = '')
+    function csmf_app($abstract = null, array $parameters = [], $plugin_base_url = '', $plugin_base_path = '')
     {
 		$app = Application::getInstance($plugin_base_url, $plugin_base_path);
 
@@ -34,26 +38,36 @@ if (! function_exists('cxf_app')) {
     }
 }
 
-if ( ! function_exists( 'cxf_config' ) ) {
+if ( ! function_exists( 'csmf_config' ) ) {
 
 	/**
 	 * Get core helper function
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_config( $name ) {
-		return cxf_app('config')->get( $name );
+	function csmf_config( $name = '', $value = null ) {
+		$config = csmf_app('config');
+
+		if (! $name) {
+			return $config;
+		}
+
+		if ($name && $value) {
+			return $config->set($name, $value);
+		}
+
+		return csmf_app('config')->get( $name );
 	}
 }
 
-if ( ! function_exists( 'cxf_helper' ) ) {
+if ( ! function_exists( 'csmf_helper' ) ) {
 
 	/**
 	 * Get core helper function
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_helper() {
+	function csmf_helper() {
 		if ( ! class_exists( '\CodexShaper\Framework\Core\Helper' ) ) {
 			return;
 		}
@@ -61,14 +75,14 @@ if ( ! function_exists( 'cxf_helper' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cxf_option_builder' ) ) {
+if ( ! function_exists( 'csmf_option_builder' ) ) {
 
 	/**
 	 * Get page by page title
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_option_builder() {
+	function csmf_option_builder() {
 		if ( ! class_exists( '\CodexShaper\Framework\Builder\COB' ) ) {
 			return;
 		}
@@ -77,23 +91,7 @@ if ( ! function_exists( 'cxf_option_builder' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cxf_get_option' ) ) {
-
-	/**
-	 * Get CodexShaper Option Builder option
-	 *
-	 * @param string $option Option name.
-	 * @param mixed  $default_value Default value if option doesn't exists.
-	 *
-	 * @package CodexShaper_Framework
-	 */
-	function cxf_get_option( $option = '', $default_value = null ) {
-		$options = get_option( 'cxf_theme_options' );
-		return ( isset( $options[ $option ] ) ) ? $options[ $option ] : $default_value;
-	}
-}
-
-if ( ! function_exists( 'cxf_get_page_by_title' ) ) {
+if ( ! function_exists( 'csmf_get_page_by_title' ) ) {
 
 	/**
 	 * Get page by page title
@@ -102,7 +100,7 @@ if ( ! function_exists( 'cxf_get_page_by_title' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_get_page_by_title( $title ) {
+	function csmf_get_page_by_title( $title ) {
 		$query = new WP_Query(
 			array(
 				'post_type'              => 'page',
@@ -122,7 +120,7 @@ if ( ! function_exists( 'cxf_get_page_by_title' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cxf_query' ) ) {
+if ( ! function_exists( 'csmf_query' ) ) {
 
 	/**
 	 * Get query by options
@@ -131,20 +129,20 @@ if ( ! function_exists( 'cxf_query' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_query( $options = '' ) {
+	function csmf_query( $options = '' ) {
 		return new CodexShaper\Framework\Builder\Database\Query( $options );
 	}
 }
 
-if ( ! function_exists( 'cxf_reset_query' ) ) {
+if ( ! function_exists( 'csmf_reset_query' ) ) {
 
 	/**
 	 * Reset current query
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_reset_query() {
-		wp_reset_query();
+	function csmf_reset_query() {
+		wp_reset_postdata();
 	}
 }
 
@@ -163,9 +161,9 @@ if ( ! function_exists( 'cxf_reset_query' ) ) {
  *
  * @return WP_Post[]|int[] Array of post objects or post IDs.
  */
-if ( ! function_exists( 'cxf_get_elementor_templates' ) ) {
+if ( ! function_exists( 'csmf_get_elementor_templates' ) ) {
 
-	function cxf_get_elementor_templates( $args = null ) {
+	function csmf_get_elementor_templates( $args = null ) {
 		$templates = array();
 
 		$defaults = array(
@@ -180,7 +178,7 @@ if ( ! function_exists( 'cxf_get_elementor_templates' ) ) {
 
 		$parsed_args = wp_parse_args( $args, $defaults );
 
-		$posts = cxf_query()->get_post_types( $parsed_args );
+		$posts = csmf_query()->get_post_types( $parsed_args );
 
 		if ( $posts ) {
 			foreach ( $posts as $post ) {
@@ -192,7 +190,7 @@ if ( ! function_exists( 'cxf_get_elementor_templates' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cxf_app_base_path' ) ) {
+if ( ! function_exists( 'csmf_app_base_path' ) ) {
 
 	/**
 	 * Get view base
@@ -201,12 +199,12 @@ if ( ! function_exists( 'cxf_app_base_path' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_app_base_path() {
-		return cxf_app()->getAppBasePath();
+	function csmf_app_base_path() {
+		return csmf_app()->getAppBasePath();
 	}
 }
 
-if ( ! function_exists( 'cxf_plugin_base_path' ) ) {
+if ( ! function_exists( 'csmf_plugin_base_path' ) ) {
 
 	/**
 	 * Get view base
@@ -215,17 +213,17 @@ if ( ! function_exists( 'cxf_plugin_base_path' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_plugin_base_path() {
+	function csmf_plugin_base_path() {
 		
-		if ( ! defined('CXF_PLUGIN_BASE_PATH') ) {
-			define( 'CXF_PLUGIN_BASE_PATH', cxf_app()->getPluginBasePath() );
+		if ( ! defined('CSMF_PLUGIN_BASE_PATH') ) {
+			define( 'CSMF_PLUGIN_BASE_PATH', csmf_app()->getPluginBasePath() );
 		}
 
-		return trailingslashit(untrailingslashit(CXF_PLUGIN_BASE_PATH));
+		return trailingslashit(untrailingslashit(CSMF_PLUGIN_BASE_PATH));
 	}
 }
 
-if ( ! function_exists( 'cxf_plugin_base_url' ) ) {
+if ( ! function_exists( 'csmf_plugin_base_url' ) ) {
 
 	/**
 	 * Get view base
@@ -234,12 +232,12 @@ if ( ! function_exists( 'cxf_plugin_base_url' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_plugin_base_url() {
-		return cxf_app()->getPluginBaseUrl();
+	function csmf_plugin_base_url() {
+		return csmf_app()->getPluginBaseUrl();
 	}
 }
 
-if ( ! function_exists( 'cxf_view_base' ) ) {
+if ( ! function_exists( 'csmf_view_base' ) ) {
 
 	/**
 	 * Get view base
@@ -250,16 +248,16 @@ if ( ! function_exists( 'cxf_view_base' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_view_base( $view_base = '' ) {
+	function csmf_view_base( $view_base = '' ) {
 		if ( ! $view_base || empty( $view_base ) ) {
-			$view_base = cxf_plugin_base_path() . 'views';
+			$view_base = csmf_plugin_base_path() . 'views';
 		}
 
 		return $view_base;
 	}
 }
 
-if ( ! function_exists( 'cxf_view_path' ) ) {
+if ( ! function_exists( 'csmf_view_path' ) ) {
 
 	/**
 	 * Render View
@@ -271,15 +269,15 @@ if ( ! function_exists( 'cxf_view_path' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_view_path( $view, $base = '', $extension = 'view.php' ) {
+	function csmf_view_path( $view, $base = '', $extension = 'view.php' ) {
 		// Get the view base path.
-		$view_base = cxf_view_base( $base );
+		$view_base = csmf_view_base( $base );
 		// Sanitize the view name.
 		$path = str_replace( array( '.', '|' ), DIRECTORY_SEPARATOR, $view );
-		$fallback_view_base = cxf_app_base_path() . 'views';
-		$view_base = cxf_plugin_base_path() . 'views';
-		$elementor_view_base = cxf_plugin_base_path() . 'widgets/elementor/views';
-		$wordpress_view_base = cxf_plugin_base_path() . 'widgets/wordpress/views';
+		$fallback_view_base = csmf_app_base_path() . 'views';
+		$view_base = csmf_plugin_base_path() . 'views';
+		$elementor_view_base = csmf_plugin_base_path() . 'widgets/elementor/views';
+		$wordpress_view_base = csmf_plugin_base_path() . 'widgets/wordpress/views';
 
 		// Check if the view file exists.
 		if ( empty( $base ) ) {
@@ -289,7 +287,7 @@ if ( ! function_exists( 'cxf_view_path' ) ) {
 			 * @param array $bases View bases.
 			 */
 			$bases = apply_filters( 
-				'cxf/view/bases', 
+				'csmf/view/bases', 
 				array( 
 					$elementor_view_base, 
 					$wordpress_view_base, 
@@ -317,7 +315,7 @@ if ( ! function_exists( 'cxf_view_path' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cxf_view_exists' ) ) {
+if ( ! function_exists( 'csmf_view_exists' ) ) {
 
 	/**
 	 * Check view exists
@@ -329,9 +327,9 @@ if ( ! function_exists( 'cxf_view_exists' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_view_exists( $view, $base = '' ) {
+	function csmf_view_exists( $view, $base = '' ) {
 
-		$view_path = cxf_view_path( $view, $base );
+		$view_path = csmf_view_path( $view, $base );
 
 		// Check if the view file exists
 		if ( ! file_exists( $view_path ) ) {
@@ -342,7 +340,7 @@ if ( ! function_exists( 'cxf_view_exists' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cxf_view' ) ) {
+if ( ! function_exists( 'csmf_view' ) ) {
 
     /**
      * Render a View with Full Scope Isolation
@@ -354,11 +352,11 @@ if ( ! function_exists( 'cxf_view' ) ) {
      *
      * @return string|void Rendered output or void if rendered directly.
      */
-    function cxf_view( $view, $data = [], $render = false, $base = '' ) {
+    function csmf_view( $view, $data = [], $render = false, $base = '' ) {
         static $data_stack = []; // Keeps track of view data for nested calls.
 
         // Resolve the full path to the view file.
-        $view_path = cxf_view_path( $view, $base );
+        $view_path = csmf_view_path( $view, $base );
 
         // Check if the view file exists.
         if ( ! file_exists( $view_path ) ) {
@@ -401,7 +399,7 @@ if ( ! function_exists( 'cxf_view' ) ) {
     }
 }
 
-if ( ! function_exists( 'cxf_view_render' ) ) {
+if ( ! function_exists( 'csmf_view_render' ) ) {
 
 	/**
 	 * Render View
@@ -412,12 +410,12 @@ if ( ! function_exists( 'cxf_view_render' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_view_render( $view, $data = array(), $base = '' ) {
-		return cxf_view( $view, $data, true, $base );
+	function csmf_view_render( $view, $data = array(), $base = '' ) {
+		return csmf_view( $view, $data, true, $base );
 	}
 }
 
-if ( ! function_exists( 'cxf_get_string_attributes' ) ) {
+if ( ! function_exists( 'csmf_get_string_attributes' ) ) {
 
 	/**
 	 * Get settings
@@ -428,7 +426,7 @@ if ( ! function_exists( 'cxf_get_string_attributes' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_get_string_attributes( $attributes, $render = false ) {
+	function csmf_get_string_attributes( $attributes, $render = false ) {
 
 		$attributes_html = implode( ' ', $attributes );
 
@@ -440,7 +438,7 @@ if ( ! function_exists( 'cxf_get_string_attributes' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cxf_settings' ) ) {
+if ( ! function_exists( 'csmf_settings' ) ) {
 
 	/**
 	 * Get settings
@@ -454,7 +452,7 @@ if ( ! function_exists( 'cxf_settings' ) ) {
 	 *
 	 * @package CodexShaper_Framework
 	 */
-	function cxf_settings( $option_name, $key = null, $default = false, $sanitize_callback = '' ) {
+	function csmf_settings( $option_name, $key = null, $default = false, $sanitize_callback = '' ) {
 		$settings = get_option( $option_name, array() );
 
 		if ( $key !== null && ! empty( $key ) ) {
@@ -473,29 +471,48 @@ if ( ! function_exists( 'cxf_settings' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cxf_sanitize_recursive' ) ) {
+if ( ! function_exists( 'csmf_get_option' ) ) {
+
+	/**
+	 * Get CodexShaper Option Builder option
+	 *
+	 * @param string $option Option name.
+	 * @param mixed  $default Default value if option doesn't exists.
+	 *
+	 * @package CodexShaper_Framework
+	 */
+	function csmf_get_option( $option, $parent = null, $default = '' ) {
+		if ( $parent ) {
+			return  csmf_settings( $parent, $option, $default );
+		}
+
+		return get_option( $option, $default );
+	}
+}
+
+if ( ! function_exists( 'csmf_sanitize_recursive' ) ) {
 	/**
 	 * Recursively sanitize an array or string.
 	 *
 	 * @param mixed $data The data to sanitize (string or array).
 	 * @return mixed The sanitized data.
 	 */
-	function cxf_sanitize_recursive( $data ) {
+	function csmf_sanitize_recursive( $data ) {
 		if ( is_array( $data ) ) {
-			return array_map( 'cxf_sanitize_recursive', $data );
+			return array_map( 'csmf_sanitize_recursive', $data );
 		}
 
 		return sanitize_text_field( $data );
 	}
 }
 
-if(!function_exists('cxf_get_post_types')) {
+if(!function_exists('csmf_get_post_types')) {
 	/**
 	 * Get all post types
 	 *
 	 * @return array $posts All post types.
 	 */
-	function cxf_get_post_types() {
+	function csmf_get_post_types() {
 		global $wp_post_types;
 		$posts = array();
 		$skip_post_types = [
@@ -512,7 +529,9 @@ if(!function_exists('cxf_get_post_types')) {
 			'customize_changeset',
 			'revision',
 			'attachment',
-			'elementor_library'
+			'elementor_library',
+			'csmf-theme-builder',
+			'csmf-custom-fonts',
 		];
 		
 		foreach ($wp_post_types as $post_type) {
@@ -521,19 +540,19 @@ if(!function_exists('cxf_get_post_types')) {
 				continue;
 			}
 			// Add post type to posts array.
-			$posts[$post_type->name] = $post_type->labels->singular_name;
+			$posts[$post_type->name] = $post_type->labels->menu_name ?? $post_type->label ?? $post_type->labels->singular_name ?? $post_type->name;
 		}
 		return $posts;
 	}
 }
 
-if(!function_exists('cxf_get_taxonomies')) {
+if(!function_exists('csmf_get_taxonomies')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cxf_get_taxonomies() {
+	function csmf_get_taxonomies() {
 		// Get all taxonomies.
 		global $wp_taxonomies;
 		$taxonomies = array();
@@ -546,15 +565,15 @@ if(!function_exists('cxf_get_taxonomies')) {
 	}
 }
 
-if(!function_exists('cxf_get_cache_post_types')) {
+if(!function_exists('csmf_get_cache_post_types')) {
 	/**
 	 * Get all post types
 	 *
 	 * @return array $posts All post types.
 	 */
-	function cxf_get_cache_post_types() {
+	function csmf_get_cache_post_types() {
 		// Get all post types.
-		$data = get_option('cxf_post_types_cache');
+		$data = get_option('csmf_post_types_cache');
 		// If no data found, return empty array.
 		if (! $data) {
 			return [];
@@ -568,15 +587,15 @@ if(!function_exists('cxf_get_cache_post_types')) {
 	}
 }
 
-if(!function_exists('cxf_get_cache_taxonomies')) {
+if(!function_exists('csmf_get_cache_taxonomies')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cxf_get_cache_taxonomies() {
+	function csmf_get_cache_taxonomies() {
 		// Get all taxonomies.
-		$data = get_option('cxf_taxonomies_cache');
+		$data = get_option('csmf_taxonomies_cache');
 		// If no data found, return empty array.
 		if (! $data) {
 			return [];
@@ -590,17 +609,17 @@ if(!function_exists('cxf_get_cache_taxonomies')) {
 	}
 }
 
-if(!function_exists('cxf_get_cache_metaboxes')) {
+if(!function_exists('csmf_get_cache_metaboxes')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cxf_get_cache_metaboxes($field = '') {
-		$metabox_prefix = cxf_config('options.metabox.prefix') ?? 'cxf_metabox_settings';
-		$metabox_option_name = cxf_config('options.metabox.option_name') ?? 'cxf_metabox_options';
+	function csmf_get_cache_metaboxes($field = '') {
+		$metabox_prefix = csmf_config('options.metabox.prefix') ?? 'csmf_metabox_settings';
+		$metabox_option_name = csmf_config('options.metabox.option_name') ?? 'csmf_metabox_options';
 		// Get all settings.
-		$data = cxf_settings($metabox_prefix);
+		$data = csmf_settings($metabox_prefix);
 		$metaboxes = $data[$metabox_option_name] ?? [];
 
 		if (! empty($field)) {
@@ -616,17 +635,17 @@ if(!function_exists('cxf_get_cache_metaboxes')) {
 	}
 }
 
-if(!function_exists('cxf_get_cache_sections')) {
+if(!function_exists('csmf_get_cache_sections')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cxf_get_cache_sections($field = '') {
-		$section_prefix 		= cxf_config('options.section.prefix') ?? 'cxf_metabox_settings';
-		$section_option_name 	= cxf_config('options.section.option_name') ?? 'cxf_section_settings';
+	function csmf_get_cache_sections($field = '') {
+		$section_prefix 		= csmf_config('options.section.prefix') ?? 'csmf_metabox_settings';
+		$section_option_name 	= csmf_config('options.section.option_name') ?? 'csmf_section_settings';
 		// Get all settings.
-		$data 					= cxf_settings($section_prefix);
+		$data 					= csmf_settings($section_prefix);
 		$sections 				= $data[$section_option_name] ?? [];
 
 		if ( ! is_array($sections) || empty($sections)) {
@@ -646,17 +665,17 @@ if(!function_exists('cxf_get_cache_sections')) {
 	}
 }
 
-if(!function_exists('cxf_get_cache_fields')) {
+if(!function_exists('csmf_get_cache_fields')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cxf_get_cache_fields($field = '') {
-		$field_prefix = cxf_config('options.field.prefix') ?? 'cxf_metabox_settings';
-		$field_option_name = cxf_config('options.field.option_name') ?? 'cxf_metabox_section_field_settings';
+	function csmf_get_cache_fields($field = '') {
+		$field_prefix = csmf_config('options.field.prefix') ?? 'csmf_metabox_settings';
+		$field_option_name = csmf_config('options.field.option_name') ?? 'csmf_metabox_section_field_settings';
 		// Get all settings.
-		$data = cxf_settings($field_prefix);
+		$data = csmf_settings($field_prefix);
 		$fields = $data[$field_option_name] ?? [];
 
 		if (empty($field)) {
@@ -669,21 +688,21 @@ if(!function_exists('cxf_get_cache_fields')) {
 	}
 }
 
-if(!function_exists('cxf_get_builder_fields')) {
+if(!function_exists('csmf_get_builder_fields')) {
 	/**
 	 * Get all taxonomies
 	 *
 	 * @return array $taxonomies All taxonomies.
 	 */
-	function cxf_get_builder_fields($keys = '', $skips = array()) {
-		$fields = cxf_config('builder.fields') ?? [];
+	function csmf_get_builder_fields($keys = '', $skips = array()) {
+		$fields = csmf_config('builder.fields') ?? [];
 
 		/**
 		 * Filter fields
 		 *
 		 * @param array $fields Fields.
 		 */
-		$fields = apply_filters('cxf/builder/fields', $fields);
+		$fields = apply_filters('csmf/builder/fields', $fields);
 
 		// Filter active fields	
 		$fields = array_filter($fields, fn($field) => $field['is_active'] ?? true);
@@ -742,7 +761,7 @@ if(!function_exists('cxf_get_builder_fields')) {
 	}
 }
 
-if (! function_exists('cxf_get_json_data')) {
+if (! function_exists('csmf_get_json_data')) {
 	/**
 	 * Get json data
 	 *
@@ -750,7 +769,7 @@ if (! function_exists('cxf_get_json_data')) {
 	 *
 	 * @return array $data Json data.
 	 */
-	function cxf_get_json_data( $file_path, $associative = true ) {
+	function csmf_get_json_data( $file_path, $associative = true ) {
 		if ( ! file_exists( $file_path ) || ! is_readable( $file_path ) ) {
 			return [];
 		}
@@ -759,7 +778,7 @@ if (! function_exists('cxf_get_json_data')) {
 	}	
 }
 
-if (! function_exists('cxf_elementor_modules')) {
+if (! function_exists('csmf_elementor_modules')) {
 	/**
 	 * Get json data
 	 *
@@ -767,7 +786,7 @@ if (! function_exists('cxf_elementor_modules')) {
 	 *
 	 * @return array $data Json data.
 	 */
-	function cxf_elementor_modules( $module_dir ) {
+	function csmf_elementor_modules( $module_dir ) {
 
 		$module_directory = untrailingslashit($module_dir) . "/*//";
 		$modules = [];
@@ -776,7 +795,7 @@ if (! function_exists('cxf_elementor_modules')) {
 				$parts  = explode( '/', untrailingslashit( $path ) );
 				$module = end( $parts );
 				if ( ! in_array( $module, $modules, true ) ) {
-					$modules[$module] = cxf_get_json_data( $path . 'module.json' );
+					$modules[$module] = csmf_get_json_data( $path . 'module.json' );
 				}
 			}
 		}
@@ -784,3 +803,235 @@ if (! function_exists('cxf_elementor_modules')) {
 		return $modules;
 	}	
 }
+
+if (! function_exists('csmf_builder_template_tab_filter')) {
+	/**
+	 * Get add tab filter query
+	 *
+	 * @param \WP_Query $query
+	 * @param string $template_type Template type.
+	 * @param string $meta_key Meta key.
+	 *
+	 * @return array $data Json data.
+	 */
+	function csmf_builder_template_tab_filter(\WP_Query $query, $template_type, $meta_key) {
+		if ( ! is_admin() ) {
+			return;
+		}
+		$query->query_vars['meta_key']     = $meta_key;
+		$query->query_vars['meta_value']   = $template_type;
+		$query->query_vars['meta_compare'] = '=';
+	}
+}
+
+if (! function_exists('csmf_get_current_post_by_condition')) {
+	/**
+	 * Get current post by condition
+	 *
+	 * @param string $post_type Post type.
+	 * @param string $template_type Template type.
+	 * @param string $meta_key Meta key.
+	 *
+	 * @return array $data Json data.
+	 */
+	function csmf_get_current_post_by_condition($post_type, $template_type, $meta_key) {
+
+		$query_args = array(
+			'post_type'      => $post_type,
+			'fields'         => 'ids',
+			'posts_per_page' => -1,
+			'order'          => 'ASC',
+			'orderby'        => 'date',
+			'meta_query'     => array(
+				array(
+					'key'   => $meta_key,
+					'value' => $template_type,
+				),
+			),
+		);
+		
+		$query      = new \WP_Query( $query_args );
+
+		return $query->posts;
+	}
+}
+
+/**
+ * Exports a WordPress option as a downloadable JSON file.
+ *
+ * @since 1.0.0
+ * @return void
+ */
+if ( ! function_exists( 'csmf_export_option' ) ) {
+	function csmf_export_option() {
+		// Verify nonce.
+		$nonce = isset( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'csmf_backup_nonce' ) ) {
+			wp_die( esc_html__( 'Error: Invalid nonce verification.', 'codexshaper-framework' ) );
+		}
+
+		// Get and validate option name.
+		$option_name = isset( $_GET['option_name'] ) ? sanitize_text_field( wp_unslash( $_GET['option_name'] ) ) : '';
+		
+		if ( empty( $option_name ) && isset( $_GET['identifier'] ) ) {
+			$option_name = sanitize_text_field( wp_unslash( $_GET['identifier'] ) );
+		}
+
+		if ( empty( $option_name ) ) {
+			wp_die( esc_html__( 'Error: Invalid key.', 'codexshaper-framework' ) );
+		}
+
+		// Get option content.
+		$content = get_option( $option_name );
+
+		if ( empty( $content ) ) {
+			wp_die( esc_html__( 'Error: No data found.', 'codexshaper-framework' ) );
+		}
+
+		// Generate filename.
+		$site_url   = str_replace( array( 'http://', 'https://', 'www.' ), '', get_site_url() );
+		$site_url   = sanitize_file_name( $site_url );
+		$timestamp  = gmdate( 'Y-m-d-His' );
+		$filename   = "{$option_name}-{$site_url}-{$timestamp}.json";
+		
+		// Check for pretty print option.
+		$json_pretty = isset( $_GET['json_pretty'] ) ? (bool) sanitize_text_field( wp_unslash( $_GET['json_pretty'] ) ) : false;
+		$json_flag   = $json_pretty ? JSON_PRETTY_PRINT : 0;
+
+		// Send appropriate headers and content.
+		if ( ! headers_sent() ) {
+			nocache_headers();
+			header( 'Content-Type: application/json' );
+			header( 'Content-Disposition: attachment; filename=' . $filename );
+			header( 'Content-Transfer-Encoding: binary' );
+			header( 'Pragma: public' );
+			header( 'Expires: 0' );
+		}
+
+		echo wp_json_encode( $content, $json_flag );
+
+		exit;
+	}
+}
+
+/**
+ * Imports option data from a JSON input.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @return void
+ */
+if ( ! function_exists( 'csmf_import_option' ) ) {
+	function csmf_import_option() {
+		// Verify nonce.
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'csmf_backup_nonce' ) ) {
+			wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'codexshaper-framework' ) ) );
+		}
+
+		// Get and validate option name.
+		$option_name = isset( $_POST['option_name'] ) ? sanitize_text_field( wp_unslash( $_POST['option_name'] ) ) : '';
+		
+		if ( empty( $option_name ) && isset( $_POST['identifier'] ) ) {
+			$option_name = sanitize_text_field( wp_unslash( $_POST['identifier'] ) );
+		}
+
+		if ( empty( $option_name ) ) {
+			wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid key.', 'codexshaper-framework' ) ) );
+		}
+
+		// Get and validate import data.
+		$data = isset( $_POST['data'] ) ? wp_kses_post_deep( json_decode( wp_unslash( trim( $_POST['data'] ) ), true ) ) : array();
+		
+		if ( empty( $data ) || ! is_array( $data ) ) {
+			wp_send_json_error( array( 'error' => esc_html__( 'Error: The response is not a valid JSON response.', 'codexshaper-framework' ) ) );
+		}
+
+		$existing_data = get_option( $option_name );
+		// Check the option is exists.
+		if ( false === $existing_data || empty( $existing_data ) || ! is_array( $existing_data )) {
+			add_option( $option_name, $data );
+			// Return success response.
+			wp_send_json_success();
+		}
+
+		// Import the data.
+		update_option( $option_name, $data );
+		
+		// Return success response.
+		wp_send_json_success();
+	}
+}
+
+/**
+ * Resets an option backup to an empty state.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @return void
+ */
+if ( ! function_exists( 'csmf_reset_option' ) ) {
+	function csmf_reset_option() {
+		// Verify nonce
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'csmf_backup_nonce' ) ) {
+			wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'codexshaper-framework' ) ) );
+		}
+
+		// Get and validate option name
+		$option_name = isset( $_POST['option_name'] ) ? sanitize_text_field( wp_unslash( $_POST['option_name'] ) ) : '';
+		
+		if ( empty( $option_name ) && isset( $_POST['identifier'] ) ) {
+			$option_name = sanitize_text_field( wp_unslash( $_POST['identifier'] ) );
+		}
+
+		if ( empty( $option_name ) ) {
+			wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid option name.', 'codexshaper-framework' ) ) );
+		}
+
+		// Reset the option to an empty array
+		update_option( $option_name, array() );
+		
+		// Return success response
+		wp_send_json_success();
+	}
+}
+
+/**
+ * Resets and Delete an option backup to an empty state.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @return void
+ */
+if ( ! function_exists( 'csmf_delete_option' ) ) {
+	function csmf_delete_option() {
+		// Verify nonce
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'csmf_backup_nonce' ) ) {
+			wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'codexshaper-framework' ) ) );
+		}
+
+		// Get and validate option name
+		$option_name = isset( $_POST['option_name'] ) ? sanitize_text_field( wp_unslash( $_POST['option_name'] ) ) : '';
+		
+		if ( empty( $option_name ) && isset( $_POST['identifier'] ) ) {
+			$option_name = sanitize_text_field( wp_unslash( $_POST['identifier'] ) );
+		}
+
+		if ( empty( $option_name ) ) {
+			wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid option name.', 'codexshaper-framework' ) ) );
+		}
+
+		// Delete the option to an empty array
+		delete_option( $option_name );
+		
+		// Return success response
+		wp_send_json_success();
+	}
+}
+
+add_action( "wp_ajax_csmf_settings_backup_export", 'csmf_export_option' );
+add_action( 'wp_ajax_csmf_import_option', 'csmf_import_option' );
+add_action( 'wp_ajax_csmf_reset_option', 'csmf_reset_option' );
+add_action( 'wp_ajax_csmf_delete_option', 'csmf_delete_option' );

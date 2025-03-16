@@ -16,7 +16,7 @@ use Exception;
 use CodexShaper\Framework\Foundation\Traits\Singleton;
 use Doctrine\Inflector\InflectorFactory;
 
-// exit if access directly.
+// Exit if access directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }

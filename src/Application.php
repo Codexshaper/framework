@@ -1,4 +1,14 @@
 <?php
+/**
+ * Application File
+ *
+ * @category   Support
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
 
 namespace CodexShaper\Framework;
 
@@ -7,6 +17,20 @@ use CodexShaper\Framework\Container\Container;
 use CodexShaper\Framework\Foundation\Traits\Hook;
 use CodexShaper\Framework\Providers\FoundationServiceProvider;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
+ * Application class
+ *
+ * @category   Class
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
 class Application extends Container {
 
 	use Hook;
@@ -82,27 +106,27 @@ class Application extends Container {
 			$plugin_base_path = dirname(__DIR__, 4);
 		}
 
-		if (! defined('CXF_APP_VERSION')) {
-			define('CXF_APP_VERSION', $this->version);
+		if (! defined('CSMF_APP_VERSION')) {
+			define('CSMF_APP_VERSION', $this->version);
 		}
 
 
-		if (! defined('CXF_PLUGIN_BASE_URL')) {
-			define('CXF_PLUGIN_BASE_URL', $plugin_base_url);
+		if (! defined('CSMF_PLUGIN_BASE_URL')) {
+			define('CSMF_PLUGIN_BASE_URL', $plugin_base_url);
 		}
 
-		if (! defined('CXF_PLUGIN_BASE_PATH')) {
-			define('CXF_PLUGIN_BASE_PATH', $plugin_base_path);
+		if (! defined('CSMF_PLUGIN_BASE_PATH')) {
+			define('CSMF_PLUGIN_BASE_PATH', $plugin_base_path);
 		}
 
-		if (! defined('CXF_PLUGIN_CONFIG_PATH')) {
-			define('CXF_PLUGIN_CONFIG_PATH', trailingslashit(untrailingslashit(CXF_PLUGIN_BASE_PATH)) . 'config/');
+		if (! defined('CSMF_PLUGIN_CONFIG_PATH')) {
+			define('CSMF_PLUGIN_CONFIG_PATH', trailingslashit(untrailingslashit(CSMF_PLUGIN_BASE_PATH)) . 'config/');
 		}
 
 
 		$this->app_base_path = dirname(__DIR__);
-		$this->plugin_base_url = CXF_PLUGIN_BASE_URL;
-		$this->plugin_base_path = CXF_PLUGIN_BASE_PATH;
+		$this->plugin_base_url = CSMF_PLUGIN_BASE_URL;
+		$this->plugin_base_path = CSMF_PLUGIN_BASE_PATH;
 
 		$this->register_bindings();
 		$this->register_service_providers();

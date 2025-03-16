@@ -20,6 +20,10 @@ use ReflectionClass;
 use ReflectionFunction;
 use ReflectionMethod;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Container class
  *

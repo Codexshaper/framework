@@ -14,6 +14,10 @@ namespace CodexShaper\Framework\Builder\OptionBuilder\Fields;
 
 use CodexShaper\Framework\Foundation\Builder\Field;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Callback Field class
  *

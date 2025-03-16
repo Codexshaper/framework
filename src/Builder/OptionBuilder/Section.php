@@ -12,6 +12,10 @@
 
 namespace CodexShaper\Framework\Builder\OptionBuilder;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Section Option class
  *
@@ -36,7 +40,7 @@ class Section {
 	 *
 	 * @return void
 	 */
-	public static function render( $section, $identifier, $options, $post_id = 0 ) {
+	public static function render( $section, $identifier, $options, $post_id = 0, $is_serialize = true ) {
 
 		/**
 		 * Filter section allowed html
@@ -46,7 +50,7 @@ class Section {
 		 * @param array $allowed_html Allowed html.
 		 */
 		$allowed_html = apply_filters(
-			'cxf/builder/section/allowed_html', 
+			'csmf/builder/section/allowed_html', 
 			array(
 				'p' => array(
 					'class' => array()
@@ -59,14 +63,15 @@ class Section {
 			)
 		);
 
-		cxf_view(
+		csmf_view(
 			'builder.fields.section', 
 			compact(
 				'section',
 				'allowed_html', 
 				'options', 
 				'post_id', 
-				'identifier'
+				'identifier',
+				'is_serialize'
 			)
 		);
 	}

@@ -74,7 +74,7 @@ abstract class Widget extends Widget_Base {
 	 *
 	 * @return void
 	 */
-	protected function switch_template_post( $post_type = 'cxf-theme-builder', $args = array() ) {
+	protected function switch_template_post( $post_type = 'csmf-theme-builder', $args = array() ) {
 		if ( $post_type === get_post_type() ) {
 
 			$defaults = array(
@@ -84,12 +84,8 @@ abstract class Widget extends Widget_Base {
 				'orderby'          => 'post_date',
 				'order'            => 'DESC',
 				'include'          => '',
-				'exclude'          => '',
-				'meta_key'         => '',
-				'meta_value'       => '',
 				'post_type'        => $post_type,
 				'post_status'      => 'publish',
-				'suppress_filters' => true,
 			);
 
 			$parsed_args = wp_parse_args( $args, $defaults );

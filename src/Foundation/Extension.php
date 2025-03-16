@@ -7,7 +7,7 @@
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cxf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 
@@ -17,6 +17,10 @@ use CodexShaper\Framework\Contracts\ExtensionContract;
 use CodexShaper\Framework\Foundation\Traits\Hook;
 use CodexShaper\Framework\Foundation\Traits\Singleton;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Extension Base Class
  *
@@ -24,7 +28,7 @@ use CodexShaper\Framework\Foundation\Traits\Singleton;
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cxf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 abstract class Extension implements ExtensionContract {

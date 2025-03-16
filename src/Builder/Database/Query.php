@@ -85,11 +85,8 @@ class Query extends WP_Query {
 			'orderby'          => 'date',
 			'order'            => 'DESC',
 			'include'          => array(),
-			'exclude'          => array(),
-			'meta_key'         => '',
-			'meta_value'       => '',
 			'post_type'        => 'post',
-			'suppress_filters' => true,
+			'suppress_filters' => false,
 		);
 
 		$parsed_args = wp_parse_args( $args, $defaults );
@@ -107,9 +104,9 @@ class Query extends WP_Query {
 	 * @since 2.3.0
 	 *
 	 * @global WP_Query $wp_query     WordPress Query object.
-	 * @global WP_Query $wp_the_query Copy of the global WP_Query instance created during wp_reset_query().
+	 * @global WP_Query $wp_the_query Copy of the global WP_Query instance created during wp_reset_postdata().
 	 */
 	public function reset() {
-		wp_reset_query();
+		wp_reset_postdata();
 	}
 }

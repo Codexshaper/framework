@@ -12,19 +12,25 @@
  */
 
 use CodexShaper\Framework\Builder\OptionBuilder\Field;
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 ?>
 
-<div class="cxf--accordion-items" data-depend-id="<?php echo esc_attr( $field['id'] ); ?>">
+<div class="csmf--accordion-items" data-depend-id="<?php echo esc_attr( $field['id'] ); ?>">
 
     <?php foreach ( $field['accordions'] as $key => $accordion ): ?>
-        <div class="cxf--accordion-item">
+        <div class="csmf--accordion-item csmf--foldable folded">
             <!-- Accordion Title -->
-            <h4 class="cxf--accordion-title">
-                <i class="cxf--icon <?php echo esc_attr( $accordion['icon'] ?? 'fas fa-angle-right' ); ?>"></i>
-                <?php echo esc_html( $accordion['title'] ); ?>
+            <h4 class="csmf--accordion-title fold-handler">
+                <span class="csmf--accordion-text"><?php echo esc_html( $accordion['title'] ); ?></span>
+                <span class="csmf--accordion-icon">
+                    <i class="<?php echo esc_attr( $accordion['icon'] ?? 'fas fa-angle-right' ); ?>"></i>
+                </span>
             </h4>
             <!-- Accordion Content -->
-            <div class="cxf--accordion-content">
+            <div class="csmf--accordion-content inside">
                 <?php
                     foreach ( $accordion['fields'] as $accordion_field ) {
 

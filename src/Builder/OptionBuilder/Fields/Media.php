@@ -14,6 +14,10 @@ namespace CodexShaper\Framework\Builder\OptionBuilder\Fields;
 
 use CodexShaper\Framework\Foundation\Builder\Field;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Media Field class
  *
@@ -75,11 +79,11 @@ class Media extends Field {
 		}
 
 		$this->value = wp_parse_args( $this->value, $default_values );
-		$preview_src = $args['preview_size'] !== 'thumbnail' ? $this->value['url'] : $this->value['thumbnail'];
+		$preview_src = $args['preview_size'] === 'thumbnail' ? $this->value['url'] : $this->value['thumbnail'];
 		$placeholder = $this->field['placeholder'] ?? 'Not selected';
 
 		if ( $args['preview'] ) {
-			cxf_view(
+			csmf_view(
 				'builder.fields.upload.preview',
 				array(
 					'args' => $args,
@@ -88,7 +92,7 @@ class Media extends Field {
 			);
 		}
 
-		cxf_view(
+		csmf_view(
 			'builder.fields.media',
 			array(
 				'name'       => $this->get_name( $this->field, $this->identifier ),

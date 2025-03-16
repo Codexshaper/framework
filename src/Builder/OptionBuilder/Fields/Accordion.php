@@ -14,6 +14,10 @@ namespace CodexShaper\Framework\Builder\OptionBuilder\Fields;
 
 use CodexShaper\Framework\Foundation\Builder\Field;
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 /**
  * Accordion Field class
  *
@@ -42,11 +46,11 @@ class Accordion extends Field {
          *
          * @param array $block_fields Accordion block fields.
          */
-		$block_fields = apply_filters( 'cxf/builder/fields/accordion/block_fields', array( 'accordion' ) );
+		$block_fields = apply_filters( 'csmf/builder/fields/accordion/block_fields', array( 'accordion' ) );
 
         $this->before();
 
-        cxf_view( 'builder.fields.accordion', [
+        csmf_view( 'builder.fields.accordion', [
             'field' => $this->field,
             'value' => $this->value,
             'identifier'    => $this->identifier,

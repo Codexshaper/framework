@@ -72,7 +72,7 @@ abstract class Module extends BaseModule {
 	 * @return string
 	 */
 	public function get_assets_base_url(): string {
-		return cxf_plugin_base_url() . 'widgets/elementor/';
+		return csmf_plugin_base_url() . 'widgets/elementor/';
 	}
 
 	/**
@@ -141,7 +141,7 @@ abstract class Module extends BaseModule {
 		 *
 		 * @param array $skins The current skins.
 		 */
-		$skins = apply_filters( "cxf/module/{$this->get_name()}/skins_init", $skins );
+		$skins = apply_filters( "csmf/module/{$this->get_name()}/skins_init", $skins );
 
 		foreach ( $skins as $widget_name => $skin_class ) {
 			// Prepare skin class if passed only skin class name.

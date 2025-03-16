@@ -32,14 +32,14 @@ trait SliderHelper {
 	 *
 	 * @var string
 	 */
-	protected $slider_control_prefix = 'cxf';
+	protected $slider_control_prefix = 'csmf';
 
 	/**
 	 * Thumb Slider Control Prefix
 	 *
 	 * @var string
 	 */
-	protected $thumb_slider_control_prefix = 'cxf_thumb';
+	protected $thumb_slider_control_prefix = 'csmf_thumb';
 
 	/**
 	 * Add Slider Attributes
@@ -57,7 +57,7 @@ trait SliderHelper {
 		$data = array(),
 		$prefix = '',
 		$attribute_id = 'slider-wrapper',
-		$slider_class = 'cxf--slider',
+		$slider_class = 'csmf--slider',
 	) {
 		$swiper_class = Plugin::instance()->experiments->is_feature_active( 'e_swiper_latest' ) ? 'swiper' : 'swiper-container';
 		$classes      = $data['class'] ?? '';
@@ -66,7 +66,7 @@ trait SliderHelper {
 			$attribute_id,
 			array(
 				'class'       => "{$slider_class} {$swiper_class} {$classes}",
-				'dir'         => $widget->get_settings_for_display( 'cxf_dir' ),
+				'dir'         => $widget->get_settings_for_display( 'csmf_dir' ),
 				'style'       => 'position: static',
 				'data-prefix' => $prefix,
 			)
@@ -89,7 +89,7 @@ trait SliderHelper {
 		$data = array(),
 		$prefix = '',
 		$attribute_id = 'thumb-slider-wrapper',
-		$slider_class = 'cxf--thumb-slider'
+		$slider_class = 'csmf--thumb-slider'
 	) {
 		$swiper_class = Plugin::instance()->experiments->is_feature_active( 'e_swiper_latest' ) ? 'swiper' : 'swiper-container';
 		$classes      = $data['class'] ?? '';
@@ -98,7 +98,7 @@ trait SliderHelper {
 			$attribute_id,
 			array(
 				'class'       => "{$slider_class} {$swiper_class} {$classes}",
-				'dir'         => $widget->get_settings_for_display( 'cxf_thumb_dir' ),
+				'dir'         => $widget->get_settings_for_display( 'csmf_thumb_dir' ),
 				'style'       => 'position: static',
 				'data-prefix' => $prefix,
 			)

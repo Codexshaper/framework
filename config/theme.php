@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 return array(
 	'astra'               => array(
 		'content_closing_tags' => '</div></div>',

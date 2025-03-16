@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
 return [
     'fields' => [
         'accordion' => [
@@ -65,6 +69,12 @@ return [
         'media' => [
             'name' => 'Media',
             'label' => 'Media',
+            'is_active' => true,
+            'is_group' => false,
+        ],
+        'icon' => [
+            'name' => 'Icon',
+            'label' => 'Icon',
             'is_active' => true,
             'is_group' => false,
         ],

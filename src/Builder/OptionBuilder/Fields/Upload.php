@@ -14,6 +14,10 @@ namespace CodexShaper\Framework\Builder\OptionBuilder\Fields;
 
 use CodexShaper\Framework\Foundation\Builder\Field;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Upload Field class
  *
@@ -67,7 +71,7 @@ class Upload extends Field {
 				$preview_src =  $this->value;
 			}
 
-			cxf_view(
+			csmf_view(
 				'builder.fields.upload.preview',
 				array(
 					'args' => $args,
@@ -76,7 +80,7 @@ class Upload extends Field {
 			);
 		}
 
-		cxf_view(
+		csmf_view(
 			'builder.fields.upload.button',
 			array(
 				'name'       => $this->get_name( $this->field, $this->identifier ),

@@ -15,7 +15,7 @@ namespace CodexShaper\Framework\Support\Facades;
 use CodexShaper\Framework\Config\Config as ConfigRepository;
 use CodexShaper\Framework\Foundation\Facade;
 
-// exit if access directly.
+// Exit if access directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }

@@ -6,7 +6,7 @@
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cxf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 
@@ -19,6 +19,10 @@ use CodexShaper\Framework\Foundation\Traits\Hook;
 use CodexShaper\Framework\Foundation\Traits\PostType\Options;
 use CodexShaper\Framework\Foundation\Traits\Setter;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Class post type
  *
@@ -26,7 +30,7 @@ use CodexShaper\Framework\Foundation\Traits\Setter;
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cxf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 abstract class PostType implements PostTypeContract {
@@ -123,6 +127,7 @@ abstract class PostType implements PostTypeContract {
 			}
 			
 			foreach($args as $label => $value) {
+
 				$setter = "set_label_{$label}";
 
 				if (method_exists($this, $setter)) {
@@ -138,17 +143,18 @@ abstract class PostType implements PostTypeContract {
 			}
 		}
 		
-		$this->post_type = substr(sanitize_key( str_replace([' ', '-'], '_', $this->get_name())), 0, 20);
+		$this->post_type = substr(str_replace([' ', '_'], '-', $this->get_name()), 0, 20);
+
 
 		if ( ! $this->post_title ) {
-			$this->post_title = join( ' ', array_map( 'ucfirst', explode( '_', $this->post_type ) ) );
+			$this->post_title = join( ' ', array_map( 'ucfirst', explode( '-', $this->post_type ) ) );
 		}
 
 		if ( method_exists( $this, 'get_title' ) ) {
 			$this->post_title = $this->get_title();
 		}
 
-		$this->plural_title = cxf_pluralize( $this->post_title );
+		$this->plural_title = csmf_pluralize( $this->post_title );
 
 		if ( method_exists( $this, 'get_plural_title' ) ) {
 			$this->plural_title = $this->get_plural_title();
@@ -174,6 +180,10 @@ abstract class PostType implements PostTypeContract {
 			$this->query_var = true;
 		}
 
+		if ( method_exists( $this, 'get_post_type' ) ) {
+			$this->post_type = $this->get_post_type();
+		}
+
 		if ( method_exists( $this, 'is_public' ) ) {
 			$this->public = $this->is_public();
 		}
@@ -195,7 +205,7 @@ abstract class PostType implements PostTypeContract {
 		}
 
 		// Set default labels and must be call before get_options().
-		if ( property_exists( $this, 'labels' ) || ! $this->labels || empty( $this->labels ) ) {
+		if ( empty( $this->labels )) {
 			$this->set_default_labels();
 		}
 
@@ -359,8 +369,8 @@ abstract class PostType implements PostTypeContract {
 	 */
 	public function register( $post_type = '', $args = array() ) {
 
-		if ( empty( $post_type ) ) {
-			$this->post_type = $this->get_name();
+		if ( ! empty( $post_type ) ) {
+			$this->post_type = $post_type;
 		}
 
 		if ( ! empty( $args ) ) {
@@ -369,6 +379,10 @@ abstract class PostType implements PostTypeContract {
 
 		if ( ! is_array( $this->options ) || empty( $this->options ) ) {
 			$this->options = $this->get_options();
+		}
+
+		if ( !$this->post_type || strlen( $this->post_type ) < 1 ) {
+			return;
 		}
 
 		register_post_type( $this->post_type, $this->options );

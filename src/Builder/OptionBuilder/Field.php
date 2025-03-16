@@ -14,6 +14,10 @@ namespace CodexShaper\Framework\Builder\OptionBuilder;
 
 use CodexShaper\Framework\Foundation\Builder\Field as BaseField;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Field Option class
  *
@@ -46,21 +50,21 @@ class Field extends BaseField {
 
 		if ( ! $field_type ) {
 			$errors = "You must provide field type.";
-			cxf_view('builder.fields.error', compact('errors'));
+			csmf_view('builder.fields.error', compact('errors'));
 			return;
 		}
 
-		$class_name  = cxf_classify( $field_type );
+		$class_name  = csmf_classify( $field_type );
 		$field_class = "CodexShaper\Framework\Builder\OptionBuilder\Fields\\{$class_name}";
 
 		if ( ! class_exists( $field_class ) ) {
 			$errors = "Field doesn't exists.";
-			cxf_view('builder.fields.error', compact('errors'));
+			csmf_view('builder.fields.error', compact('errors'));
 			return;
 		}
 
+		$value             = ! isset($value) && isset( $field['default'] ) ? $field['default'] : $value;
 		$value             = $field['value'] ?? $value;
-		$value             = ! $value && isset( $field['default'] ) ? $field['default'] : $value;
 		$title             = $field['title'] ?? '';
 		$subtitle          = $field['subtitle'] ?? '';
 		$class             = $field['class'] ?? '';
@@ -116,7 +120,7 @@ class Field extends BaseField {
 
 		}
 		
-		cxf_view(
+		csmf_view(
 			'builder.field',
 			compact(
 				'field_type',
@@ -142,6 +146,7 @@ class Field extends BaseField {
 		$identifier = $data['identifier'] ?? '';
 		$options = $data['options'] ?? array();
 		$parent = $data['parent'] ?? '';
+		$is_serialize = $data['is_serialize'] ?? true;
 
 		if ( ! empty( $field['id'] ) ) {
 
@@ -157,7 +162,7 @@ class Field extends BaseField {
 		}
 
 		if ($post_id) {
-			$value = static::get_value( $post_id, $field, $identifier, $options );
+			$value = static::get_value( $post_id, $field, $identifier, $options, $is_serialize );
 		}
 
 		static::render( $field, $value, $identifier, $parent );

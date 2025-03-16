@@ -14,6 +14,10 @@ namespace CodexShaper\Framework\Builder\OptionBuilder\Fields;
 
 use CodexShaper\Framework\Foundation\Builder\Field;
 
+if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly.
+}
+
 /**
  * Switcher Field class
  *
@@ -41,7 +45,7 @@ class Switcher extends Field {
         $attributes = $this->get_attributes();
         $this->before();
 
-        cxf_view( 'builder.fields.switcher', compact(
+        csmf_view( 'builder.fields.switcher', compact(
                 'identifier',
                 'value',
                 'field',

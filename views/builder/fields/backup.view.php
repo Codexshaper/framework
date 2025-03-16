@@ -10,36 +10,52 @@
  * @since      1.0.0
  * @version    1.0.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 ?>
-<div class="cxf--import-wrapper">
-    <textarea name="cxf_import_data" class="cxf--import-data"></textarea>
+<div class="csmf--import-wrapper">
+    <textarea name="csmf_import_data" class="csmf--import-data"></textarea>
     <button 
         type="submit" 
-        class="cxf--import button cxf--a-btn cxf--a-btn-primary" 
+        class="csmf--import button csmf--a-btn csmf--a-btn-primary" 
         data-identifier="<?php echo esc_attr( $identifier ); ?>" 
+        data-option-name="<?php echo esc_attr( $option_name ); ?>" 
         data-nonce="<?php echo esc_attr( $nonce ); ?>"
     >
         <?php echo esc_html__( 'Import', 'codexshaper-framework' );?>
     </button>
 </div>
 
-<div class="cxf--export-wrapper">
-    <textarea readonly="readonly" class="cxf--option-export"><?php echo esc_html( $export_data ); ?></textarea>
+<div class="csmf--export-wrapper">
+    <textarea readonly="readonly" class="csmf--option-export"><?php echo esc_html( $export_data ); ?></textarea>
     <a 
         href="<?php echo esc_url( $export ); ?>" 
-        class="cxf--export" 
+        class="csmf--export" 
         target="_blank"
     >
         <?php echo esc_html__( 'Export & Download', 'codexshaper-framework' ); ?>
     </a>
     <button 
         type="submit" 
-        name="cxf_option[reset]" 
         value="reset" 
-        class="cxf--reset button cxf--a-btn cxf--a-btn-primary" 
-        data-identifier="<?php echo esc_attr( $identifier ); ?>" 
+        class="csmf--reset-option button csmf--a-btn csmf--a-btn-primary" 
+        data-identifier="<?php echo esc_attr( $identifier ); ?>"
+        data-option-name="<?php echo esc_attr( $option_name ); ?>"
         data-nonce="<?php echo esc_attr( $nonce ); ?>"
     >
         <?php echo esc_html__( 'Reset', 'codexshaper-framework' ); ?>
+    </button>
+
+    <button 
+        type="submit"  
+        value="reset" 
+        class="csmf--delete-option button csmf--a-btn csmf--a-btn-primary" 
+        data-identifier="<?php echo esc_attr( $identifier ); ?>"
+        data-option-name="<?php echo esc_attr( $option_name ); ?>"
+        data-nonce="<?php echo esc_attr( $nonce ); ?>"
+    >
+        <?php echo esc_html__( 'Reset & Delete', 'codexshaper-framework' ); ?>
     </button>
 </div>

@@ -14,6 +14,10 @@ namespace CodexShaper\Framework\Builder\OptionBuilder\Fields;
 
 use CodexShaper\Framework\Foundation\Builder\Field;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Heading Field class
  *
@@ -39,7 +43,7 @@ class Heading extends Field {
 
         $this->before();
 
-        cxf_view( 'builder.fields.heading', compact( 'field', 'identifier' ) );
+        csmf_view( 'builder.fields.heading', compact( 'field', 'identifier' ) );
 
         $this->after();
 	}

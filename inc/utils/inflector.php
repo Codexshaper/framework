@@ -1,13 +1,27 @@
 <?php
+/**
+ * Inflector functions
+ *
+ * @category   Core
+ * @package    CodexShaper_Framework
+ * @author     CodexShaper <info@codexshaper.com>
+ * @license    https://www.gnu.org/licenses/gpl-2.0.html
+ * @link       https://codexshaper.com
+ * @since      1.0.0
+ */
 
-if ( ! function_exists( 'cxf_inflector' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+if ( ! function_exists( 'csmf_inflector' ) ) {
 
 	/**
 	 * Get inflector instance
 	 *
 	 * @return \CodexShaper\Framework\Supports\Inflector The single instance of the class.
 	 */
-	function cxf_inflector() {
+	function csmf_inflector() {
 		if ( ! class_exists( '\CodexShaper\Framework\Support\Inflector' ) ) {
 			return;
 		}
@@ -15,7 +29,7 @@ if ( ! function_exists( 'cxf_inflector' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cxf_tableize' ) ) {
+if ( ! function_exists( 'csmf_tableize' ) ) {
 
 	/**
 	 * Get tableize name from given string name.
@@ -25,12 +39,12 @@ if ( ! function_exists( 'cxf_tableize' ) ) {
 	 *
 	 * @return string The tableized name.
 	 */
-	function cxf_tableize( $word ) {
-		return cxf_inflector()->tableize( $word );
+	function csmf_tableize( $word ) {
+		return csmf_inflector()->tableize( $word );
 	}
 }
 
-if ( ! function_exists( 'cxf_classify' ) ) {
+if ( ! function_exists( 'csmf_classify' ) ) {
 
 	/**
 	 * Get classify name from given string name.
@@ -40,12 +54,12 @@ if ( ! function_exists( 'cxf_classify' ) ) {
 	 *
 	 * @return string The classified name.
 	 */
-	function cxf_classify( $word ) {
-		return cxf_inflector()->classify( $word );
+	function csmf_classify( $word ) {
+		return csmf_inflector()->classify( $word );
 	}
 }
 
-if ( ! function_exists( 'cxf_camelize' ) ) {
+if ( ! function_exists( 'csmf_camelize' ) ) {
 
 	/**
 	 * Get camelize name from given string name.
@@ -56,12 +70,12 @@ if ( ! function_exists( 'cxf_camelize' ) ) {
 	 *
 	 * @return string The camelized name.
 	 */
-	function cxf_camelize( $word ) {
-		return cxf_inflector()->camelize( $word );
+	function csmf_camelize( $word ) {
+		return csmf_inflector()->camelize( $word );
 	}
 }
 
-if ( ! function_exists( 'cxf_capitalize' ) ) {
+if ( ! function_exists( 'csmf_capitalize' ) ) {
 
 	/**
 	 * Get capitalize name from given string name.
@@ -71,12 +85,12 @@ if ( ! function_exists( 'cxf_capitalize' ) ) {
 	 *
 	 * @return string The capitalized name.
 	 */
-	function cxf_capitalize( $word ) {
-		return cxf_inflector()->capitalize( $word );
+	function csmf_capitalize( $word ) {
+		return csmf_inflector()->capitalize( $word );
 	}
 }
 
-if ( ! function_exists( 'cxf_pluralize' ) ) {
+if ( ! function_exists( 'csmf_pluralize' ) ) {
 
 	/**
 	 * Get pluralize name from given string name.
@@ -86,12 +100,12 @@ if ( ! function_exists( 'cxf_pluralize' ) ) {
 	 *
 	 * @return string The pluralized name.
 	 */
-	function cxf_pluralize( $word ) {
-		return cxf_inflector()->pluralize( $word );
+	function csmf_pluralize( $word ) {
+		return csmf_inflector()->pluralize( $word );
 	}
 }
 
-if ( ! function_exists( 'cxf_singularize' ) ) {
+if ( ! function_exists( 'csmf_singularize' ) ) {
 
 	/**
 	 * Get singularize name from given string name.
@@ -101,12 +115,12 @@ if ( ! function_exists( 'cxf_singularize' ) ) {
 	 *
 	 * @return string Singularized name.
 	 */
-	function cxf_singularize( $word ) {
-		return cxf_inflector()->singularize( $word );
+	function csmf_singularize( $word ) {
+		return csmf_inflector()->singularize( $word );
 	}
 }
 
-if ( ! function_exists( 'cxf_slug' ) ) {
+if ( ! function_exists( 'csmf_slug' ) ) {
 
 	/**
 	 * Get slug name from given string name.
@@ -116,12 +130,12 @@ if ( ! function_exists( 'cxf_slug' ) ) {
 	 *
 	 * @return string The slug.
 	 */
-	function cxf_slug( $word ) {
-		return cxf_inflector()->slug( $word );
+	function csmf_slug( $word ) {
+		return csmf_inflector()->slug( $word );
 	}
 }
 
-if ( ! function_exists( 'cxf_title' ) ) {
+if ( ! function_exists( 'csmf_title' ) ) {
 
 	/**
 	 * Get title name from given text.
@@ -131,7 +145,7 @@ if ( ! function_exists( 'cxf_title' ) ) {
 	 *
 	 * @return string The title.
 	 */
-	function cxf_title( $text ) {
+	function csmf_title( $text ) {
 		$string = preg_replace( '/([a-z])([A-Z])/', '\\1 \\2', $text );
 		$string = preg_replace( '/[-_]/', ' ', $string );
 		return ucwords( $string );

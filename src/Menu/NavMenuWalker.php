@@ -195,7 +195,7 @@ class NavMenuWalker extends \Walker_Nav_Menu {
 		if ( in_array( 'menu-item-has-children', $classes ) ) {
 			// Check submenu_icon_icon set on menu args
 			if ( ! empty( $args->submenu_icon ) ) {
-				$submenu_icon .= '<span class="cxf-submenu-icon">' . $args->submenu_icon . '</span>';
+				$submenu_icon .= '<span class="csmf-submenu-icon">' . $args->submenu_icon . '</span>';
 			}
 		}
 

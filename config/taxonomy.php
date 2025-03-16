@@ -1,5 +1,8 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 
 return [
     'namespace' => 'CodexShaper\\Framework\\Taxonomies',

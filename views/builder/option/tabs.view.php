@@ -11,7 +11,11 @@
  * @version    1.0.0
  */
 
- $show_tab = $args['show_tab'] ?? true;
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
+$show_tab = $args['show_tab'] ?? true;
 
 if ( ! $show_tab || count($tabs) < 1 ) {
     return;
@@ -27,17 +31,17 @@ if ( ! $show_tab || count($tabs) < 1 ) {
 ?>
     <!-- Single tab item. -->
     <?php if ( empty( $tab['children'] ) ): ?>
-        <li class="cxf--tab-item">
+        <li class="csmf--tab-item">
             <a 
                 href="#<?php echo esc_attr( $tab_id ); ?>" 
-                class="cxf--tab-btn" 
-                data-cxf-tab="<?php echo esc_attr( $tab_id ); ?>" 
+                class="csmf--tab-btn" 
+                data-csmf-tab="<?php echo esc_attr( $tab_id ); ?>" 
                 role="tab" 
                 aria-selected="true" 
                 aria-controls="panel_<?php echo esc_attr( $tab_id ); ?>"
             >
                 <?php if($tab_icon): ?>
-                    <i class="cxf--tab-icon <?php echo esc_attr( $tab_icon ); ?>"></i>
+                    <i class="csmf--tab-icon <?php echo esc_attr( $tab_icon ); ?>"></i>
                 <?php endif; ?>
                 <?php if($tab_title): ?>
                     <?php echo esc_html($tab_title); ?>
@@ -50,17 +54,17 @@ if ( ! $show_tab || count($tabs) < 1 ) {
         <?php continue; ?>
     <?php endif; ?>
         <!-- Tab item with children. -->
-        <li class="cxf--tab-item cxf--tab-has-children <?php echo $key === 0 ? 'expanded' : ''; ?>">
+        <li class="csmf--tab-item csmf--tab-has-children <?php echo $key === 0 ? 'expanded' : ''; ?>">
             <a 
-                href="#<?php echo esc_attr( $tab_id ) . '/' . sanitize_title($tab['children'][0]['title']) ?>"
-                class="cxf--tab-btn" 
-                data-cxf-tab="<?php echo esc_attr( $tab_id ) . '/' . sanitize_title($tab['children'][0]['title']) ?>" 
+                href="#<?php echo esc_attr( $tab_id . '/' . sanitize_title($tab['children'][0]['title'])); ?>"
+                class="csmf--tab-btn" 
+                data-csmf-tab="<?php echo esc_attr( $tab_id . '/' . sanitize_title($tab['children'][0]['title'])); ?>" 
                 role="tab" 
                 aria-selected="true" 
-                aria-controls="panel_<?php echo esc_attr( $tab_id ) . '/' . sanitize_title($tab['children'][0]['title']) ?>"
+                aria-controls="panel_<?php echo esc_attr( $tab_id . '/' . sanitize_title($tab['children'][0]['title'])); ?>"
             >
                 <?php if($tab_icon): ?>
-                    <i class="cxf--tab-icon <?php echo esc_attr( $tab_icon ); ?>"></i>
+                    <i class="csmf--tab-icon <?php echo esc_attr( $tab_icon ); ?>"></i>
                 <?php endif; ?>
                 <?php if($tab_title): ?>
                     <?php echo esc_html($tab_title); ?>
@@ -78,17 +82,17 @@ if ( ! $show_tab || count($tabs) < 1 ) {
                     $children_error = '';
                     $children_icon  = $children['icon'] ?? '';
                 ?>
-                    <li class="cxf--tab-item">
+                    <li class="csmf--tab-item">
                         <a 
                             href="#<?php echo esc_attr( $children_id ); ?>" 
-                            class="cxf--tab-btn" 
-                            data-cxf-tab="<?php echo esc_attr( $children_id ); ?>" 
+                            class="csmf--tab-btn" 
+                            data-csmf-tab="<?php echo esc_attr( $children_id ); ?>" 
                             role="tab" 
                             aria-selected="true" 
                             aria-controls="panel_<?php echo esc_attr( $children_id ); ?>"
                         >
                             <?php if($children_icon): ?>
-                                <i class="cxf--tab-icon <?php echo esc_attr( $children_icon ); ?>"></i>
+                                <i class="csmf--tab-icon <?php echo esc_attr( $children_icon ); ?>"></i>
                             <?php endif; ?>
                             <?php if($children_title): ?>
                                 <?php echo esc_html($children_title); ?>

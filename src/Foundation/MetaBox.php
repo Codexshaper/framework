@@ -6,7 +6,7 @@
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cxf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 
@@ -20,6 +20,10 @@ use CodexShaper\Framework\Foundation\Traits\Getter;
 use CodexShaper\Framework\Foundation\Traits\Hook;
 use WP_Post;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * MetaBox Base Class
  *
@@ -27,7 +31,7 @@ use WP_Post;
  * @package    CodexShaper_Framework
  * @author     CodexShaper <info@codexshaper.com>
  * @license    https://www.gnu.org/licenses/gpl-2.0.html
- * @link       https://github.com/CodexShaper-Devs/cxf
+ * @link       https://github.com/CodexShaper-Devs/csmf
  * @since      1.0.0
  */
 abstract class MetaBox implements MetaBoxContract {
@@ -131,7 +135,7 @@ abstract class MetaBox implements MetaBoxContract {
 	 *
 	 * @var string  The metabox nonce prefix.
 	 */
-	protected $nonce = 'cxf_metabox_nonce';
+	protected $nonce = 'csmf_metabox_nonce';
 
 	/**
 	 * The metabox options
@@ -204,6 +208,7 @@ abstract class MetaBox implements MetaBoxContract {
 		$this->add_action( 'add_meta_boxes', 'register' );
 		// Save meta box data.
 		$this->add_action( 'save_post', 'save' );
+		$this->add_action( 'edit_attachment', 'save' );
 	}
 
 	/**
@@ -232,7 +237,7 @@ abstract class MetaBox implements MetaBoxContract {
 			$this->title = $this->get_title();
 		}
 
-		$this->plural_title = cxf_pluralize( $this->title );
+		$this->plural_title = csmf_pluralize( $this->title );
 
 		if ( method_exists( $this, 'get_plural_title' ) ) {
 			$this->plural_title = $this->get_plural_title();
@@ -240,6 +245,14 @@ abstract class MetaBox implements MetaBoxContract {
 
 		if ( method_exists( $this, 'get_screen' ) ) {
 			$this->screen = $this->get_screen();
+		}
+
+		if ( method_exists( $this, 'get_is_serialize' ) ) {
+			$this->is_serialize = $this->get_is_serialize();
+		}
+
+		if ( method_exists( $this, 'get_is_active' ) ) {
+			$this->is_active = $this->get_is_active();
 		}
 
 		if ( method_exists( $this, 'get_context' ) ) {
@@ -327,7 +340,7 @@ abstract class MetaBox implements MetaBoxContract {
 
 		$this->sections = $this->get_sections();
 
-		$this->sections = apply_filters( "cxf_filter_{$this->id}_sections", $this->sections );
+		$this->sections = apply_filters( "csmf_filter_{$this->id}_sections", $this->sections );
 
 		add_meta_box( $this->id, $this->title, array( $this, 'render' ), $this->screen, $this->context, $this->priority, $this->callback_args );
 	}
@@ -389,22 +402,25 @@ abstract class MetaBox implements MetaBoxContract {
 			return;
 		}
 
-		$errors = get_post_meta( $post->ID, 'cxf_metabox_errors_' . $this->id, true );
+		$errors = get_post_meta( $post->ID, 'csmf_metabox_errors_' . $this->id, true );
 
 		if ( $errors ) {
-			delete_post_meta( $post->ID, 'cxf_metabox_errors_' . $this->id );
+			delete_post_meta( $post->ID, 'csmf_metabox_errors_' . $this->id );
 		}
 
 		wp_nonce_field( $this->nonce, "{$this->nonce}_{$this->id}" );
 
 		?>
-		<div class="cxf cxf--metabox">
-			<div class="cxf--wrapper">
-				<div class="cxf--content">
-					<div class="cxf--sections">
+		<div class="csmf csmf--metabox">
+			<div class="csmf--wrapper">
+				<div class="csmf--content">
+					<div class="csmf--sections">
 						<?php
+						if (isset($this->options['data_type'])) {
+							$this->options['data_type'] = $this->is_serialize ? 'serialize' : '';
+						}
 						foreach ( $this->sections as $section ) {
-							Section::render( $section, $this->id, $this->options, $post->ID );
+							Section::render( $section, $this->id, $this->options, $post->ID, $this->is_serialize );
 						}
 						?>
 					</div>
@@ -436,8 +452,8 @@ abstract class MetaBox implements MetaBoxContract {
 			return;
 		}
 
-		// Prepare data, request, and errors.
-		$request = isset($_POST[$this->id]) ? cxf_sanitize_recursive(wp_unslash($_POST[$this->id])) : [];
+		// XSS ok. This "POST" requests is sanitizing below.
+		$request = isset($_POST[$this->id]) ? csmf_sanitize_recursive(wp_unslash($_POST[$this->id])) : [];
 		$data    = [];
 		$errors  = [];
 
@@ -468,9 +484,9 @@ abstract class MetaBox implements MetaBoxContract {
 		}
 
 		// Filter and reset handling.
-		$data     = apply_filters("cxf_{$this->id}_save", $data, $post_id, $this);
+		$data     = apply_filters("csmf_{$this->id}_save", $data, $post_id, $this);
 		$is_reset = isset($request['_reset']) && $request['_reset'];
-		do_action("cxf_{$this->id}_save_before", $data, $post_id, $this);
+		do_action("csmf_{$this->id}_save_before", $data, $post_id, $this);
 
 		if ($is_reset) {
 			$this->handle_reset($post_id, $sections);
@@ -482,12 +498,12 @@ abstract class MetaBox implements MetaBoxContract {
 
 		// Save errors if available.
 		if (!empty($errors)) {
-			update_post_meta($post_id, 'cxf_metabox_errors_' . $this->id, $errors);
+			update_post_meta($post_id, 'csmf_metabox_errors_' . $this->id, $errors);
 		}
 
 		// Perform actions after saving.
-		do_action("cxf_{$this->id}_saved", $data, $post_id, $this);
-		do_action("cxf_{$this->id}_save_after", $data, $post_id, $this);
+		do_action("csmf_{$this->id}_saved", $data, $post_id, $this);
+		do_action("csmf_{$this->id}_save_after", $data, $post_id, $this);
 	}
 
 	/**

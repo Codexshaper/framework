@@ -13,29 +13,33 @@
 
 use CodexShaper\Framework\Builder\OptionBuilder\Field;
 
-    $section_class = $section['class'] ?? '';
-    $section_class .= ' cxf--builder-init';
-    $section_title  = $section['title'] ?? '';
-    $section_icon   = $section['icon'] ?? '';
-    $section_description = $section['description'] ?? '';
-    $section_parent = isset($section['parent_title']) ? sanitize_title( $section['parent_title'] ) . '/' : '';
-    $section_slug   =  sanitize_title( $section_title );
-    $section_id = "{$section_parent}{$section_slug}";
-    $is_error       = false;
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
+$section_class = $section['class'] ?? '';
+$section_class .= ' csmf--builder-init';
+$section_title  = $section['title'] ?? '';
+$section_icon   = $section['icon'] ?? '';
+$section_description = $section['description'] ?? '';
+$section_parent = isset($section['parent_title']) ? sanitize_title( $section['parent_title'] ) . '/' : '';
+$section_slug   =  sanitize_title( $section_title );
+$section_id = "{$section_parent}{$section_slug}";
+$is_error       = false;
 ?>
 
 <div 
-    class="cxf--section tab-panel <?php echo esc_attr( $section_class ); ?>" 
+    class="csmf--section tab-panel <?php echo esc_attr( $section_class ); ?>" 
     id="panel_<?php echo esc_attr( $section_id ); ?>" 
-    data-cxf-tab="<?php echo esc_attr( $section_id ); ?>" 
+    data-csmf-tab="<?php echo esc_attr( $section_id ); ?>" 
     role="tabpanel"
 >
     <!-- Title -->
     <?php if ( $section_title || $section_icon ) : ?>
-        <div class="cxf--section-title">
+        <div class="csmf--section-title">
             <h3>
                 <?php if ( $section_icon ): ?>
-                    <i class="cxf--section-icon <?php echo esc_attr( $section_icon ); ?>"></i>
+                    <i class="csmf--section-icon <?php echo esc_attr( $section_icon ); ?>"></i>
                 <?php endif; ?>
                 <?php echo wp_kses($section_title, $allowed_html); ?>
             </h3>
@@ -43,7 +47,7 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
     <?php endif; ?>
     <!-- Description -->
     <?php if ( $section_description ) : ?>
-        <div class="cxf--field cxf--section-description"><?php echo wp_kses($section_description, $allowed_html); ?></div>
+        <div class="csmf--field csmf--section-description"><?php echo wp_kses($section_description, $allowed_html); ?></div>
     <?php endif; ?>
     <!-- Fields -->
     <?php
@@ -62,13 +66,14 @@ use CodexShaper\Framework\Builder\OptionBuilder\Field;
                     'identifier' => $identifier,
                     'post_id' => $post_id,
                     'options' => $options,
-                    'parent' => $parent
+                    'parent' => $parent,
+                    'is_serialize' => $is_serialize,
                 ) );
             }
         }
     ?>
     <!-- No option found -->
     <?php if ( $is_error ) : ?>
-        <div class="cxf--no-option"><?php esc_html__( 'No section data found.', 'codexshaper-framework' ); ?></div>
+        <div class="csmf--no-option"><?php esc_html__( 'No section data found.', 'codexshaper-framework' ); ?></div>
     <?php endif; ?>
 </div>

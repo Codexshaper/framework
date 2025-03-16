@@ -15,7 +15,7 @@ namespace CodexShaper\Framework\Support\Facades;
 use CodexShaper\Framework\Support\Filesystem as FilesystemRepository;
 use CodexShaper\Framework\Foundation\Facade;
 
-// exit if access directly.
+// Exit if access directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }

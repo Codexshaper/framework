@@ -27,7 +27,7 @@ trait Singleton {
 	/**
 	 * Store all instances and keep remember.
 	 *
-	 * @var \CxfTheme\Inc\Traits\Singleton The single instance of the called class.
+	 * @var \CsmfTheme\Inc\Traits\Singleton The single instance of the called class.
 	 */
 	private static $instances = array();
 
@@ -46,8 +46,8 @@ trait Singleton {
 			// Create new instance and store in the instances.
 			static::$instances[ $called_class_name ] = new $called_class_name( ...$args );
 
-			// Use the `cxf_theme_singleton_init_{$instance}` hook to execute code for the dependent class or items.
-			do_action( sprintf( 'cxf_theme_singleton_init_%s', $called_class_name ) ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+			// Use the `csmf_theme_singleton_init_{$instance}` hook to execute code for the dependent class or items.
+			do_action( sprintf( 'csmf_theme_singleton_init_%s', $called_class_name ) ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		}
 

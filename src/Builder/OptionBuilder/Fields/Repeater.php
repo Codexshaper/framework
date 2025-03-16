@@ -14,6 +14,10 @@ namespace CodexShaper\Framework\Builder\OptionBuilder\Fields;
 
 use CodexShaper\Framework\Foundation\Builder\Field as BaseField;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Callback Field class
  *
@@ -42,13 +46,13 @@ class Repeater extends BaseField {
 		);
 
 		if ( preg_match( '/' . preg_quote( '[' . $this->field['id'] . ']' ) . '/', $this->identifier ) ) {
-			echo '<div class="cxf--notice cxf--notice-danger">' . esc_html__( 'Error: Field ID conflict.', 'codexshaper-framework' ) . '</div>';
+			echo '<div class="csmf--notice csmf--notice-danger">' . esc_html__( 'Error: Field ID conflict.', 'codexshaper-framework' ) . '</div>';
 			return;
 		}
 
 		$this->before();
 
-		cxf_view(
+		csmf_view(
 			'builder.fields.repeater', 
 			array(
 				'identifier' => $this->identifier,

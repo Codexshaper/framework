@@ -15,7 +15,7 @@ namespace CodexShaper\Framework\Support\Facades;
 use CodexShaper\Framework\Support\Inflector as InflectorRepository;
 use CodexShaper\Framework\Foundation\Facade;
 
-// e=Exit if access directly.
+// Exit if access directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }

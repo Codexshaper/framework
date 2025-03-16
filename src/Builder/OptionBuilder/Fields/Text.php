@@ -14,6 +14,10 @@ namespace CodexShaper\Framework\Builder\OptionBuilder\Fields;
 
 use CodexShaper\Framework\Foundation\Builder\Field;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Text Field class
  *
@@ -42,7 +46,7 @@ class Text extends Field {
 
         $this->before();
 
-        cxf_view( 'builder.fields.text', compact( 'type', 'name', 'value', 'attributes' ) );
+        csmf_view( 'builder.fields.text', compact( 'type', 'name', 'value', 'attributes' ) );
 
         $this->after();
 	}

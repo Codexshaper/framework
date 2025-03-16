@@ -28,16 +28,11 @@
     "doctrine/inflector": "^2.0",
     "psr/container": "^2.0"
   },
-  "require-dev": {
-    "wp-coding-standards/wpcs": "3.0",
-    "phpcompatibility/phpcompatibility-wp": "^2.1",
-    "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
-  },
+  "require-dev": {},
   "config": {
     "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true
-    }
-  },
+      "dealerdirect/phpcodesniffer-composer-installer": false
+    }},
   "minimum-stability": "stable",
   "prefer-stable": true
 }
