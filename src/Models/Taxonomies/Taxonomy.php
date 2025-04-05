@@ -113,7 +113,7 @@ class Taxonomy extends Model {
 					)
 				);
 
-				if ( is_wp_error( $taxonomy_terms ) ) {
+				if ( is_wp_error( $taxonomy_terms ) || ! is_array( $taxonomy_terms ) ) {
 					continue;
 				}
 
