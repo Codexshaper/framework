@@ -250,10 +250,10 @@ if ( ! function_exists( 'csmf_view_base' ) ) {
 	 */
 	function csmf_view_base( $view_base = '' ) {
 		if ( ! $view_base || empty( $view_base ) ) {
-			$view_base = csmf_plugin_base_path() . 'views';
+			$view_base = csmf_plugin_base_path();
 		}
 
-		return $view_base;
+		return trailingslashit( untrailingslashit( $view_base ) );
 	}
 }
 
@@ -271,13 +271,14 @@ if ( ! function_exists( 'csmf_view_path' ) ) {
 	 */
 	function csmf_view_path( $view, $base = '', $extension = 'view.php' ) {
 		// Get the view base path.
-		$view_base = csmf_view_base( $base );
+		$view_base = csmf_view_base( $base ) . 'views';
+		$view_path = '';
 		// Sanitize the view name.
 		$path = str_replace( array( '.', '|' ), DIRECTORY_SEPARATOR, $view );
 		$fallback_view_base = csmf_app_base_path() . 'views';
-		$view_base = csmf_plugin_base_path() . 'views';
 		$elementor_view_base = csmf_plugin_base_path() . 'widgets/elementor/views';
 		$wordpress_view_base = csmf_plugin_base_path() . 'widgets/wordpress/views';
+		
 
 		// Check if the view file exists.
 		if ( empty( $base ) ) {

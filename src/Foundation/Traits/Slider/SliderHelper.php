@@ -59,7 +59,8 @@ trait SliderHelper {
 		$attribute_id = 'slider-wrapper',
 		$slider_class = 'csmf--slider',
 	) {
-		$swiper_class = Plugin::instance()->experiments->is_feature_active( 'e_swiper_latest' ) ? 'swiper' : 'swiper-container';
+		// $swiper_class = Plugin::instance()->experiments->is_feature_active( 'e_swiper_latest' ) ? 'swiper' : 'swiper-container';
+		$swiper_class = 'swiper';
 		$classes      = $data['class'] ?? '';
 		$prefix       = $prefix ?? $this->slider_control_prefix;
 		$widget->add_render_attribute(
